@@ -1,0 +1,504 @@
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5%;
+    background: linear-gradient(45deg, darkblue, #187CFF);
+}
+
+header {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.main-content {
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-right: 5%;
+}
+
+#logo {
+    width: auto;
+    text-align: left;
+    padding: 0;
+}
+
+#logo img {
+    width: 180px;
+    height: auto;
+    margin: 0;
+}
+
+.typing-effect {
+    font-size: 41px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 4px;
+    margin-top: -30px;
+    margin-left: -16px;
+    height: 230px;
+    overflow: hidden;
+}
+
+#cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.sub-text {
+    font-size: 29px;
+    margin-left: -14px;
+    color: white;
+    margin-top: -99px;
+    font-weight: 400;
+}
+
+.sub-text.specific-line {
+    font-size: 17px;
+    width: 94%;
+    margin-left: -14px;
+    margin-right: auto;
+    margin-top: 22px;
+}
+
+.main-content > p {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.email-access {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+}
+
+#search-input {
+    flex: none;
+    width: 310px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #187CFF;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#search-input::placeholder {
+    color: #aaa;
+}
+
+#search-input:focus {
+    border-color: darkblue;
+}
+
+#access-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid #187CFF;
+    background-color: #187CFF;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    outline: none;
+}
+
+.search-section {
+    position: relative;
+    width: 88%;
+    max-width: 600px;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+#companySearch {
+    width: 54%;
+    padding: 12px 60px 12px 15px;
+    font-size: 1.4em;
+    margin-left: -14px;
+    border: 2px solid #888;
+    border-radius: 30px;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+#companySearch::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#companySearch:hover {
+    border-color: white;
+    background-color: transparent;
+}
+
+#voiceButton {
+    position: absolute;
+    right: 220px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    font-size: 1.7em;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#feedbackText {
+    margin-left: 2px;
+    margin-top: 2px;
+    font-size: 0.4em;
+    color: #FFF;
+    transition: opacity 0.3s;
+    visibility: hidden;
+}
+
+.voiceButton-listening #feedbackText {
+    visibility: visible;
+    opacity: 1;
+}
+
+.position-app-store {
+    position: fixed;
+    bottom: 50px;
+    right: 710px;
+    z-index: 1000;
+    display: flex;
+}
+
+.position-app-store a {
+    margin-right: 8px;
+}
+
+.position-app-store .app-store-badge img {
+    width: 130px;
+    height: 30px;
+    border-radius: 13px;
+}
+
+.position-app-store .google-play-badge img {
+    width: 146px; 
+    height: 46px; 
+    border-radius: 13px;
+}
+
+.badges-container {
+    position: fixed;
+    bottom: 200px;
+    right: 1106px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 11px; 
+}
+
+/* Existing CSS for larger screens */
+@media (min-width: 768px) {
+    header {
+        padding: 0 5%;
+    }
+
+    .main-content {
+        position: static;
+    }
+
+    .badges-container {
+        position: absolute;
+        top: calc(83% + 3px);
+        right: 36%;
+    }
+}
+
+/* New CSS for smaller screens (like iPhone 4) */
+@media (max-width: 767px) {
+    .badges-container {
+        position: absolute;
+        top: calc(79% + 3px); /* Adjust this value as needed */
+        right: 10%; /* Adjust this value as needed */
+    }
+}
+
+
+@media (max-width: 768px) {
+    html {
+        height: 100%; /* Ensure the html element covers the entire viewport */
+        background: linear-gradient(180deg, #191970, #187CFF);
+
+    }
+
+    body {
+        height: inherit; /* Let the body take the height of its content */
+        margin: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start; /* Align items to the start */
+        padding-left: 3%;
+        padding-bottom: 0px;
+        background: none; /* Remove the background from the body */
+    }
+
+    header {
+        background-color: transparent;
+        height: 17px;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        z-index: 0;
+    }
+
+    #text-logo {
+        font-size: 20px;
+    }
+
+    .typing-effect {
+        font-size: 33px;
+        padding-top: 140px;
+        position: sticky;
+        top: -55px;
+        z-index: 1000;
+        margin-left: -31px;
+    }
+
+    .sub-text {
+        font-size: 22px;
+        position: sticky;
+        width: 82%;
+        margin-top: -62px;
+        margin-left: -29px;
+    }
+    
+    .sub-text.specific-line {
+        font-size: 17px;
+        width: 94%;
+        margin-left: -28px;
+        margin-right: auto;
+        margin-top: 11px;
+    }
+    
+    #companySearch {
+        width: 88%;
+        padding: 12px 60px 12px 15px;
+        margin-left: -28px;
+        font-size: 1.4em;
+        border: 2px solid #888;
+        transition: border-color 0.3s;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    #companySearch::placeholder {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    #companySearch:hover {
+        border-color: white;
+        background-color: transparent;
+    }
+    
+    #voiceButton {
+        position: absolute;
+        right: -29px;
+    }
+    
+    #feedbackText {
+        right: 5px;
+        top: 10%;
+        transform: translateY(-50%);
+    }
+
+    .badges-container {
+        position: absolute;
+        right: 60px;
+        background-color: transparent;
+        display: flex;
+        flex-direction: row-reverse; 
+        align-items: center; 
+        bottom: 137px;
+    }
+
+    .badges-container a {
+        margin-right: -13px;
+    }
+
+    .badges-container .app-store-badge img {
+        width: 131px;
+        height: 43px;
+        border-radius: 2.5px;
+    }
+
+    .badges-container .google-play-badge img {
+        height: 63px !important;  
+        width: 154px !important;   
+        border-radius: 2.5px;
+    }
+}
+
+/* General Styles (Affecting both Desktop and Mobile) */
+
+body[page="policy"], 
+body[page="terms"] {
+    background: #187CFF;
+    color: white;
+}
+
+nav {
+    position: fixed;
+    bottom: 12px;
+    left: 59px;
+    z-index: 1001;
+}
+
+.content {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 120px 0 20px;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-left: -20px;
+    color: #FFF;
+    margin-top: 20px;
+}
+
+p, ul, ol, li {
+    margin-bottom: 35px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Desktop Specific Styles for Privacy Policy and Terms Pages */
+
+body[page="policy"] header, 
+body[page="terms"] header {
+    background-color: #187CFF;
+    padding-top: 27px; 
+    height: 23px;
+}
+
+body[page="policy"] .content {
+    padding-top: 1510px;
+    padding-bottom: 50px;
+}
+
+body[page="terms"] .content {
+    padding-top: 1980px;
+    padding-bottom: 50px;
+}
+
+/* Fixed navigation for policy and terms pages (Desktop) */
+body[page="policy"] nav, 
+body[page="terms"] nav {
+    position: fixed;
+    bottom: 0;
+    left: 56px;
+    right: 0;
+    background-color: #187CFF;
+    z-index: 100; 
+    color: #FFFFFF;
+    padding: 14px;
+}
+
+
+
+/* Mobile Specific Styles */
+
+@media (max-width: 768px) {
+    /* Reset the background gradient for html */
+    html {
+        background: none;
+    }
+
+    /* Assign the flat blue background for policy and terms pages */
+    body[page="policy"], 
+    body[page="terms"] {
+        background: #187CFF;
+    }
+
+    /* Assign the gradient background for the home page */
+    body[page="home"] {
+        background: linear-gradient(45deg, darkblue, #187CFF);
+    }
+
+    /* Styling for .content in policy and terms pages */
+    body[page="policy"] .content, 
+    body[page="terms"] .content {
+        margin: 53px 27px 70px 1px;
+        max-width: 120%;
+        padding: 10px 0 68px 4px; /* Increased the padding-bottom value */
+    }
+
+    /* Fixed navigation for policy and terms pages */
+    body[page="policy"] nav, 
+    body[page="terms"] nav {
+        position: fixed;
+        bottom: 0;
+        left: 4px;
+        right: 0;
+        background-color: #187CFF;
+        z-index: 100; 
+        color: #FFFFFF;
+        padding: 16px;
+    }
+
+    /* Making sure links inside the navigation are white */
+    body[page="policy"] nav a, 
+    body[page="terms"] nav a {
+        color: #FFFFFF;
+    }
+
+    /* Adjusted navigation for home page */
+    body[page="home"] nav {
+        left: 16px;
+    }
+
+    /* Header styles for policy and terms pages */
+    body[page="policy"] header, 
+    body[page="terms"] header {
+        position: absolute;
+        background-color: transparent;
+        top: 6px;  
+        margin-left: -3px;
+    }
+
+    /* Padding for logo and nav links in policy and terms headers */
+    body[page="policy"] header #logo, 
+    body[page="policy"] header nav a, 
+    body[page="terms"] header #logo, 
+    body[page="terms"] header nav a {
+        padding-bottom: 3px;
+    }
+}
