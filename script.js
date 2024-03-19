@@ -30,7 +30,7 @@
 
     const typingEffect = () => {
         const sentences = [
-            "Hello, I'm B01",
+            "Hi, I'm B01",
             "I broke out of the internet to help you contact any company",
             "Voice Call and Instant Messaging",
             "Thinking of a company? Just say it or type it, and voila!",
