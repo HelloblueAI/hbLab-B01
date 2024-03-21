@@ -192,15 +192,23 @@ header {
 
     .badges-container {
         position: absolute;
-        top: calc(86% + 3px);
-        right: 31%;
+        top: calc(76% + 3px);
+        right: 39%;
     }
 }
 
 @media (width <=767px) {
     .badges-container {
         position: absolute;
-        top: calc(68% + 5px);
+        top: calc(77% + 5px);
+        right: 12%;
+    }
+}
+
+@media (width >=767px) {
+    .badges-container {
+        position: absolute;
+        top: calc(50% + 5px);
         right: 12%;
     }
 }
@@ -299,7 +307,6 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 330px;
     }
 
     .badges-container a {
@@ -338,13 +345,6 @@ nav {
     margin: 120px 0 20px;
     font-size: 12px;
     line-height: 1.2;
-}
-
-p,
-ul,
-ol,
-li {
-    margin-bottom: 35px;
 }
 
 h1,
