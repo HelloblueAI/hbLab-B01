@@ -200,7 +200,7 @@ header {
 @media (width <=767px) {
     .badges-container {
         position: absolute;
-        top: calc(77% + 5px);
+        top: calc(68% + 5px);
         right: 12%;
     }
 }
