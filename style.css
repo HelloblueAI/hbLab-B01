@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    height: calc(100vh - 56px);
+    height: 110vh;
     margin: 0;
     display: flex;
     justify-content: flex-start;
@@ -37,7 +37,7 @@ header {
     text-align: left;
     padding: 0;
     margin-left: -1;
-    margin-top: -12px;
+    margin-top: -11px;
 }
 
 
