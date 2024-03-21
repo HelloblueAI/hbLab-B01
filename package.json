@@ -5,6 +5,7 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "check-updates": "ncu",
     "lint:css": "stylelint '**/*.css'",
     "format": "prettier --write '**/*.{html,js,css}'",
     "lint:js": "eslint '**/*.js'",
@@ -15,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "npm-check-updates": "^11.8.5",
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^36.0.0",
     "prettier": "^3.2.5",
