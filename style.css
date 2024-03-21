@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    height: 110vh;
+    height: 100vh;
     margin: 0;
     display: flex;
     justify-content: flex-start;
@@ -208,12 +208,11 @@ header {
 
 @media (width <=768px) {
     html {
-        height: 100%;
         background: linear-gradient(180deg, #191970, #187CFF);
     }
 
     body {
-        height: inherit;
+        /* height: inherit; */
         margin: 0;
         display: flex;
         justify-content: flex-start;
