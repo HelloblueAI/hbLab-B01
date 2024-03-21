@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    height: 100vh;
+    height: calc(100vh - 56px);
     margin: 0;
     display: flex;
     justify-content: flex-start;
