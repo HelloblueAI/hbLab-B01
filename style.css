@@ -7,6 +7,7 @@ body {
     align-items: center;
     padding-left: 5%;
     background: linear-gradient(45deg, darkblue, #187CFF);
+    background-attachment: fixed;
 }
 
 header {
@@ -16,7 +17,7 @@ header {
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    top: 0;
+    top: -1px;
     left: 0;
     background-color: transparent;
     z-index: 1000;
@@ -35,7 +36,10 @@ header {
     width: auto;
     text-align: left;
     padding: 0;
+    margin-left: -1;
+    margin-top: -16px;
 }
+
 
 #logo img {
     width: 180px;
@@ -44,15 +48,16 @@ header {
 }
 
 .typing-effect {
-    font-size: 41px;
+    font-size: 28px !important;
     color: white;
     font-weight: bold;
     margin-bottom: 4px;
-    margin-top: -30px;
+    margin-top: -86px;
     margin-left: -16px;
     height: 230px;
     overflow: hidden;
 }
+
 
 .login-button {
     position: absolute;
@@ -172,8 +177,9 @@ header {
     z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 11px;
+    gap: 9px;
 }
+
 
 @media (width >=768px) {
     header {
@@ -186,18 +192,19 @@ header {
 
     .badges-container {
         position: absolute;
-        top: calc(83% + 3px);
-        right: 36%;
+        top: calc(86% + 3px);
+        right: 31%;
     }
 }
 
 @media (width <=767px) {
     .badges-container {
         position: absolute;
-        top: calc(79% + 3px);
-        right: 10%;
+        top: calc(77% + 5px);
+        right: 12%;
     }
 }
+
 
 @media (width <=768px) {
     html {
@@ -287,12 +294,12 @@ header {
 
     .badges-container {
         position: absolute;
-        right: 60px;
+        right: 59px;
         background-color: transparent;
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 137px;
+        bottom: 330px;
     }
 
     .badges-container a {
