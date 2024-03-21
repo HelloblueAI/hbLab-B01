@@ -16,15 +16,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "npm-check-updates": "^11.8.5",
-    "stylelint": "^16.2.1",
-    "stylelint-config-standard": "^36.0.0",
-    "prettier": "^3.2.5",
-    "eslint": "^8.0.0",
     "cssnano": "^6.1.1",
-    "terser": "^5.0.0",
-    "serve": "^14.2.1",
+    "eslint": "^8.0.0",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.2"
+    "lint-staged": "^15.2.2",
+    "npm-check-updates": "^16.14.17",
+    "prettier": "^3.2.5",
+    "serve": "^14.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.0.0"
   }
 }

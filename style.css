@@ -181,7 +181,7 @@ header {
 }
 
 
-@media (width >=768px) {
+@media (min-width: 768px) {
     header {
         padding: 0 5%;
     }
@@ -197,7 +197,7 @@ header {
     }
 }
 
-@media (width <=767px) {
+@media (max-width: 767px) {
     .badges-container {
         position: absolute;
         top: calc(77% + 5px);
@@ -205,16 +205,8 @@ header {
     }
 }
 
-@media (width >=767px) {
-    .badges-container {
-        position: absolute;
-        top: calc(50% + 5px);
-        right: 12%;
-    }
-}
 
-
-@media (width <=768px) {
+@media (max-width: 768px) {
     html {
         height: 100%;
         background: linear-gradient(180deg, #191970, #187CFF);
@@ -397,7 +389,7 @@ body[page="terms"] nav {
     padding: 14px;
 }
 
-@media (width <=768px) {
+@media (max-width: 768px) {
     html {
         background: none;
     }
