@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     height: 100vh;
     margin: 0;
     display: flex;
@@ -125,12 +125,12 @@ header {
     border-radius: 30px;
     outline: none;
     transition: border-color 0.3s;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255 255 255 / 10%);
     color: white;
 }
 
 #companySearch::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255 255 255 / 70%);
 }
 
 #companySearch:hover {
@@ -175,7 +175,7 @@ header {
     gap: 11px;
 }
 
-@media (min-width: 768px) {
+@media (width >=768px) {
     header {
         padding: 0 5%;
     }
@@ -191,7 +191,7 @@ header {
     }
 }
 
-@media (max-width: 767px) {
+@media (width <=767px) {
     .badges-container {
         position: absolute;
         top: calc(79% + 3px);
@@ -199,7 +199,7 @@ header {
     }
 }
 
-@media (max-width: 768px) {
+@media (width <=768px) {
     html {
         height: 100%;
         background: linear-gradient(180deg, #191970, #187CFF);
@@ -212,7 +212,7 @@ header {
         justify-content: flex-start;
         align-items: flex-start;
         padding-left: 3%;
-        padding-bottom: 0px;
+        padding-bottom: 0;
         background: none;
     }
 
@@ -260,13 +260,13 @@ header {
         font-size: 1.4em;
         border: 2px solid #888;
         transition: border-color 0.3s;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255 255 255 / 10%);
         color: white;
-        border-color: rgba(255, 255, 255, 0.5);
+        border-color: rgba(255 255 255 / 50%);
     }
 
     #companySearch::placeholder {
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255 255 255 / 90%);
     }
 
     #companySearch:hover {
@@ -333,6 +333,13 @@ nav {
     line-height: 1.2;
 }
 
+p,
+ul,
+ol,
+li {
+    margin-bottom: 35px;
+}
+
 h1,
 h2,
 h3,
@@ -342,13 +349,6 @@ h6 {
     margin-left: -20px;
     color: #FFF;
     margin-top: 20px;
-}
-
-p,
-ul,
-ol,
-li {
-    margin-bottom: 35px;
 }
 
 a {
@@ -386,11 +386,11 @@ body[page="terms"] nav {
     right: 0;
     background-color: #187CFF;
     z-index: 100;
-    color: #FFFFFF;
+    color: #FFF;
     padding: 14px;
 }
 
-@media (max-width: 768px) {
+@media (width <=768px) {
     html {
         background: none;
     }
@@ -419,14 +419,14 @@ body[page="terms"] nav {
         right: 0;
         background-color: #187CFF;
         z-index: 100;
-        color: #FFFFFF;
+        color: #FFF;
         padding: 16px;
     }
 
 
     body[page="policy"] nav a,
     body[page="terms"] nav a {
-        color: #FFFFFF;
+        color: #FFF;
     }
 
     body[page="home"] nav {

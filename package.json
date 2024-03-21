@@ -1,0 +1,17 @@
+{
+  "name": "cpanel-public_html",
+  "version": "1.0.0",
+  "description": "[![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:css": "stylelint '**/*.css'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}
