@@ -1,17 +1,28 @@
 {
   "name": "cpanel-public_html",
   "version": "1.0.0",
-  "description": "[![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)",
+  "description": "[Netlify Status Badge]",
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:css": "stylelint '**/*.css'"
+    "lint:css": "stylelint '**/*.css'",
+    "format": "prettier --write '**/*.{html,js,css}'",
+    "lint:js": "eslint '**/*.js'",
+    "build:css": "postcss style.css -o style.min.css",
+    "build:js": "terser script.js -o script.min.js",
+    "start": "serve ."
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "stylelint": "^16.2.1",
-    "stylelint-config-standard": "^36.0.0"
+    "stylelint-config-standard": "^36.0.0",
+    "prettier": "^3.2.5",
+    "eslint": "^8.0.0",
+    "cssnano": "^6.1.1",
+    "terser": "^5.0.0",
+    "serve": "^14.2.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
   }
 }
