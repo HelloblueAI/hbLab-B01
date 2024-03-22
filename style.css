@@ -174,13 +174,12 @@ header {
     position: fixed;
     bottom: 200px;
     right: 1106px;
-    z-index: 1000;
     display: flex;
     align-items: center;
     gap: 9px;
 }
 
-
+/* for dektop version badge containers */
 @media (min-width: 768px) {
     header {
         padding: 0 5%;
@@ -194,13 +193,15 @@ header {
         position: absolute;
         top: calc(76% + 3px);
         right: 39%;
+        bottom: auto;
     }
 }
 
-@media (max-width: 767px) {
+/* for mobile versions badge containers */
+@media (max-width: 768px) {
     .badges-container {
         position: absolute;
-        top: calc(77% + 5px);
+        top: calc(74% + 1px);
         right: 12%;
     }
 }
