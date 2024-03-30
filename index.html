@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Safari Pinned Tab Icon -->
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+  <title>helloblue: Call any company...</title>
+  <!-- Stylesheet Link -->
+  <link rel="stylesheet" href="./style.css">
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="helloblue: Call any company...">
+  <meta name="twitter:description" content="The world's first Voice AI Customer Service Assistant">
+  <meta name="twitter:image" content="https://helloblue.ai/images/1.png">
+  <!-- OpenGraph Tags (For Facebook and other social media) -->
+  <meta property="og:title" content="helloblue: Call any company...">
+  <meta property="og:description" content="The world's first Voice AI Customer Service Assistant">
+  <meta property="og:image" content="https://helloblue.ai/images/1.png">
+  <meta property="og:url" content="https://helloblue.ai/">
+</head>
+<body page="home">
+  <!-- Header Section -->
+  <header>
+    <div id="logo">
+      <a href="index.html">
+        <img src="https://i.postimg.cc/CLYrn5hh/Copy-of-Original-size-Copy-of-Copy-of-Professional-Gradient-Abstract-Circle-Technology-Company-Log.png" alt="Your Logo" />
+      </a>
+    </div>
+    <nav>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-use.html">Terms of Use</a>
+    </nav>
+  </header>
+  <!-- Main Content Section -->
+  <div class="main-content">
+    <h1 class="typing-effect">
+      <span id="typed-output"></span>
+      <span id="cursor">|</span>
+    </h1>
+    <p class="sub-text">The world's first voice AI Customer Service Assistant</p>
+    <p class="sub-text specific-line">Don't browse for customer services. Use helloblue to get connected!</p>
+    <!-- Search Section -->
+    <div class="call-message-container" style="display: none;">
+      <span id="callMessage">You asked to call: </span><span id="companyName"></span>
+  </div>
+    <div class="search-section">
+      <input type="text" id="companySearch" placeholder="Search for a company" inputmode="search">
+      <button id="voiceButton" aria-label="Voice search for a company" inputmode="search">
+        <img src="https://i.postimg.cc/K4926qL9/microphone-3-128.png" alt="Microphone" width="21" height="21">
+        <span id="feedbackText"></span>
+        <span id="companyName" style="display: none;"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Badges Container -->
+  <div class="badges-container">
+    <a href="https://apps.apple.com/us/app/helloblue/id6450708010?itsct=apps_box_badge&amp;itscg=30200" class="app-store-badge">
+      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1692057600" alt="Download on the App Store">
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=com.cloudtenlabs.helloblue&hl=en_US&gl=US" class="google-play-badge">
+      <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="width: 140px; height: 59px;">
+    </a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6/dist/fuse.basic.min.js"></script>
+  <script src="./script.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </body>
+  </html>

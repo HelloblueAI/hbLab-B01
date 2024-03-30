@@ -1,0 +1,450 @@
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5%;
+    background: linear-gradient(45deg, darkblue, #187CFF);
+    background-attachment: fixed;
+}
+
+header {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: -1px;
+    left: 0;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.main-content {
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-right: 5%;
+}
+
+#logo {
+    width: auto;
+    text-align: left;
+    padding: 0;
+    margin-left: -1;
+    margin-top: -11px;
+}
+
+
+#logo img {
+    width: 180px;
+    height: auto;
+    margin: 0;
+}
+
+.typing-effect {
+    font-size: 28px !important;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 4px;
+    margin-top: -86px;
+    margin-left: -16px;
+    height: 230px;
+    overflow: hidden;
+}
+
+
+.login-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.login-button button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.sub-text {
+    font-size: 29px;
+    margin-left: -14px;
+    color: white;
+    margin-top: -99px;
+    font-weight: 400;
+}
+
+.sub-text.specific-line {
+    font-size: 17px;
+    width: 94%;
+    margin-left: -14px;
+    margin-right: auto;
+    margin-top: 22px;
+}
+
+.main-content>p {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.search-section {
+    position: relative;
+    width: 88%;
+    max-width: 600px;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+#companySearch {
+    width: 54%;
+    padding: 12px 60px 12px 15px;
+    font-size: 1.4em;
+    margin-left: -14px;
+    border: 2px solid #888;
+    border-radius: 30px;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: rgba(255 255 255 / 10%);
+    color: white;
+}
+
+#companySearch::placeholder {
+    color: rgba(255 255 255 / 70%);
+}
+
+#companySearch:hover {
+    border-color: white;
+    background-color: transparent;
+}
+
+#voiceButton {
+    position: absolute;
+    right: 220px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    font-size: 1.7em;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#feedbackText {
+    margin-left: 2px;
+    margin-top: 2px;
+    font-size: 0.4em;
+    color: #FFF;
+    transition: opacity 0.3s;
+    visibility: hidden;
+}
+
+.voiceButton-listening #feedbackText {
+    visibility: visible;
+    opacity: 1;
+}
+
+.badges-container {
+    position: fixed;
+    bottom: 200px;
+    right: 1106px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* for dektop version badge containers */
+@media (min-width: 768px) {
+    header {
+        padding: 0 5%;
+    }
+
+    .main-content {
+        position: static;
+    }
+
+    .badges-container {
+        position: absolute;
+        top: calc(76% + 3px);
+        right: 39%;
+        bottom: auto;
+    }
+}
+
+/* for mobile versions badge containers */
+@media (max-width: 768px) {
+    .badges-container {
+        position: absolute;
+        top: calc(74% + 1px);
+        right: 12%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    html {
+        height: 100%;
+        background: linear-gradient(180deg, #191970, #187CFF);
+    }
+
+    body {
+        height: inherit;
+        margin: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 3%;
+        padding-bottom: 0;
+        background: none;
+    }
+
+    header {
+        background-color: transparent;
+        height: 17px;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        z-index: 0;
+    }
+
+    #text-logo {
+        font-size: 20px;
+    }
+
+    .typing-effect {
+        font-size: 33px;
+        padding-top: 140px;
+        position: sticky;
+        top: -55px;
+        z-index: 1000;
+        margin-left: -31px;
+    }
+
+    .sub-text {
+        font-size: 22px;
+        position: sticky;
+        width: 82%;
+        margin-top: -62px;
+        margin-left: -29px;
+    }
+
+    .sub-text.specific-line {
+        font-size: 17px;
+        width: 94%;
+        margin-left: -28px;
+        margin-right: auto;
+        margin-top: 11px;
+    }
+
+    #companySearch {
+        width: 88%;
+        padding: 12px 60px 12px 15px;
+        margin-left: -28px;
+        font-size: 1.4em;
+        border: 2px solid #888;
+        transition: border-color 0.3s;
+        background-color: rgba(255 255 255 / 10%);
+        color: white;
+        border-color: rgba(255 255 255 / 50%);
+    }
+
+    #companySearch::placeholder {
+        color: rgba(255 255 255 / 90%);
+    }
+
+    #companySearch:hover {
+        border-color: white;
+        background-color: transparent;
+    }
+
+    #voiceButton {
+        position: absolute;
+        right: -29px;
+    }
+
+    #feedbackText {
+        right: 5px;
+        top: 10%;
+        transform: translateY(-50%);
+    }
+
+    .badges-container {
+        position: absolute;
+        right: 59px;
+        background-color: transparent;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+
+    .badges-container a {
+        margin-right: -13px;
+    }
+
+    .badges-container .app-store-badge img {
+        width: 131px;
+        height: 43px;
+        border-radius: 2.5px;
+    }
+
+    .badges-container .google-play-badge img {
+        height: 63px !important;
+        width: 154px !important;
+        border-radius: 2.5px;
+    }
+}
+
+body[page="policy"],
+body[page="terms"] {
+    background: #187CFF;
+    color: white;
+}
+
+nav {
+    position: fixed;
+    bottom: 12px;
+    left: 59px;
+    z-index: 1001;
+}
+
+.content {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 120px 0 20px;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-left: -20px;
+    color: #FFF;
+    margin-top: 20px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body[page="policy"] header,
+body[page="terms"] header {
+    background-color: #187CFF;
+    padding-top: 27px;
+    height: 23px;
+}
+
+body[page="policy"] .content {
+    padding-top: 1510px;
+    padding-bottom: 50px;
+}
+
+body[page="terms"] .content {
+    padding-top: 1980px;
+    padding-bottom: 50px;
+}
+
+body[page="policy"] nav,
+body[page="terms"] nav {
+    position: fixed;
+    bottom: 0;
+    left: 56px;
+    right: 0;
+    background-color: #187CFF;
+    z-index: 100;
+    color: #FFF;
+    padding: 14px;
+}
+
+@media (max-width: 768px) {
+    html {
+        background: none;
+    }
+
+    body[page="policy"],
+    body[page="terms"] {
+        background: #187CFF;
+    }
+
+    body[page="home"] {
+        background: linear-gradient(45deg, darkblue, #187CFF);
+    }
+
+    body[page="policy"] .content,
+    body[page="terms"] .content {
+        margin: 53px 27px 70px 1px;
+        max-width: 120%;
+        padding: 10px 0 68px 4px;
+    }
+
+    body[page="policy"] nav,
+    body[page="terms"] nav {
+        position: fixed;
+        bottom: 0;
+        left: 4px;
+        right: 0;
+        background-color: #187CFF;
+        z-index: 100;
+        color: #FFF;
+        padding: 16px;
+    }
+
+
+    body[page="policy"] nav a,
+    body[page="terms"] nav a {
+        color: #FFF;
+    }
+
+    body[page="home"] nav {
+        left: 16px;
+    }
+
+    body[page="policy"] header,
+    body[page="terms"] header {
+        position: absolute;
+        background-color: transparent;
+        top: 6px;
+        margin-left: -3px;
+    }
+
+    body[page="policy"] header #logo,
+    body[page="policy"] header nav a,
+    body[page="terms"] header #logo,
+    body[page="terms"] header nav a {
+        padding-bottom: 3px;
+    }
+}
