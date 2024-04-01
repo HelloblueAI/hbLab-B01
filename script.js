@@ -2,15 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
 
     const API_ENDPOINT = 'https://hblab-399712.uw.r.appspot.com/api/company?name=';
+    const cache = new Map();
 
-    // Assuming these elements correctly match your HTML structure
     const elements = {
         voiceButton: document.getElementById('voiceButton'),
         companySearch: document.getElementById('companySearch'),
         typedOutput: document.getElementById('typed-output'),
         feedbackText: document.getElementById('feedbackText'),
         companyNameSpan: document.getElementById('companyName'),
-        callMessageContainer: document.querySelector('.call-message-container'),
     };
 
     if (Object.values(elements).some(el => !el)) {
@@ -18,50 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    console.log("All required elements are present");
+    const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
-// Set of company names that should always be uppercase
-const UPPERCASE_COMPANIES = new Set([
-    'AMEX',
-    'DHL',
-    'IBM',
-    'UPS',
-    'TD',
-    'CHASE',
-    'USPS',
-    'AT&T',
-    'NASA',
-    'CNN',
-    'HP',
-    'JFK',
-    'H&M',
-    'IKEA',
-    'BMW',
-    'KFC',
-    'EA',
-    '3M',
-    'GE',
-    'LG'
-]);
-
-// Function to capitalize the first letter of a string
-// and ensure that certain company names are displayed in uppercase
-const capitalizeFirstLetter = string => {
-    if (typeof string !== 'string' || string.length === 0) {
-        console.error('capitalizeFirstLetter was called with an argument that is not a string:', string);
-        return '';
-    }
-    
-    // If the company name is in the UPPERCASE_COMPANIES set, return it in uppercase
-    if (UPPERCASE_COMPANIES.has(string.toUpperCase())) {
-        return string.toUpperCase();
-    } else {
-        // Otherwise, capitalize only the first letter and set the rest to lowercase
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    }
-};
-
-    
     const displayNotification = message => alert(message);
 
     const isValidURL = url => {
@@ -99,12 +56,12 @@ const capitalizeFirstLetter = string => {
                 index = (index + 1) % sentences.length;
                 setTimeout(type, 1500);
             } else {
-                let delay = currentSentence.charAt(charIndex - 1) === '.' ? 300 : 60;
+                let delay = currentSentence.substring(charIndex - 1, charIndex) === '.' ? 300 : 60;
                 setTimeout(type, delay);
             }
         };
 
-        setTimeout(type, 500); // Start typing effect after a short delay
+        type();
     };
 
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -116,81 +73,124 @@ const capitalizeFirstLetter = string => {
     };
 
     recognition.onresult = (event) => {
-        const company = capitalizeFirstLetter(event.results[event.results.length - 1][0].transcript.trim());
-        console.log(`Voice recognition result: ${company}`);
+        const company = capitalizeFirstLetter(event.results[event.results.length - 1][0].transcript);
         fetchCompanyData(company);
     };
 
     recognition.onerror = (event) => {
-        let errorMessage = "An error occurred with voice recognition: " + event.error;
-        console.error(errorMessage);
+        let errorMessage = "An error occurred with voice recognition.";
+
+        switch (event.error) {
+            case "no-speech":
+                errorMessage = "No speech was detected. Please try again.";
+                break;
+            case "aborted":
+                errorMessage = "Voice recognition was aborted. Please try again.";
+                break;
+            case "audio-capture":
+                errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
+                break;
+            case "network":
+                errorMessage = "Network issues prevented voice recognition. Please check your connection.";
+                break;
+            case "not-allowed":
+                errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
+                break;
+            case "service-not-allowed":
+                errorMessage = "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.";
+                break;
+            default:
+                break;
+        }
+
         displayNotification(errorMessage);
     };
 
     recognition.onend = () => {
-        console.log("Voice recognition ended");
         elements.feedbackText.textContent = "";
         elements.voiceButton.classList.remove('voiceButton-listening');
     };
 
-    elements.voiceButton.addEventListener('click', () => {
-        if (recognition.listening) {
-            recognition.stop();
-        } else {
-            recognition.start();
+    const setupVoiceRecognition = () => {
+        if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+            displayNotification("Your browser doesn't support voice recognition.");
+            return;
         }
-    });
 
-    elements.companySearch.addEventListener('input', event => {
-        const value = capitalizeFirstLetter(event.target.value);
-        elements.companySearch.value = value;
-    });
+        elements.voiceButton.addEventListener('click', (event) => {
+            if (event.target.classList.contains('voiceButton-listening')) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        });
+    };
 
-    elements.companySearch.addEventListener('keypress', event => {
-        if (event.key === 'Enter' && event.target.value.trim() !== '') {
-            fetchCompanyData(event.target.value.trim());
-        }
-    });
+    const setupCompanySearchListener = () => {
+        elements.companySearch.addEventListener('input', event => {
+            const value = event.target.value;
+            event.target.value = capitalizeFirstLetter(value);
+        });
+
+        elements.companySearch.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                fetchCompanyData(capitalizeFirstLetter(e.target.value));
+            }
+        });
+    };
 
     const fetchCompanyData = async company => {
-        const encodedCompany = encodeURIComponent(company);
-        const urlToFetch = `${API_ENDPOINT}${encodedCompany}`;
+        recognition.stop(); // Explicitly stop the recognition service
+        elements.feedbackText.textContent = "";
+        elements.voiceButton.classList.remove('voiceButton-listening');
 
+        if (cache.has(company)) {
+            processCompanyData(cache.get(company));
+            return;
+        }
+
+        const encodedCompany = encodeURIComponent(company);
         try {
-            const response = await fetch(urlToFetch);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const data = await response.json();
-            console.log(`Data received for ${company}:`, data);
-            // Process and display the data - function definition not shown for brevity
-            processCompanyData(data);
+            const response = await fetch(`${API_ENDPOINT}${encodedCompany}`);
+            if (response.ok) {
+                const data = await response.json();
+                cache.set(company, data);
+                processCompanyData(data);
+            } else {
+                throw new Error('Network response was not ok');
+            }
         } catch (error) {
-            console.error(`Failed to fetch company data:`, error);
-            alert(`Failed to fetch data for ${company}. Please try again.`);
+            displayNotification(`An error occurred while fetching company data: ${error.message}`);
         }
     };
 
     const processCompanyData = data => {
-        console.log("Processing company data:", data);
-        if (!data || !data.companyname) {
-            displayNotification('Company not found. Please try a different search.');
+        if (data.error) {
+            displayNotification(data.error);
             return;
         }
-    
-        const companyName = capitalizeFirstLetter(data.companyname);
-        const phoneNumber = data.phonenumber;
-    
-        if (phoneNumber && phoneNumber !== "NA") {
-            const cleanPhoneNumber = phoneNumber.replace(/[^0-9]/g, '');
-            const messageContent = `${companyName}: ${cleanPhoneNumber}. Would you like to dial this number?`;
-            if (confirm(messageContent)) {
-                window.location.href = `tel:${cleanPhoneNumber}`;
+
+        elements.companyNameSpan.textContent = `You asked to call: ${capitalizeFirstLetter(data.name)}`;
+        handleCompanyActions(data);
+    };
+
+    const handleCompanyActions = data => {
+        const correctedCompanyName = capitalizeFirstLetter(data.name);
+        if (data.number && data.number !== "NA") {
+            const message = `${correctedCompanyName}: ${data.number}. Would you like to dial this number?`;
+            if (confirm(message)) {
+                if (isValidURL(data.url)) {
+                    window.location.href = data.url;
+                } else {
+                    window.location.href = `tel:${data.number.replace(/[^0-9]/g, '')}`;
+                }
             }
         } else {
-            displayNotification(`${companyName} does not have a phone number available.`);
+            displayNotification('Company not found or no available actions.');
         }
     };
-    
-    // Initialize the typing effect and other functions you might have here
+
     typingEffect();
+    setupVoiceRecognition();
     setupCompanySearchListener();
 })();
