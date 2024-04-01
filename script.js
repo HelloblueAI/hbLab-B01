@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
-    const API_ENDPOINT = 'http://localhost:3002/api/company?name=';
-    const cache = new Map();
 
+    const API_ENDPOINT = 'https://hblab-399712.uw.r.appspot.com/api/company?name=';
+
+    // Assuming these elements correctly match your HTML structure
     const elements = {
         voiceButton: document.getElementById('voiceButton'),
         companySearch: document.getElementById('companySearch'),
@@ -60,7 +61,6 @@ const capitalizeFirstLetter = string => {
     }
 };
 
-    
     
     const displayNotification = message => alert(message);
 
@@ -153,31 +153,19 @@ const capitalizeFirstLetter = string => {
     });
 
     const fetchCompanyData = async company => {
-        console.log(`Fetching data for: ${company}`);
-        recognition.stop();
-        elements.feedbackText.textContent = "";
-        elements.voiceButton.classList.remove('voiceButton-listening');
-
-        if (cache.has(company)) {
-            console.log(`Using cached data for: ${company}`);
-            processCompanyData(cache.get(company));
-            return;
-        }
-
         const encodedCompany = encodeURIComponent(company);
         const urlToFetch = `${API_ENDPOINT}${encodedCompany}`;
-        console.log(`Making API call to: ${urlToFetch}`);
 
         try {
             const response = await fetch(urlToFetch);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             console.log(`Data received for ${company}:`, data);
-            cache.set(company, data);
+            // Process and display the data - function definition not shown for brevity
             processCompanyData(data);
         } catch (error) {
-            console.error(`Failed to fetch company data for ${company}:`, error);
-            displayNotification(`Failed to fetch data for ${company}. Please try again.`);
+            console.error(`Failed to fetch company data:`, error);
+            alert(`Failed to fetch data for ${company}. Please try again.`);
         }
     };
 
