@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Some DOM elements are missing.");
             return;
         }
+        
 
         const capitalizeCompany = string => UPPERCASE_COMPANIES.has(string.toUpperCase()) ?
             string.toUpperCase() :
@@ -40,13 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const typingEffect = async () => {
             const sentences = [
-                "Hello. I'm B01, an AI Agent.",
-                "I broke out of the internet to help you contact any company...",
-                "Phone or Live Chat",
-                "Connect to over 12K customer services",
-                "Less than 3 seconds :)",
+                "Hello, I'm B01",
+                "I broke out of the internet to help you contact any company",
+                "Phone and Instant Live Chat",
+                "All in under 3 seconds",
                 "Got a company in mind? Just say the word or type it in",
-                "Finding customer service has never been this easy",
+                "Connecting to customer services has never been this fast",
                 "Ready to connect?",
                 "I'm here to assist...!",
             ];
@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const typesentence = async (sentence) => {
             for (let i = 0; i <= sentence.length; i++) {
                 elements.typedOutput.textContent = sentence.substring(0, i);
-                await delay(sentence[i - 1] === '.' ? 300 : 60);
+                // Adjusted for a slower typing effect
+                await delay(sentence[i - 1] === '.' ? 300 : 120);
             }
         };
 
@@ -105,14 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayNotification("Your browser doesn't support voice recognition.");
                 return;
             }
-        
+
             elements.voiceButton.addEventListener('click', async () => {
                 // If already listening, stop the recognition
                 if (elements.voiceButton.classList.contains('voiceButton-listening')) {
                     recognition.stop();
                     return;
                 }
-        
+
                 // Try to start the recognition only after user interaction
                 try {
                     // Request microphone access only after user clicks the voice button
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         };
-        
+
         elements.companySearch.addEventListener('input', event => {
             event.target.value = capitalizeCompany(event.target.value.trim());
         });
@@ -161,21 +162,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const sentence = `You asked to call: ${companyName}`;
             elements.typedOutput.textContent = ''; // Clear existing text
             elements.companyNameSpan.classList.remove('hidden'); // Ensure the company name span is visible
-        
+
             await typesentence(sentence);
-        
-            // Delay after typing effect completes. Adjust the time as needed.
-            await delay(5000); // Keep the text displayed for 5 seconds.
+
+            // Keep the sentence displayed for an additional duration, e.g., 5000ms = 5 seconds
+            await delay(5000);
         };
-        
-        
-    
+
         const processCompanyData = data => {
             if (!data || !data.name) {
                 displayNotification('Company not found. Please try a different search.');
                 return;
             }
-    
+
             const companyName = capitalizeCompany(data.name);
             displayCompanyTypingEffect(companyName); // Call the typing effect with the company name
             handleCompanyActions(data);
