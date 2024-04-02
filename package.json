@@ -2,7 +2,7 @@
   "name": "cpanel-public_html",
   "version": "1.0.0",
   "description": "[Netlify Status Badge]",
-  "main": "script.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "check-updates": "ncu",
@@ -10,8 +10,7 @@
     "format": "prettier --write '**/*.{html,js,css}'",
     "lint:js": "eslint '**/*.js'",
     "build:css": "postcss style.css -o style.min.css",
-    "build:js": "terser script.js -o script.min.js",
-    "build": "npm run build:css && npm run build:js",
+    "build": "npm run build:css",
     "start": "lite-server",
     "serve": "serve -s ."
   },
@@ -26,8 +25,7 @@
     "npm-check-updates": "^16.14.17",
     "prettier": "^3.2.5",
     "serve": "^14.2.1",
-    "stylelint-config-standard": "^36.0.0",
-    "terser": "^5.0.0"
+    "stylelint-config-standard": "^36.0.0"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",

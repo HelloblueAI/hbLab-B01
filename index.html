@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Safari Pinned Tab Icon -->
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    
+
     <!-- Title -->
     <title>helloblue: Call any company...</title>
 
@@ -27,8 +26,7 @@
     <meta property="og:image" content="https://helloblue.ai/images/1.png">
     <meta property="og:url" content="https://helloblue.ai/">
 </head>
-
-<body page="home"> <!-- Added page="home" attribute -->
+<body page="home">
     <!-- Header Section -->
     <header>
         <div id="logo">
@@ -50,19 +48,17 @@
         </h1>
         <p class="sub-text">The world's first Voice AI Customer Service Assistant</p>
         <p class="sub-text specific-line">Don't browse for customer services. Use helloblue to get connected!</p>
-        
-        <!-- Search Section -->
-<!-- Search Section -->
-    <div class="search-section">
-        <input type="text" id="companySearch" placeholder="Search for a company..." inputmode="search">
-        <button id="voiceButton" aria-label="Voice search for a company">
-            <img src="https://i.postimg.cc/K4926qL9/microphone-3-128.png" alt="Microphone" width="21" height="21">
-            <span id="feedbackText"></span>
-            <span id="companyName" class="hidden"></span> <!-- Changed to class for styling -->
-        </button>
-    </div>
-        </div>
 
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" id="companySearch" placeholder="Search for a company..." inputmode="search">
+            <button id="voiceButton" aria-label="Voice search for a company">
+                <img src="https://i.postimg.cc/K4926qL9/microphone-3-128.png" alt="Microphone" width="21" height="21">
+            </button>
+            <div id="feedbackText"></div>
+            <div id="companyName" class="hidden"></div>
+        </div>
+    </div>
 
     <!-- Badges Container -->
     <div class="badges-container">
@@ -73,11 +69,9 @@
             <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="width: 140px; height: 59px;">
         </a>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6/dist/fuse.basic.min.js"></script>
-    <script src="app_complete.js"></script>
-    <script src="./script.js"></script>
-    
-    
-</body>
 
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6/dist/fuse.basic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6/dist/fuse.basic.min.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
 </html>
