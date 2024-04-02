@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
 
-    (() => {
+    (async () => {
         const API_ENDPOINT = 'https://hblab-399712.uw.r.appspot.com/api/company?name=';
         const cache = new Map();
 
-        // Set of company names that should always be uppercase
         const UPPERCASE_COMPANIES = new Set([
             'AMEX', 'DHL', 'IBM', 'UPS', 'TD', 'CHASE', 'USPS', 'AT&T',
             'NASA', 'CNN', 'HP', 'JFK', 'H&M', 'IKEA', 'BMW', 'KFC', 'EA', '3M', 'GE', 'LG'
@@ -24,26 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const capitalizeCompany = string => {
-            if (UPPERCASE_COMPANIES.has(string.toUpperCase())) {
-                return string.toUpperCase();
-            } else {
-                return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-            }
-        };
+        const capitalizeCompany = string => UPPERCASE_COMPANIES.has(string.toUpperCase()) ?
+            string.toUpperCase() :
+            string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
         const displayNotification = message => alert(message);
 
-        const isValidURL = url => {
+        const isValidURL = string => {
             try {
-                new URL(url);
+                new URL(string);
                 return true;
-            } catch (error) {
+            } catch {
                 return false;
             }
         };
 
-        const typingEffect = () => {
+        const typingEffect = async () => {
             const sentences = [
                 "Hello. I'm B01, an AI Agent.",
                 "I broke out of the internet to help you contact any company...",
@@ -56,26 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 "I'm here to assist...!",
             ];
 
-            let index = 0;
-            let charIndex = 0;
+            for (const sentence of sentences) {
+                await typesentence(sentence);
+                await delay(1500);
+            }
 
-            const type = () => {
-                const currentSentence = sentences[index];
-                elements.typedOutput.textContent = currentSentence.substring(0, charIndex + 1);
-                charIndex++;
-
-                if (charIndex > currentSentence.length) {
-                    charIndex = 0;
-                    index = (index + 1) % sentences.length;
-                    setTimeout(type, 1500);
-                } else {
-                    let delay = currentSentence[charIndex - 1] === '.' ? 300 : 60;
-                    setTimeout(type, delay);
-                }
-            };
-
-            type();
+            typingEffect();
         };
+
+        const typesentence = async (sentence) => {
+            for (let i = 0; i <= sentence.length; i++) {
+                elements.typedOutput.textContent = sentence.substring(0, i);
+                await delay(sentence[i - 1] === '.' ? 300 : 60);
+            }
+        };
+
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.continuous = false;
@@ -87,34 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         recognition.onresult = (event) => {
             const company = capitalizeCompany(event.results[event.results.length - 1][0].transcript.trim());
+            elements.companySearch.value = '';
             fetchCompanyData(company);
         };
 
         recognition.onerror = (event) => {
-            let errorMessage = "An error occurred with voice recognition.";
-
-            switch (event.error) {
-                case "no-speech":
-                    errorMessage = "No speech was detected. Please try again.";
-                    break;
-                case "aborted":
-                    errorMessage = "Voice recognition was aborted. Please try again.";
-                    break;
-                case "audio-capture":
-                    errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
-                    break;
-                case "network":
-                    errorMessage = "Network issues prevented voice recognition. Please check your connection.";
-                    break;
-                case "not-allowed":
-                    errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
-                    break;
-                case "service-not-allowed":
-                    errorMessage = "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.";
-                    break;
-                default:
-                    break;
-            }
+            const errorMessage = {
+                "no-speech": "No speech was detected. Please try again.",
+                "aborted": "Voice recognition was aborted. Please try again.",
+                "audio-capture": "Microphone is not accessible. Please ensure you've granted the necessary permissions.",
+                "network": "Network issues prevented voice recognition. Please check your connection.",
+                "not-allowed": "Permission to access microphone was denied. Please allow access to use this feature.",
+                "service-not-allowed": "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.",
+            }[event.error] || "An unknown error occurred with voice recognition.";
 
             displayNotification(errorMessage);
         };
@@ -129,36 +105,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayNotification("Your browser doesn't support voice recognition.");
                 return;
             }
-
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(() => {
-                    elements.voiceButton.addEventListener('click', (event) => {
-                        if (event.target.classList.contains('voiceButton-listening')) {
-                            recognition.stop();
-                        } else {
-                            recognition.start();
-                        }
-                    });
-                })
-                .catch(error => {
+        
+            elements.voiceButton.addEventListener('click', async () => {
+                // If already listening, stop the recognition
+                if (elements.voiceButton.classList.contains('voiceButton-listening')) {
+                    recognition.stop();
+                    return;
+                }
+        
+                // Try to start the recognition only after user interaction
+                try {
+                    // Request microphone access only after user clicks the voice button
+                    await navigator.mediaDevices.getUserMedia({ audio: true });
+                    recognition.start();
+                } catch (error) {
                     console.error('Error accessing microphone:', error);
                     displayNotification("Failed to access the microphone. Please check your browser settings and ensure you've granted the necessary permissions.");
-                });
+                }
+            });
         };
-
+        
         elements.companySearch.addEventListener('input', event => {
-            const value = capitalizeCompany(event.target.value.trim());
-            event.target.value = value;
+            event.target.value = capitalizeCompany(event.target.value.trim());
         });
 
         elements.companySearch.addEventListener('keypress', event => {
             if (event.key === 'Enter' && event.target.value.trim() !== '') {
-                fetchCompanyData(event.target.value.trim());
+                fetchCompanyData(capitalizeCompany(event.target.value.trim()));
             }
         });
 
         const fetchCompanyData = async company => {
-            recognition.stop(); // Explicitly stop the recognition service
+            recognition.stop();
             elements.feedbackText.textContent = "";
             elements.voiceButton.classList.remove('voiceButton-listening');
 
@@ -167,9 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const encodedCompany = encodeURIComponent(company);
             try {
-                const response = await fetch(`${API_ENDPOINT}${encodedCompany}`);
+                const response = await fetch(`${API_ENDPOINT}${encodeURIComponent(company)}`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 cache.set(company, data);
@@ -180,14 +157,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const displayCompanyTypingEffect = async (companyName) => {
+            const sentence = `You asked to call: ${companyName}`;
+            elements.typedOutput.textContent = ''; // Clear existing text
+            elements.companyNameSpan.classList.remove('hidden'); // Ensure the company name span is visible
+        
+            await typesentence(sentence);
+        
+            // Delay after typing effect completes. Adjust the time as needed.
+            await delay(5000); // Keep the text displayed for 5 seconds.
+        };
+        
+        
+    
         const processCompanyData = data => {
             if (!data || !data.name) {
                 displayNotification('Company not found. Please try a different search.');
                 return;
             }
-
+    
             const companyName = capitalizeCompany(data.name);
-            elements.companyNameSpan.textContent = `You asked to call: ${companyName}`;
+            displayCompanyTypingEffect(companyName); // Call the typing effect with the company name
             handleCompanyActions(data);
         };
 
@@ -198,18 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (phoneNumber && phoneNumber !== "NA") {
                 const messageContent = `${correctedCompanyName}: ${phoneNumber}. Would you like to dial this number?`;
                 if (confirm(messageContent)) {
-                    if (isValidURL(data.url)) {
-                        window.location.href = data.url;
-                    } else {
-                        window.location.href = `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
-                    }
+                    window.location.href = isValidURL(data.url) ? data.url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
                 }
             } else {
                 displayNotification(`${correctedCompanyName} does not have a phone number available.`);
             }
         };
 
-        typingEffect();
-        setupVoiceRecognition();
+        await Promise.all([typingEffect(), setupVoiceRecognition()]);
     })();
 });
