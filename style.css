@@ -359,7 +359,7 @@ header {
     
     #voiceButton {
         position: absolute;
-        right: -29px;
+        right: -6px;
     }
     
     #feedbackText {
@@ -375,7 +375,7 @@ header {
         display: flex;
         flex-direction: row-reverse; 
         align-items: center; 
-        bottom: 137px;
+        bottom: 90px;
     }
 
     .badges-container a {
