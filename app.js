@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cache = new Map();
     let activeEffect = 'intro';
+    let isConfirmationDialogOpen = false;
 
     const typeEffect = async (text, effectType) => {
         for (let i = 0; i <= text.length; i++) {
@@ -71,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const showConfirmationDialog = (companyName, phoneNumber, url) => {
+        if (isConfirmationDialogOpen) return;
+        isConfirmationDialogOpen = true;
+
         if (phoneNumber && phoneNumber !== "NA") {
             const messageContent = `${companyName}: ${phoneNumber}. Would you like to dial this number?`;
             if (confirm(messageContent)) {
@@ -79,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             displayNotification(`${companyName} does not have a phone number available.`);
         }
+
+        isConfirmationDialogOpen = false;
     };
 
     const fetchCompanyData = async (company) => {

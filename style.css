@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
     display: flex;
@@ -7,7 +7,6 @@ body {
     align-items: center;
     padding-left: 5%;
     background: linear-gradient(45deg, darkblue, #187CFF);
-    background-attachment: fixed;
 }
 
 header {
@@ -17,7 +16,7 @@ header {
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    top: -1px;
+    top: 0;
     left: 0;
     background-color: transparent;
     z-index: 1000;
@@ -36,10 +35,7 @@ header {
     width: auto;
     text-align: left;
     padding: 0;
-    margin-left: -1;
-    margin-top: -11px;
 }
-
 
 #logo img {
     width: 180px;
@@ -48,30 +44,14 @@ header {
 }
 
 .typing-effect {
-    font-size: 28px !important;
+    font-size: 41px;
     color: white;
     font-weight: bold;
     margin-bottom: 4px;
-    margin-top: -86px;
+    margin-top: -30px;
     margin-left: -16px;
     height: 230px;
     overflow: hidden;
-}
-
-
-.login-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-.login-button button {
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
 }
 
 #cursor {
@@ -79,17 +59,9 @@ header {
 }
 
 @keyframes blink {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .sub-text {
@@ -108,9 +80,49 @@ header {
     margin-top: 22px;
 }
 
-.main-content>p {
+.main-content > p {
     color: white;
     margin-bottom: 10px;
+}
+
+.email-access {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+}
+
+#search-input {
+    flex: none;
+    width: 310px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #187CFF;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#search-input::placeholder {
+    color: #aaa;
+}
+
+#search-input:focus {
+    border-color: darkblue;
+}
+
+#access-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid #187CFF;
+    background-color: #187CFF;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    outline: none;
 }
 
 .search-section {
@@ -161,65 +173,88 @@ header {
     transition: background-color 0.3s;
     animation: futuristicAnimation 2s infinite;
     animation-play-state: paused;
-  }
-  
-  #voiceButton:hover {
+}
+
+#voiceButton:hover {
     background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  #voiceButton img {
+}
+
+#voiceButton img {
     width: 24px;
     height: 24px;
-  }
-  
-  #feedbackText {
-    position: absolute;
-    right: 60px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.9em;
-    color: #FFF;
-    opacity: 0;
-    transition: opacity 0.3s;
-    white-space: nowrap;
-  }
-  
-  .voiceButton-listening #feedbackText {
-    opacity: 1;
-  }
-  
-  @keyframes futuristicAnimation {
+}
+
+@keyframes futuristicAnimation {
     0% {
-      box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+        box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
     }
     25% {
-      box-shadow: 0 0 0 10px rgba(0, 255, 255, 0.3);
+        box-shadow: 0 0 0 10px rgba(0, 255, 255, 0.3);
     }
     50% {
-      box-shadow: 0 0 0 20px rgba(0, 255, 255, 0.1);
+        box-shadow: 0 0 0 20px rgba(0, 255, 255, 0.1);
     }
     75% {
-      box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.05);
+        box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.05);
     }
     100% {
-      box-shadow: 0 0 0 40px rgba(0, 255, 255, 0);
+        box-shadow: 0 0 0 40px rgba(0, 255, 255, 0);
     }
-  }
-  
-  #voiceButton:active {
+}
+
+#voiceButton:active {
     animation-play-state: running;
-  }
+}
+
+#feedbackText {
+    margin-left: 2px;
+    margin-top: 2px;
+    font-size: 0.4em;
+    color: #FFF;
+    transition: opacity 0.3s;
+    visibility: hidden;
+}
+
+.voiceButton-listening #feedbackText {
+    visibility: visible;
+    opacity: 1;
+}
+
+.position-app-store {
+    position: fixed;
+    bottom: 50px;
+    right: 710px;
+    z-index: 1000;
+    display: flex;
+}
+
+.position-app-store a {
+    margin-right: 8px;
+}
+
+.position-app-store .app-store-badge img {
+    width: 130px;
+    height: 30px;
+    border-radius: 13px;
+}
+
+.position-app-store .google-play-badge img {
+    width: 146px; 
+    height: 46px; 
+    border-radius: 13px;
+}
 
 .badges-container {
     position: fixed;
     bottom: 200px;
     right: 1106px;
+    z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 11px; 
 }
 
-/* for desktop version badge containers */
+/* Existing CSS for larger screens */
 @media (min-width: 768px) {
     header {
         padding: 0 5%;
@@ -231,37 +266,37 @@ header {
 
     .badges-container {
         position: absolute;
-        top: calc(76% + 3px);
-        right: 39%;
-        bottom: auto;
+        top: calc(83% + 3px);
+        right: 36%;
     }
 }
 
-/* for mobile versions badge containers */
-@media (max-width: 768px) {
+/* New CSS for smaller screens (like iPhone 4) */
+@media (max-width: 767px) {
     .badges-container {
         position: absolute;
-        top: calc(74% + 1px);
-        right: 12%;
+        top: calc(79% + 3px); /* Adjust this value as needed */
+        right: 10%; /* Adjust this value as needed */
     }
 }
 
 
 @media (max-width: 768px) {
     html {
-        height: 100%;
+        height: 100%; /* Ensure the html element covers the entire viewport */
         background: linear-gradient(180deg, #191970, #187CFF);
+
     }
 
     body {
-        height: inherit;
+        height: inherit; /* Let the body take the height of its content */
         margin: 0;
         display: flex;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: flex-start; /* Align items to the start */
         padding-left: 3%;
-        padding-bottom: 0;
-        background: none;
+        padding-bottom: 0px;
+        background: none; /* Remove the background from the body */
     }
 
     header {
@@ -292,7 +327,7 @@ header {
         margin-top: -62px;
         margin-left: -29px;
     }
-
+    
     .sub-text.specific-line {
         font-size: 17px;
         width: 94%;
@@ -300,7 +335,7 @@ header {
         margin-right: auto;
         margin-top: 11px;
     }
-
+    
     #companySearch {
         width: 88%;
         padding: 12px 60px 12px 15px;
@@ -321,15 +356,12 @@ header {
         border-color: white;
         background-color: transparent;
     }
-
+    
     #voiceButton {
         position: absolute;
         right: -29px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
-
+    
     #feedbackText {
         right: 5px;
         top: 10%;
@@ -338,11 +370,12 @@ header {
 
     .badges-container {
         position: absolute;
-        right: 59px;
+        right: 60px;
         background-color: transparent;
         display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
+        flex-direction: row-reverse; 
+        align-items: center; 
+        bottom: 137px;
     }
 
     .badges-container a {
@@ -356,13 +389,15 @@ header {
     }
 
     .badges-container .google-play-badge img {
-        height: 63px !important;
-        width: 154px !important;
+        height: 63px !important;  
+        width: 154px !important;   
         border-radius: 2.5px;
     }
 }
 
-body[page="policy"],
+/* General Styles (Affecting both Desktop and Mobile) */
+
+body[page="policy"], 
 body[page="terms"] {
     background: #187CFF;
     color: white;
@@ -383,15 +418,14 @@ nav {
     line-height: 1.2;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     margin-left: -20px;
     color: #FFF;
     margin-top: 20px;
+}
+
+p, ul, ol, li {
+    margin-bottom: 35px;
 }
 
 a {
@@ -404,10 +438,12 @@ a:hover {
     text-decoration: underline;
 }
 
-body[page="policy"] header,
+/* Desktop Specific Styles for Privacy Policy and Terms Pages */
+
+body[page="policy"] header, 
 body[page="terms"] header {
     background-color: #187CFF;
-    padding-top: 27px;
+    padding-top: 27px; 
     height: 23px;
 }
 
@@ -421,73 +457,85 @@ body[page="terms"] .content {
     padding-bottom: 50px;
 }
 
-body[page="policy"] nav,
+/* Fixed navigation for policy and terms pages (Desktop) */
+body[page="policy"] nav, 
 body[page="terms"] nav {
     position: fixed;
     bottom: 0;
     left: 56px;
     right: 0;
     background-color: #187CFF;
-    z-index: 100;
-    color: #FFF;
+    z-index: 100; 
+    color: #FFFFFF;
     padding: 14px;
 }
 
 
+
+/* Mobile Specific Styles */
+
 @media (max-width: 768px) {
+    /* Reset the background gradient for html */
     html {
         background: none;
     }
 
-    body[page="policy"],
+    /* Assign the flat blue background for policy and terms pages */
+    body[page="policy"], 
     body[page="terms"] {
         background: #187CFF;
     }
 
+    /* Assign the gradient background for the home page */
     body[page="home"] {
         background: linear-gradient(45deg, darkblue, #187CFF);
     }
 
-    body[page="policy"] .content,
+    /* Styling for .content in policy and terms pages */
+    body[page="policy"] .content, 
     body[page="terms"] .content {
         margin: 53px 27px 70px 1px;
         max-width: 120%;
-        padding: 10px 0 68px 4px;
+        padding: 10px 0 68px 4px; /* Increased the padding-bottom value */
     }
 
-    body[page="policy"] nav,
+    /* Fixed navigation for policy and terms pages */
+    body[page="policy"] nav, 
     body[page="terms"] nav {
         position: fixed;
         bottom: 0;
         left: 4px;
         right: 0;
         background-color: #187CFF;
-        z-index: 100;
-        color: #FFF;
+        z-index: 100; 
+        color: #FFFFFF;
         padding: 16px;
     }
 
-
-    body[page="policy"] nav a,
+    /* Making sure links inside the navigation are white */
+    body[page="policy"] nav a, 
     body[page="terms"] nav a {
-        color: #FFF;
+        color: #FFFFFF;
     }
 
+    /* Adjusted navigation for home page */
     body[page="home"] nav {
         left: 16px;
     }
 
-    body[page="policy"] header,
+    /* Header styles for policy and terms pages */
+    body[page="policy"] header, 
     body[page="terms"] header {
         position: absolute;
         background-color: transparent;
-        top: 6px;
+        top: 6px;  
         margin-left: -3px;
     }
 
-    body[page="policy"] header #logo,
-    body[page="policy"] header nav a,
-    body[page="terms"] header #logo,
+    /* Padding for logo and nav links in policy and terms headers */
+    body[page="policy"] header #logo, 
+    body[page="policy"] header nav a, 
+    body[page="terms"] header #logo, 
     body[page="terms"] header nav a {
         padding-bottom: 3px;
     }
