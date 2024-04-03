@@ -166,7 +166,7 @@ header {
 #voiceButton {
     position: absolute;
     right: 220px;
-    top: 50%;
+    top: 49%;
     transform: translateY(-50%);
     background-color: transparent;
     border: none;
@@ -177,10 +177,14 @@ header {
     justify-content: center;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 80%;
     transition: background-color 0.3s;
     animation: futuristicAnimation 2s infinite;
     animation-play-state: paused;
+}
+
+#voiceButton.active {
+    animation-play-state: running;
 }
 
 #voiceButton:hover {
@@ -190,6 +194,15 @@ header {
 #voiceButton img {
     width: 24px;
     height: 24px;
+}
+
+.voice-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
 }
 
 @keyframes futuristicAnimation {

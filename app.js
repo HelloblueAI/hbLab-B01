@@ -123,17 +123,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const setupVoiceRecognition = () => {
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.continuous = false;
-
+    
         recognition.onstart = () => {
             elements.feedbackText.textContent = "Listening...";
-            elements.voiceButton.classList.add('voiceButton-listening');
+            elements.voiceButton.classList.add('active');
         };
-
+    
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
             handleVoiceInput(transcript);
         };
-
+    
         recognition.onerror = (event) => {
             const errorMessage = {
                 "no-speech": "No speech was detected. Please try again.",
@@ -143,21 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 "not-allowed": "Permission to access microphone was denied. Please allow access to use this feature.",
                 "service-not-allowed": "The speech recognition feature is not supported by your browser. For company searches, use your keyboard.",
             }[event.error] || "An unknown error occurred with voice recognition.";
-
+    
             displayNotification(errorMessage);
         };
-
+    
         recognition.onend = () => {
             elements.feedbackText.textContent = "";
-            elements.voiceButton.classList.remove('voiceButton-listening');
+            elements.voiceButton.classList.remove('active');
         };
-
+    
         elements.voiceButton.onclick = async () => {
-            if (elements.voiceButton.classList.contains('voiceButton-listening')) {
+            if (elements.voiceButton.classList.contains('active')) {
                 recognition.stop();
                 return;
             }
-
+    
             try {
                 await navigator.mediaDevices.getUserMedia({ audio: true });
                 recognition.start();
