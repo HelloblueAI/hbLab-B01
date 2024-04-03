@@ -88,9 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const fetchCompanyData = async (company) => {
+        // Check if a dialog is already shown for the current company
+        if (isConfirmationDialogOpen) return;
+    
         elements.feedbackText.textContent = "";
         const cacheKey = `companyData-${company}`;
-
+    
         const cachedData = localStorage.getItem(cacheKey);
         if (cachedData) {
             const data = JSON.parse(cachedData);
