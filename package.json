@@ -11,7 +11,7 @@
     "lint:js": "eslint '**/*.js'",
     "build:css": "postcss style.css -o style.min.css",
     "build": "npm run build:css",
-    "start": "lite-server",
+    "start": "http-server",
     "serve": "serve -s ."
   },
   "author": "",
@@ -19,9 +19,9 @@
   "devDependencies": {
     "cssnano": "^6.1.1",
     "eslint": "^8.0.0",
+    "http-server": "^14.1.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
-    "lite-server": "^2.6.1",
     "npm-check-updates": "^16.14.17",
     "prettier": "^3.2.5",
     "serve": "^14.2.1",
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "gotrue-js": "^0.9.29"
   }
 }

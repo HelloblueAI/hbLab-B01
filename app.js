@@ -1,14 +1,45 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils.js';
 
+// Initialize GoTrue client
+const auth = new GoTrue({
+  APIUrl: 'https://helloblue.ai/.netlify/identity',
+  setCookie: true,
+});
+
+// Login function
+function login(email, password) {
+  auth.login(email, password)
+    .then(response => {
+      console.log("Success! Response: ", response);
+      window.location.href = '/dashboard'; // Make sure this URL points to your dashboard path
+    })
+    .catch(error => {
+      console.error("Failed to login: ", error);
+      displayNotification("Login failed. Please check your credentials and try again.");
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const elements = {
-        voiceButton: document.getElementById('voiceButton'),
-        companySearch: document.getElementById('companySearch'),
-        typedOutput: document.getElementById('typed-output'),
-        feedbackText: document.getElementById('feedbackText'),
-        companyNameSpan: document.getElementById('companyName'),
-    };
+  // Define all the elements you will use
+  const elements = {
+      voiceButton: document.getElementById('voiceButton'),
+      companySearch: document.getElementById('companySearch'),
+      typedOutput: document.getElementById('typed-output'),
+      feedbackText: document.getElementById('feedbackText'),
+      companyNameSpan: document.getElementById('companyName'),
+      loginForm: document.getElementById('loginForm'), // Your login form
+      emailInput: document.getElementById('emailInput'), // Input for email
+      passwordInput: document.getElementById('passwordInput'), // Input for password
+  };
+
+  // Event listener for login form submission
+  if (elements.loginForm) {
+    elements.loginForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      login(elements.emailInput.value, elements.passwordInput.value);
+    });
+  }
 
     const cache = new Map();
     let activeEffect = 'intro';

@@ -20,6 +20,8 @@
     <meta property="og:description" content="The world's first Voice AI Customer Service Assistant">
     <meta property="og:image" content="https://helloblue.ai/images/1.png">
     <meta property="og:url" content="https://helloblue.ai/">
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body page="home">
     <!-- Header Section -->
@@ -32,6 +34,8 @@
         <nav>
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="terms-of-use.html">Terms of Use</a>
+            <!-- Login Button -->
+            <a href="#" onclick="event.preventDefault(); window.netlifyIdentity.open();">Login</a>
         </nav>
     </header>
     <!-- Main Content Section -->
@@ -67,5 +71,16 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6/dist/fuse.basic.min.js"></script>
     <script type="module" src="app.js"></script>
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', user => {
+                if (!user) {
+                    window.netlifyIdentity.on('login', () => {
+                        document.location.href = '/dashboard/'; // Redirect to dashboard on login
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>
