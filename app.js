@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
 
+    recognition.stop();
+
     if (phoneNumber && phoneNumber !== "NA") {
       const messageContent = `${companyName}: ${phoneNumber}. Would you like to dial this number?`;
       if (confirm(messageContent)) {
