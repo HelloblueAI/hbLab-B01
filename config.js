@@ -1,7 +1,6 @@
-// config.js
 export const config = {
-    API_ENDPOINT: 'https://dolphin-app-dchbn.ondigitalocean.app/',
-    UPPERCASE_COMPANIES: new Set([
+  API_ENDPOINT: 'https://dolphin-app-dchbn.ondigitalocean.app/api/company',
+  UPPERCASE_COMPANIES: new Set([
       'AMEX',
       'DHL',
       'IBM',
