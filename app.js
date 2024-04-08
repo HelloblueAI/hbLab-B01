@@ -5,6 +5,10 @@ import { capitalizeCompany, displayNotification, isValidURL, delay } from './uti
 const auth = new GoTrue({
   APIUrl: 'https://helloblue.ai/.netlify/identity',
   setCookie: true,
+  cookieOptions: {
+    SameSite: 'None',
+    Secure: true,
+  },
 });
 
 // Login function
