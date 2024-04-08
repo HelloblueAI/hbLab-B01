@@ -161,6 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.voiceButton.classList.remove('active');
     };
 
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        recognition.stop();
+      }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      recognition.stop();
+    });
+
     elements.voiceButton.onclick = async () => {
       if (elements.voiceButton.classList.contains('active')) {
         recognition.stop();
