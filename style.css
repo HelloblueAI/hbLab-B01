@@ -489,12 +489,12 @@ body[page="terms"] header {
 }
 
 body[page="policy"] .content {
-    padding-top: 1510px;
+    padding-top: 1400px;
     padding-bottom: 50px;
 }
 
 body[page="terms"] .content {
-    padding-top: 1980px;
+    padding-top: 1880px;
     padding-bottom: 50px;
 }
 
@@ -571,7 +571,7 @@ body[page="terms"] nav {
     body[page="terms"] header {
         position: absolute;
         background-color: transparent;
-        top: 6px;
+        top: 1px;
         margin-left: -3px;
     }
 
