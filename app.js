@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Error fetching company data:', error);
       displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
+      introEffect(); // Call introEffect if there was an error fetching company data
     }
   };
 
@@ -108,20 +109,23 @@ document.addEventListener('DOMContentLoaded', () => {
     await typeEffect(sentence, 'company');
     showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
   };
-  
+
   const showConfirmationDialog = (capitalizedCompanyName, phoneNumber, url) => {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
-  
+
     if (phoneNumber && phoneNumber !== "NA") {
       const messageContent = `${capitalizedCompanyName}: ${phoneNumber}. Would you like to dial this number?`;
       if (confirm(messageContent)) {
         window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
+      } else {
+        introEffect(); // Call introEffect if the user cancels the confirmation dialog
       }
     } else {
       displayNotification(`${capitalizedCompanyName} does not have a phone number available.`);
+      introEffect(); // Call introEffect if there is no phone number available
     }
-  
+
     isConfirmationDialogOpen = false;
   };
 
@@ -135,18 +139,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
-  
+
     recognition.onstart = () => {
       elements.feedbackText.textContent = "Listening...";
       elements.voiceButton.classList.add('active');
     };
-  
+
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       handleVoiceInput(transcript);
       recognition.stop();
     };
-  
+
     recognition.onerror = (event) => {
       const errorMessage = {
         "no-speech": "No speech was detected. Please try again.",
@@ -156,26 +160,27 @@ document.addEventListener('DOMContentLoaded', () => {
         "not-allowed": "Permission to access microphone was denied. Please allow access to use this feature.",
         "service-not-allowed": "The speech recognition feature is not supported by your browser. For company searches, use your keyboard.",
       }[event.error] || "An unknown error occurred with voice recognition.";
-  
+
       displayNotification(errorMessage);
       recognition.stop();
+      introEffect(); // Call introEffect if there was an error with voice recognition
     };
-  
+
     recognition.onend = () => {
       elements.feedbackText.textContent = "";
       elements.voiceButton.classList.remove('active');
     };
-  
+
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
         recognition.stop();
       }
     });
-  
+
     window.addEventListener('beforeunload', () => {
       recognition.stop();
     });
-  
+
     elements.voiceButton.addEventListener('click', () => {
       if (elements.voiceButton.classList.contains('active')) {
         recognition.stop();
@@ -184,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
-  
+
   elements.companySearch.addEventListener('input', (event) => {
     event.target.value = capitalizeCompany(event.target.value.trim());
     clearTimeout(fetchTimeout);
@@ -192,6 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const company = capitalizeCompany(event.target.value.trim());
       if (company !== '') {
         await fetchCompanyData(company);
+      } else {
+        introEffect(); // Call introEffect if the search input is empty
       }
     }, 500);
   });
@@ -203,8 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
       await fetchCompanyData(company);
     }
   });
-
-  elements.companySearch.addEventListener('focus', introEffect);
 
   setupVoiceRecognition();
   introEffect();
