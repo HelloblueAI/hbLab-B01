@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cachedData) {
       const data = JSON.parse(cachedData);
       await displayCompanyInfo(data.company_name, data.phone_number, data.url);
-      showConfirmationDialog(data.company_name, data.phone_number, data.url);
       return;
     }
 
@@ -93,34 +92,34 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem(cacheKey, JSON.stringify(data));
 
       await displayCompanyInfo(data.company_name, data.phone_number, data.url);
-      showConfirmationDialog(data.company_name, data.phone_number, data.url);
     } catch (error) {
       console.error('Error fetching company data:', error);
-      displayNotification(`Failed to fetch data for ${company}. Please try again.`);
+      displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
     }
   };
 
   const displayCompanyInfo = async (companyName, phoneNumber, url) => {
     activeEffect = 'company';
-    const sentence = `You asked to call: ${companyName}`;
+    const capitalizedCompanyName = capitalizeCompany(companyName);
+    const sentence = `You asked to call: ${capitalizedCompanyName}`;
     elements.typedOutput.textContent = '';
-    elements.companyNameSpan.style.display = 'inline';
     await typeEffect(sentence, 'company');
+    showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
   };
-
-  const showConfirmationDialog = (companyName, phoneNumber, url) => {
+  
+  const showConfirmationDialog = (capitalizedCompanyName, phoneNumber, url) => {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
-
+  
     if (phoneNumber && phoneNumber !== "NA") {
-      const messageContent = `${companyName}: ${phoneNumber}. Would you like to dial this number?`;
+      const messageContent = `${capitalizedCompanyName}: ${phoneNumber}. Would you like to dial this number?`;
       if (confirm(messageContent)) {
         window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
       }
     } else {
-      displayNotification(`${companyName} does not have a phone number available.`);
+      displayNotification(`${capitalizedCompanyName} does not have a phone number available.`);
     }
-
+  
     isConfirmationDialogOpen = false;
   };
 
@@ -171,6 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
         recognition.start();
+        setTimeout(() => {
+          if (elements.voiceButton.classList.contains('active')) {
+            recognition.stop();
+          }
+        }, 5000); // Automatically stop voice recognition after 5 seconds
       } catch (error) {
         console.error('Error accessing microphone:', error);
         displayNotification("Failed to access the microphone. Please check your browser settings and ensure you've granted the necessary permissions.");
