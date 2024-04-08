@@ -1,26 +1,50 @@
-// app.js
-import { config } from './config';
-import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils';
-import { login } from './auth';
-import { fetchCompanyData } from './api';
-import { render } from './templates';
+import { config } from './config.js';
+import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils.js';
+
+// Initialize GoTrue client
+const auth = new GoTrue({
+  APIUrl: 'https://helloblue.ai/.netlify/identity',
+  setCookie: true,
+});
+
+// Login function
+async function login(email, password) {
+  try {
+    const response = await auth.login(email, password);
+    console.log("Success! Response: ", response);
+    window.location.href = '/dashboard';
+  } catch (error) {
+    console.error("Failed to login: ", error);
+    displayNotification("Login failed. Please check your credentials and try again.");
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
     voiceButton: document.getElementById('voiceButton'),
     companySearch: document.getElementById('companySearch'),
-    output: document.getElementById('output'),
+    typedOutput: document.getElementById('typed-output'),
+    feedbackText: document.getElementById('feedbackText'),
+    companyNameSpan: document.getElementById('companyName'),
     loginForm: document.getElementById('loginForm'),
+    emailInput: document.getElementById('emailInput'),
+    passwordInput: document.getElementById('passwordInput'),
   };
+
+  if (elements.loginForm) {
+    elements.loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      await login(elements.emailInput.value, elements.passwordInput.value);
+    });
+  }
 
   let activeEffect = 'intro';
   let isConfirmationDialogOpen = false;
 
   const typeEffect = async (text, effectType) => {
-    const outputElement = elements.output.querySelector('.typed-output');
     for (let i = 0; i <= text.length; i++) {
       if (activeEffect !== effectType) break;
-      outputElement.textContent = text.substring(0, i);
+      elements.typedOutput.textContent = text.substring(0, i);
       await delay(text[i - 1] === '.' ? 200 : 50);
     }
   };
@@ -45,50 +69,56 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeEffect === 'intro') introEffect();
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    const email = event.target.elements.email.value;
-    const password = event.target.elements.password.value;
-    await login(email, password);
-  };
+  let fetchTimeout;
 
-  const handleCompanySearch = async (company) => {
+  const fetchCompanyData = async (company) => {
     if (isConfirmationDialogOpen) return;
 
-    const cachedData = localStorage.getItem(`companyData-${company}`);
+    elements.feedbackText.textContent = "";
+    const cacheKey = `companyData-${company}`;
+
+    const cachedData = localStorage.getItem(cacheKey);
     if (cachedData) {
       const data = JSON.parse(cachedData);
-      render('companyInfo', data);
-      showConfirmationDialog(data);
+      await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+      showConfirmationDialog(data.company_name, data.phone_number, data.url);
       return;
     }
 
     try {
-      render('loading');
-      const data = await fetchCompanyData(company);
-      localStorage.setItem(`companyData-${company}`, JSON.stringify(data));
-      render('companyInfo', data);
-      showConfirmationDialog(data);
+      const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+
+      localStorage.setItem(cacheKey, JSON.stringify(data));
+
+      await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+      showConfirmationDialog(data.company_name, data.phone_number, data.url);
     } catch (error) {
       console.error('Error fetching company data:', error);
-      if (!isConfirmationDialogOpen) {
-        displayNotification(`Failed to fetch data for ${company}. Please try again.`);
-      }
+      displayNotification(`Failed to fetch data for ${company}. Please try again.`);
     }
   };
 
-  const showConfirmationDialog = (data) => {
+  const displayCompanyInfo = async (companyName, phoneNumber, url) => {
+    activeEffect = 'company';
+    const sentence = `You asked to call: ${companyName}`;
+    elements.typedOutput.textContent = '';
+    elements.companyNameSpan.style.display = 'inline';
+    await typeEffect(sentence, 'company');
+  };
+
+  const showConfirmationDialog = (companyName, phoneNumber, url) => {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
 
-    const { company_name, phone_number, url } = data;
-    if (phone_number && phone_number !== "NA") {
-      const messageContent = `${company_name}: ${phone_number}. Would you like to dial this number?`;
+    if (phoneNumber && phoneNumber !== "NA") {
+      const messageContent = `${companyName}: ${phoneNumber}. Would you like to dial this number?`;
       if (confirm(messageContent)) {
-        window.location.href = isValidURL(url) ? url : `tel:${phone_number.replace(/[^0-9]/g, '')}`;
+        window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
       }
     } else {
-      displayNotification(`${company_name} does not have a phone number available.`);
+      displayNotification(`${companyName} does not have a phone number available.`);
     }
 
     isConfirmationDialogOpen = false;
@@ -97,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleVoiceInput = async (transcript) => {
     const company = capitalizeCompany(transcript.trim());
     elements.companySearch.value = company;
-    await handleCompanySearch(company);
+    await fetchCompanyData(company);
   };
 
   const setupVoiceRecognition = () => {
@@ -105,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recognition.continuous = false;
 
     recognition.onstart = () => {
-      render('listening');
+      elements.feedbackText.textContent = "Listening...";
       elements.voiceButton.classList.add('active');
     };
 
@@ -128,11 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     recognition.onend = () => {
-      render('ready');
+      elements.feedbackText.textContent = "";
       elements.voiceButton.classList.remove('active');
     };
 
-    elements.voiceButton.addEventListener('click', async () => {
+    elements.voiceButton.onclick = async () => {
       if (elements.voiceButton.classList.contains('active')) {
         recognition.stop();
         return;
@@ -145,19 +175,25 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error accessing microphone:', error);
         displayNotification("Failed to access the microphone. Please check your browser settings and ensure you've granted the necessary permissions.");
       }
-    });
+    };
   };
-
-  elements.loginForm.addEventListener('submit', handleLogin);
 
   elements.companySearch.addEventListener('input', (event) => {
     event.target.value = capitalizeCompany(event.target.value.trim());
+    clearTimeout(fetchTimeout);
+    fetchTimeout = setTimeout(async () => {
+      const company = capitalizeCompany(event.target.value.trim());
+      if (company !== '') {
+        await fetchCompanyData(company);
+      }
+    }, 500);
   });
 
   elements.companySearch.addEventListener('keypress', async (event) => {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
+      clearTimeout(fetchTimeout);
       const company = capitalizeCompany(event.target.value.trim());
-      await handleCompanySearch(company);
+      await fetchCompanyData(company);
     }
   });
 
