@@ -1,30 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Safari Pinned Tab Icon -->
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <!-- Title -->
     <title>helloblue: Call any company...</title>
-    <!-- Stylesheet Link -->
     <link rel="stylesheet" href="./style.css">
-    <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="helloblue: Call any company">
     <meta name="twitter:description" content="The world's first Voice AI Customer Service Assistant">
     <meta name="twitter:image" content="https://helloblue.ai/images/1.png">
-    <!-- OpenGraph Tags (For Facebook and other social media) -->
     <meta property="og:title" content="helloblue: Call any company">
     <meta property="og:description" content="The world's first Voice AI Customer Service Assistant">
     <meta property="og:image" content="https://helloblue.ai/images/1.png">
     <meta property="og:url" content="https://helloblue.ai/">
-    <!-- Netlify Identity Widget -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body page="home">
-    <!-- Header Section -->
     <header>
         <div id="logo">
             <a href="index.html">
@@ -34,19 +26,15 @@
         <nav>
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="terms-of-use.html">Terms of Use</a>
-            <!-- Login Button -->
-            <a href="#" onclick="event.preventDefault(); window.netlifyIdentity.open();">Login</a>
         </nav>
+        <div class="login-button">
+            <a href="#" id="login">Login</a>
+        </div>
     </header>
-    <!-- Main Content Section -->
     <div class="main-content">
-        <h1 class="typing-effect">
-            <span id="typed-output"></span>
-            <span id="cursor">|</span>
-        </h1>
+        <h1 class="typing-effect"><span id="typed-output"></span><span id="cursor">|</span></h1>
         <p class="sub-text">The world's first Voice AI Customer Service Assistant</p>
         <p class="sub-text specific-line">Don't browse for customer services. Use helloblue to get connected!</p>
-        <!-- Search Section -->
         <div class="search-section">
             <input type="text" id="companySearch" placeholder="Search for a company" inputmode="search">
             <div class="voice-container">
@@ -62,7 +50,6 @@
             <div id="companyName" class="hidden"></div>
         </div>
     </div>
-    <!-- Badges Container -->
     <div class="badges-container">
         <a href="https://apps.apple.com/us/app/helloblue/id6450708010?itsct=apps_box_badge&amp;itscg=30200" class="app-store-badge">
             <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1692057600" alt="Download on the App Store">
@@ -71,17 +58,35 @@
             <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="width: 140px; height: 59px;">
         </a>
     </div>
+    <div class="login-modal" id="login-modal">
+        <div class="login-modal-content">
+            <p>Login form goes here...</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modal-overlay"></div>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6/dist/fuse.basic.min.js"></script>
     <script type="module" src="app.js"></script>
     <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on('init', user => {
-                if (!user) {
-                    window.netlifyIdentity.on('login', () => {
-                        document.location.href = '/dashboard/'; // Redirect to dashboard on login
-                    });
-                }
-            });
+        document.getElementById('login').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('login-modal').style.display = 'block';
+            document.getElementById('modal-overlay').style.display = 'block';
+        });
+        
+        document.getElementById('modal-overlay').addEventListener('click', function() {
+            closeModal();
+        });
+        
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        function closeModal() {
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('modal-overlay').style.display = 'none';
         }
     </script>
 </body>

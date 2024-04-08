@@ -19,7 +19,7 @@ header {
     top: 0;
     left: 0;
     background-color: transparent;
-    z-index: 1000;
+    z-index: 999;
 }
 
 .main-content {
@@ -251,7 +251,7 @@ header {
     position: fixed;
     bottom: 50px;
     right: 710px;
-    z-index: 1000;
+    z-index: 998;
     display: flex;
 }
 
@@ -275,11 +275,71 @@ header {
     position: fixed;
     bottom: 200px;
     right: 1106px;
-    z-index: 1000;
+    z-index: 998;
     display: flex;
     align-items: center;
     gap: 8px;
 }
+
+.login-button {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    z-index: 1002; /* This keeps the login button above the modal overlay */
+}
+
+.login-button a {
+    padding: 6px 20px;
+    background-color: #f4f4f4;
+    color: #187CFF;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.login-button a:hover {
+    background-color: #f0f0f0;
+}
+
+/* The modal backdrop */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; /* Full-screen layout */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6); /* Translucent background */
+    z-index: 1000; /* High z-index, but lower than the modal to allow for interaction with the modal */
+}
+
+.login-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Centered layout */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; /* Fixed width, adjust as needed */
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1001; /* Higher than the overlay to be on top */
+}
+
+/* The actual modal content container */
+.login-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    /* Add any additional styling needed for your login content */
+}
+
+/* To show the modal when it is active (toggle the 'active' class via JavaScript) */
+.login-modal.active {
+    display: flex; /* Display the modal */
+}
+
+
 
 /* Existing CSS for larger screens */
 @media (min-width: 768px) {
@@ -346,9 +406,9 @@ header {
 
     .typing-effect {
         font-size: 30px;
-        margin-top: 140px;
+        margin-top: 120px;
         position: sticky;
-        z-index: 1000;
+        z-index: 998;
         margin-left: -31px;
     }
 
@@ -391,7 +451,7 @@ header {
 
     #voiceButton {
         position: absolute;
-        right: -6px;
+        right: -5px;
         top: 7px;
     }
 
@@ -439,7 +499,7 @@ body[page="terms"] {
 
 nav {
     position: fixed;
-    bottom: 12px;
+    bottom: 14px;
     left: 59px;
     z-index: 1001;
 }
