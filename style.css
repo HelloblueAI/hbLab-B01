@@ -2,7 +2,7 @@ body {
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    display: flex;
+    display: absolute;
     justify-content: flex-start;
     align-items: center;
     padding-left: 5%;
@@ -48,7 +48,7 @@ header {
     color: white;
     font-weight: bold;
     margin-bottom: 4px;
-    margin-top: -30px;
+    margin-top: 150px;
     margin-left: -16px;
     height: 230px;
     overflow: hidden;
@@ -163,11 +163,11 @@ header {
     background-color: transparent;
 }
 
+
 #voiceButton {
     position: absolute;
     right: 220px;
-    top: 49%;
-    transform: translateY(-50%);
+    top: 6px;
     background-color: transparent;
     border: none;
     color: white;
@@ -177,14 +177,13 @@ header {
     justify-content: center;
     width: 40px;
     height: 40px;
-    border-radius: 80%;
+    border-radius: 50%;
     transition: background-color 0.3s;
-    animation: futuristicAnimation 2s infinite;
-    animation-play-state: paused;
+    z-index: 10;
 }
 
 #voiceButton.active {
-    animation-play-state: running;
+    animation: futuristicAnimation 2s infinite;
 }
 
 #voiceButton:hover {
@@ -205,27 +204,22 @@ header {
     pointer-events: auto;
 }
 
-
-
 @keyframes futuristicAnimation {
-    0% {
+    0%, 100% {
+        transform: scale(1);
         box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
     }
-
-    25% {
+    20% {
+        transform: scale(1.1);
         box-shadow: 0 0 0 10px rgba(0, 255, 255, 0.3);
     }
-
     50% {
+        transform: scale(1.2);
         box-shadow: 0 0 0 20px rgba(0, 255, 255, 0.1);
     }
-
     75% {
+        transform: scale(1.1);
         box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.05);
-    }
-
-    100% {
-        box-shadow: 0 0 0 40px rgba(0, 255, 255, 0);
     }
 }
 
@@ -246,6 +240,7 @@ header {
     visibility: visible;
     opacity: 1;
 }
+
 
 .position-app-store {
     position: fixed;
@@ -278,7 +273,7 @@ header {
     z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 11px;
+    gap: 8px;
 }
 
 /* Existing CSS for larger screens */
@@ -335,8 +330,8 @@ header {
     header {
         background-color: transparent;
         height: 17px;
-        padding-top: 40px;
-        padding-bottom: 10px;
+        padding-top: 33px;
+        padding-bottom: 5px;
         z-index: 0;
     }
 
@@ -346,9 +341,8 @@ header {
 
     .typing-effect {
         font-size: 30px;
-        padding-top: 140px;
+        margin-top: 140px;
         position: sticky;
-        top: -55px;
         z-index: 1000;
         margin-left: -31px;
     }
@@ -357,7 +351,7 @@ header {
         font-size: 22px;
         position: sticky;
         width: 82%;
-        margin-top: -62px;
+        margin-top: -88px;
         margin-left: -29px;
     }
 
@@ -393,6 +387,7 @@ header {
     #voiceButton {
         position: absolute;
         right: -6px;
+        top: 6px;
     }
 
     #feedbackText {
@@ -408,7 +403,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 90px;
+        bottom: 250px;
     }
 
     .badges-container a {

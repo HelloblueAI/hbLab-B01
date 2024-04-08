@@ -1,7 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils.js';
 
-// Initialize GoTrue client
 const auth = new GoTrue({
   APIUrl: 'https://helloblue.ai/.netlify/identity',
   setCookie: true,
@@ -11,7 +10,6 @@ const auth = new GoTrue({
   },
 });
 
-// Login function
 async function login(email, password) {
   try {
     const response = await auth.login(email, password);
@@ -134,26 +132,22 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const setupVoiceRecognition = () => {
-    // Initialize the SpeechRecognition API with cross-browser compatibility.
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.continuous = false; // Do not continue capturing audio after a result is returned.
+    recognition.continuous = false;
   
     recognition.onstart = () => {
-      // Visual feedback that listening has started.
       elements.feedbackText.textContent = "Listening...";
       elements.voiceButton.classList.add('active');
     };
   
     recognition.onresult = (event) => {
-      // Once a result is received, process it immediately.
       const transcript = event.results[0][0].transcript;
-      handleVoiceInput(transcript); // Handle the voice input with your function.
-      recognition.stop(); // Stop the recognition immediately after receiving a result.
+      handleVoiceInput(transcript);
+      recognition.stop();
     };
   
     recognition.onerror = (event) => {
-      // Map of common error messages for user-friendly feedback.
       const errorMessage = {
         "no-speech": "No speech was detected. Please try again.",
         "aborted": "Voice recognition was aborted. Please try again.",
@@ -163,17 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
         "service-not-allowed": "The speech recognition feature is not supported by your browser. For company searches, use your keyboard.",
       }[event.error] || "An unknown error occurred with voice recognition.";
   
-      displayNotification(errorMessage); // Display the appropriate error message to the user.
-      recognition.stop(); // Ensure recognition is stopped on error.
+      displayNotification(errorMessage);
+      recognition.stop();
     };
   
     recognition.onend = () => {
-      // Cleanup once recognition ends.
       elements.feedbackText.textContent = "";
       elements.voiceButton.classList.remove('active');
     };
   
-    // Ensure recognition stops if the page is being hidden or unloaded.
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
         recognition.stop();
@@ -184,27 +176,15 @@ document.addEventListener('DOMContentLoaded', () => {
       recognition.stop();
     });
   
-    // Manage the voice button's click event.
-    elements.voiceButton.onclick = async () => {
-      // If already active, stop the recognition to reset.
+    elements.voiceButton.addEventListener('click', () => {
       if (elements.voiceButton.classList.contains('active')) {
         recognition.stop();
-        return;
-      }
-  
-      // Start recognition, ensuring the user has granted microphone access.
-      try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+      } else {
         recognition.start();
-      } catch (error) {
-        console.error('Error accessing microphone:', error);
-        displayNotification("Failed to access the microphone. Please check your browser settings and ensure you've granted the necessary permissions.");
       }
-    };
+    });
   };
   
-  
-
   elements.companySearch.addEventListener('input', (event) => {
     event.target.value = capitalizeCompany(event.target.value.trim());
     clearTimeout(fetchTimeout);

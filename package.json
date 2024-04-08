@@ -12,24 +12,32 @@
     "build:css": "postcss style.css -o style.min.css",
     "build": "npm run build:css",
     "start": "http-server",
-    "serve": "serve -s ."
+    "serve": "serve -s .",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "cssnano": "^6.1.1",
-    "eslint": "^8.0.0",
+    "eslint": "^9.0.0",
     "http-server": "^14.1.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "npm-check-updates": "^16.14.17",
+    "postcss": "^8.4.24",
+    "postcss-cli": "^10.0.0",
     "prettier": "^3.2.5",
     "serve": "^14.2.1",
+    "stylelint": "^16.1.0",
     "stylelint-config-standard": "^36.0.0"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
     "gotrue-js": "^0.9.29"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,html}": "prettier --write"
   }
 }
