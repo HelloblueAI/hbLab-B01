@@ -251,7 +251,7 @@ header {
     position: fixed;
     bottom: 50px;
     right: 710px;
-    z-index: 998;
+    z-index: 200;
     display: flex;
 }
 
@@ -275,7 +275,7 @@ header {
     position: fixed;
     bottom: 200px;
     right: 1106px;
-    z-index: 998;
+    z-index: 200;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -300,45 +300,6 @@ header {
 .login-button a:hover {
     background-color: #f0f0f0;
 }
-
-/* The modal backdrop */
-.modal-overlay {
-    display: none; /* Hidden by default */
-    position: fixed; /* Full-screen layout */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6); /* Translucent background */
-    z-index: 1000; /* High z-index, but lower than the modal to allow for interaction with the modal */
-}
-
-.login-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Centered layout */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px; /* Fixed width, adjust as needed */
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    z-index: 1001; /* Higher than the overlay to be on top */
-}
-
-/* The actual modal content container */
-.login-modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    /* Add any additional styling needed for your login content */
-}
-
-/* To show the modal when it is active (toggle the 'active' class via JavaScript) */
-.login-modal.active {
-    display: flex; /* Display the modal */
-}
-
 
 
 /* Existing CSS for larger screens */
@@ -408,7 +369,7 @@ header {
         font-size: 30px;
         margin-top: 120px;
         position: sticky;
-        z-index: 998;
+        z-index: 200;
         margin-left: -31px;
     }
 
