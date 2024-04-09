@@ -283,7 +283,7 @@ header {
 
 .login-button {
     position: absolute;
-    top: 25px;
+    top: 24px;
     right: 20px;
     z-index: 1002; /* This keeps the login button above the modal overlay */
 }
