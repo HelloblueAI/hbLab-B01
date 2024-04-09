@@ -301,6 +301,12 @@ header {
     background-color: #f0f0f0;
 }
 
+/* Adjustments for when Netlify Identity widget is active */
+.netlify-identity-active .typing-effect,
+.netlify-identity-active .badges-container {
+    display: none; /* Or adjust z-index as needed */
+}
+
 
 /* Existing CSS for larger screens */
 @media (min-width: 768px) {

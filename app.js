@@ -40,6 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+    // Setup event listeners for Netlify Identity widget
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('login', () => document.body.classList.add('netlify-identity-active'));
+      window.netlifyIdentity.on('logout', () => document.body.classList.remove('netlify-identity-active'));
+      window.netlifyIdentity.on('open', () => document.body.classList.add('netlify-identity-active'));
+      window.netlifyIdentity.on('close', () => document.body.classList.remove('netlify-identity-active'));
+    }
+  
+
   let activeEffect = 'intro';
   let isConfirmationDialogOpen = false;
 
