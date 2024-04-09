@@ -40,17 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-    // Setup event listeners for Netlify Identity widget
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('login', () => document.body.classList.add('netlify-identity-active'));
-      window.netlifyIdentity.on('logout', () => document.body.classList.remove('netlify-identity-active'));
-      window.netlifyIdentity.on('open', () => document.body.classList.add('netlify-identity-active'));
-      window.netlifyIdentity.on('close', () => document.body.classList.remove('netlify-identity-active'));
-    }
-  
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('login', () => document.body.classList.add('netlify-identity-active'));
+    window.netlifyIdentity.on('logout', () => document.body.classList.remove('netlify-identity-active'));
+    window.netlifyIdentity.on('open', () => document.body.classList.add('netlify-identity-active'));
+    window.netlifyIdentity.on('close', () => document.body.classList.remove('netlify-identity-active'));
+  }
 
   let activeEffect = 'intro';
   let isConfirmationDialogOpen = false;
+  let fetchTimeout;
 
   const typeEffect = async (text, effectType) => {
     for (let i = 0; i <= text.length; i++) {
@@ -80,33 +79,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeEffect === 'intro') introEffect();
   };
 
-  let fetchTimeout;
-
   const fetchCompanyData = async (company) => {
     if (isConfirmationDialogOpen) return;
 
     elements.feedbackText.textContent = "";
     const cacheKey = `companyData-${company}`;
-
     const cachedData = localStorage.getItem(cacheKey);
+
     if (cachedData) {
       const data = JSON.parse(cachedData);
       await displayCompanyInfo(data.company_name, data.phone_number, data.url);
-      return;
-    }
+    } else {
+      try {
+        const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
 
-    try {
-      const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-
-      localStorage.setItem(cacheKey, JSON.stringify(data));
-
-      await displayCompanyInfo(data.company_name, data.phone_number, data.url);
-    } catch (error) {
-      console.error('Error fetching company data:', error);
-      displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
-      introEffect(); // Call introEffect if there was an error fetching company data
+        localStorage.setItem(cacheKey, JSON.stringify(data));
+        await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+      } catch (error) {
+        console.error('Error fetching company data:', error);
+        displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
+        introEffect(); // Restart the introEffect in case of an error
+      }
     }
   };
 
@@ -138,11 +133,29 @@ document.addEventListener('DOMContentLoaded', () => {
     isConfirmationDialogOpen = false;
   };
 
-  const handleVoiceInput = async (transcript) => {
-    const company = capitalizeCompany(transcript.trim());
-    elements.companySearch.value = company;
-    await fetchCompanyData(company);
-  };
+  elements.companySearch.addEventListener('input', (event) => {
+    const company = capitalizeCompany(event.target.value.trim());
+    event.target.value = company;
+    clearTimeout(fetchTimeout);
+    fetchTimeout = setTimeout(() => {
+      if (company !== '') {
+        fetchCompanyData(company);
+      } else {
+        introEffect(); // Call introEffect if the search input is empty
+      }
+    }, 500);
+  });
+
+  elements.companySearch.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const company = capitalizeCompany(event.target.value.trim());
+      if (company !== '') {
+        clearTimeout(fetchTimeout);
+        fetchCompanyData(company);
+      }
+    }
+  });
 
   const setupVoiceRecognition = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
