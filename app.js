@@ -33,23 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     passwordInput: document.getElementById('passwordInput'),
   };
 
-  if (elements.loginForm) {
-    elements.loginForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await login(elements.emailInput.value, elements.passwordInput.value);
-    });
-  }
-
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on('login', () => document.body.classList.add('netlify-identity-active'));
-    window.netlifyIdentity.on('logout', () => document.body.classList.remove('netlify-identity-active'));
-    window.netlifyIdentity.on('open', () => document.body.classList.add('netlify-identity-active'));
-    window.netlifyIdentity.on('close', () => document.body.classList.remove('netlify-identity-active'));
-  }
-
   let activeEffect = 'intro';
   let isConfirmationDialogOpen = false;
   let fetchTimeout;
+  let isFetching = false;
 
   const typeEffect = async (text, effectType) => {
     for (let i = 0; i <= text.length; i++) {
@@ -89,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cachedData) {
       const data = JSON.parse(cachedData);
       await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+      isFetching = false;
     } else {
       try {
         const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
@@ -97,10 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem(cacheKey, JSON.stringify(data));
         await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+        isFetching = false;
       } catch (error) {
         console.error('Error fetching company data:', error);
         displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
-        introEffect(); // Restart the introEffect in case of an error
+        introEffect();
+        isFetching = false;
       }
     }
   };
@@ -123,41 +113,54 @@ document.addEventListener('DOMContentLoaded', () => {
       if (confirm(messageContent)) {
         window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
       } else {
-        introEffect(); // Call introEffect if the user cancels the confirmation dialog
+        introEffect();
       }
     } else {
       displayNotification(`${capitalizedCompanyName} does not have a phone number available.`);
-      introEffect(); // Call introEffect if there is no phone number available
+      introEffect();
     }
 
     isConfirmationDialogOpen = false;
   };
 
-  elements.companySearch.addEventListener('input', (event) => {
+  const handleCompanySearch = (event) => {
     const company = capitalizeCompany(event.target.value.trim());
     event.target.value = company;
-    clearTimeout(fetchTimeout);
-    fetchTimeout = setTimeout(() => {
-      if (company !== '') {
-        fetchCompanyData(company);
-      } else {
-        introEffect(); // Call introEffect if the search input is empty
-      }
-    }, 500);
-  });
 
-  elements.companySearch.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const company = capitalizeCompany(event.target.value.trim());
-      if (company !== '') {
-        clearTimeout(fetchTimeout);
-        fetchCompanyData(company);
-      }
+    if (event.type === 'keypress' && event.key !== 'Enter') {
+      return;
     }
-  });
+
+    clearTimeout(fetchTimeout);
+
+    if (company !== '') {
+      if (event.key === 'Enter') {
+        if (!isFetching) {
+          isFetching = true;
+          fetchCompanyData(company);
+        }
+      } else {
+        fetchTimeout = setTimeout(() => {
+          if (!isFetching) {
+            isFetching = true;
+            fetchCompanyData(company);
+          }
+        }, 500);
+      }
+    } else {
+      introEffect();
+    }
+  };
+
+  elements.companySearch.addEventListener('input', handleCompanySearch);
+  elements.companySearch.addEventListener('keypress', handleCompanySearch);
 
   const setupVoiceRecognition = () => {
+    if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+      console.error("This browser does not support Speech Recognition.");
+      return;
+    }
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
@@ -169,39 +172,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      handleVoiceInput(transcript);
+      elements.companySearch.value = transcript;
+      fetchCompanyData(transcript.trim());
       recognition.stop();
     };
 
     recognition.onerror = (event) => {
-      const errorMessage = {
-        "no-speech": "No speech was detected. Please try again.",
-        "aborted": "Voice recognition was aborted. Please try again.",
-        "audio-capture": "Microphone is not accessible. Please ensure you've granted the necessary permissions.",
-        "network": "Network issues prevented voice recognition. Please check your connection.",
-        "not-allowed": "Permission to access microphone was denied. Please allow access to use this feature.",
-        "service-not-allowed": "The speech recognition feature is not supported by your browser. For company searches, use your keyboard.",
-      }[event.error] || "An unknown error occurred with voice recognition.";
-
-      displayNotification(errorMessage);
+      console.error('Recognition error: ', event.error);
+      displayNotification("An error occurred with voice recognition: " + event.error);
       recognition.stop();
-      introEffect(); // Call introEffect if there was an error with voice recognition
     };
 
     recognition.onend = () => {
-      elements.feedbackText.textContent = "";
       elements.voiceButton.classList.remove('active');
     };
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        recognition.stop();
-      }
-    });
-
-    window.addEventListener('beforeunload', () => {
-      recognition.stop();
-    });
 
     elements.voiceButton.addEventListener('click', () => {
       if (elements.voiceButton.classList.contains('active')) {
@@ -211,27 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
-
-  elements.companySearch.addEventListener('input', (event) => {
-    event.target.value = capitalizeCompany(event.target.value.trim());
-    clearTimeout(fetchTimeout);
-    fetchTimeout = setTimeout(async () => {
-      const company = capitalizeCompany(event.target.value.trim());
-      if (company !== '') {
-        await fetchCompanyData(company);
-      } else {
-        introEffect(); // Call introEffect if the search input is empty
-      }
-    }, 500);
-  });
-
-  elements.companySearch.addEventListener('keypress', async (event) => {
-    if (event.key === 'Enter' && event.target.value.trim() !== '') {
-      clearTimeout(fetchTimeout);
-      const company = capitalizeCompany(event.target.value.trim());
-      await fetchCompanyData(company);
-    }
-  });
 
   setupVoiceRecognition();
   introEffect();
