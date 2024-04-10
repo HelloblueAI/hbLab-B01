@@ -178,10 +178,33 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     recognition.onerror = (event) => {
-      console.error('Recognition error: ', event.error);
-      displayNotification("An error occurred with voice recognition: " + event.error);
-      recognition.stop();
-    };
+      let errorMessage = "An error occurred with voice recognition.";
+
+      switch (event.error) {
+          case "no-speech":
+              errorMessage = "No speech was detected. Please try again.";
+              break;
+          case "aborted":
+              errorMessage = "Voice recognition was aborted. Please try again.";
+              break;
+          case "audio-capture":
+              errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
+              break;
+          case "network":
+              errorMessage = "Network issues prevented voice recognition. Please check your connection.";
+              break;
+          case "not-allowed":
+              errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
+              break;
+          case "service-not-allowed":
+              errorMessage = "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.";
+              break;
+          default:
+              break;
+      }
+
+      displayNotification(errorMessage);
+  };
 
     recognition.onend = () => {
       elements.voiceButton.classList.remove('active');
