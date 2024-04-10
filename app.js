@@ -10,7 +10,7 @@ const auth = new GoTrue({
   },
 });
 
-async function login(email, password) {
+const login = async (email, password) => {
   try {
     const response = await auth.login(email, password);
     console.log("Success! Response: ", response);
@@ -19,7 +19,7 @@ async function login(email, password) {
     console.error("Failed to login: ", error);
     displayNotification("Login failed. Please check your credentials and try again.");
   }
-}
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cachedData) {
       const data = JSON.parse(cachedData);
-      await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+      await displayCompanyInfo(data);
       isFetching = false;
     } else {
       try {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
 
         localStorage.setItem(cacheKey, JSON.stringify(data));
-        await displayCompanyInfo(data.company_name, data.phone_number, data.url);
+        await displayCompanyInfo(data);
         isFetching = false;
       } catch (error) {
         console.error('Error fetching company data:', error);
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const displayCompanyInfo = async (companyName, phoneNumber, url) => {
+  const displayCompanyInfo = async ({ company_name: companyName, phone_number: phoneNumber, url }) => {
     activeEffect = 'company';
     const capitalizedCompanyName = capitalizeCompany(companyName);
     const sentence = `You asked to call: ${capitalizedCompanyName}`;
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isConfirmationDialogOpen = false;
   };
 
-  const handleCompanySearch = (event) => {
+  const handleCompanySearch = async (event) => {
     const company = capitalizeCompany(event.target.value.trim());
     event.target.value = company;
 
@@ -137,13 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (event.key === 'Enter') {
         if (!isFetching) {
           isFetching = true;
-          fetchCompanyData(company);
+          await fetchCompanyData(company);
         }
       } else {
-        fetchTimeout = setTimeout(() => {
+        fetchTimeout = setTimeout(async () => {
           if (!isFetching) {
             isFetching = true;
-            fetchCompanyData(company);
+            await fetchCompanyData(company);
           }
         }, 500);
       }
@@ -156,12 +156,13 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.companySearch.addEventListener('keypress', handleCompanySearch);
 
   const setupVoiceRecognition = () => {
-    if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
       console.error("This browser does not support Speech Recognition.");
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
 
@@ -181,30 +182,30 @@ document.addEventListener('DOMContentLoaded', () => {
       let errorMessage = "An error occurred with voice recognition.";
 
       switch (event.error) {
-          case "no-speech":
-              errorMessage = "No speech was detected. Please try again.";
-              break;
-          case "aborted":
-              errorMessage = "Voice recognition was aborted. Please try again.";
-              break;
-          case "audio-capture":
-              errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
-              break;
-          case "network":
-              errorMessage = "Network issues prevented voice recognition. Please check your connection.";
-              break;
-          case "not-allowed":
-              errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
-              break;
-          case "service-not-allowed":
-              errorMessage = "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.";
-              break;
-          default:
-              break;
+        case "no-speech":
+          errorMessage = "No speech was detected. Please try again.";
+          break;
+        case "aborted":
+          errorMessage = "Voice recognition was aborted. Please try again.";
+          break;
+        case "audio-capture":
+          errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
+          break;
+        case "network":
+          errorMessage = "Network issues prevented voice recognition. Please check your connection.";
+          break;
+        case "not-allowed":
+          errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
+          break;
+        case "service-not-allowed":
+          errorMessage = "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.";
+          break;
+        default:
+          break;
       }
 
       displayNotification(errorMessage);
-  };
+    };
 
     recognition.onend = () => {
       elements.voiceButton.classList.remove('active');
