@@ -126,13 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleCompanySearch = async (event) => {
     const company = capitalizeCompany(event.target.value.trim());
     event.target.value = company;
-  
+
     if (event.type === 'keypress' && event.key !== 'Enter') {
       return;
     }
-  
+
     clearTimeout(fetchTimeout);
-  
+
     if (company !== '') {
       if (event.key === 'Enter') {
         if (!isFetching) {
