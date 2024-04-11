@@ -104,29 +104,40 @@ document.addEventListener('DOMContentLoaded', () => {
     isConfirmationDialogOpen = false;
   };
 
+  let timer;
   const handleCompanySearch = async (event) => {
-    const company = capitalizeCompany(event.target.value.trim());
-    event.target.value = company;
-
+    clearTimeout(timer);
+  
+    if (event.type === 'keypress' && event.key === ' ') {
+      event.preventDefault();
+      event.target.value += ' ';
+      return;
+    }
+  
     if (event.type === 'keypress' && event.key !== 'Enter') {
       return;
     }
-
-    clearTimeout(fetchTimeout);
-
+  
+    let company = event.target.value.trim();
+  
     if (company !== '') {
+      company = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      event.target.value = company;
+  
+      clearTimeout(fetchTimeout);
+  
       if (event.key === 'Enter') {
         if (!isFetching) {
           isFetching = true;
           await fetchCompanyData(company);
         }
       } else {
-        fetchTimeout = setTimeout(async () => {
+        timer = setTimeout(async () => {
           if (!isFetching) {
             isFetching = true;
             await fetchCompanyData(company);
           }
-        }, 500);
+        }, 1000);
       }
     } else {
       introEffect();
