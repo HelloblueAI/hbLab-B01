@@ -330,9 +330,7 @@ header {
     .badges-container {
         position: absolute;
         top: calc(84% + 3px);
-        /* Adjust this value as needed */
         right: 10%;
-        /* Adjust this value as needed */
     }
 }
 
@@ -436,7 +434,7 @@ header {
         flex-direction: row-reverse;
         align-items: center;
         bottom: 250px;
-        top: 570px;
+        top: 550px;
     }
 
     .badges-container a {
