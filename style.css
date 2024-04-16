@@ -278,7 +278,7 @@ header {
 }
 
 
-  
+
 /* Existing CSS for larger screens */
 @media (min-width: 768px) {
     header {
@@ -396,8 +396,8 @@ header {
         top: 10%;
         transform: translateY(-50%);
     }
-    
-    /* Ino top bayad tanzim koni age mikhay badgeharo bala payin koni */ 
+
+    /* Ino top bayad tanzim koni age mikhay badgeharo bala payin koni */
     .badges-container {
         position: absolute;
         right: 60px;

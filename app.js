@@ -107,25 +107,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let timer;
   const handleCompanySearch = async (event) => {
     clearTimeout(timer);
-  
+
     if (event.type === 'keypress' && event.key === ' ') {
       event.preventDefault();
       event.target.value += ' ';
       return;
     }
-  
+
     if (event.type === 'keypress' && event.key !== 'Enter') {
       return;
     }
-  
+
     let company = event.target.value.trim();
-  
+
     if (company !== '') {
       company = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
       event.target.value = company;
-  
+
       clearTimeout(fetchTimeout);
-  
+
       if (event.key === 'Enter') {
         if (!isFetching) {
           isFetching = true;
