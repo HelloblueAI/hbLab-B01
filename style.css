@@ -486,12 +486,12 @@ body[page="terms"] header {
 }
 
 body[page="policy"] .content {
-    padding-top: 0px;
+    margin-top: 50px;
     padding-bottom: 54px;
 }
 
 body[page="terms"] .content {
-    padding-top:1px;
+    margin-top: 50px;
     padding-bottom: 50px;
 }
 
