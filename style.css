@@ -478,105 +478,105 @@ a:hover {
 
 /* Desktop Specific Styles for Privacy Policy and Terms Pages */
 
+/* Header styles for policy and terms pages */
 body[page="policy"] header,
 body[page="terms"] header {
-    background-color: #187CFF;
-    padding-top: 27px;
-    height: 23px;
+    background-color: #187CFF;  /* Blue background for headers */
+    padding-top: 27px;          /* Padding at the top */
+    height: 23px;               /* Fixed height */
 }
 
+/* Content styling for policy page */
 body[page="policy"] .content {
-    margin-top: 50px;
-    padding-bottom: 54px;
+    margin-top: 50px;           /* Space above the content */
+    padding-bottom: 54px;       /* Padding below the content */
 }
 
+/* Content styling for terms page */
 body[page="terms"] .content {
-    margin-top: 50px;
-    padding-bottom: 50px;
+    margin-top: 50px;           /* Same top margin as policy page */
+    padding-bottom: 50px;       /* Slightly different padding below content */
 }
 
-/* Fixed navigation for policy and terms pages (Desktop) */
+/* Fixed navigation bar styling shared by policy and terms pages */
 body[page="policy"] nav,
 body[page="terms"] nav {
-    position: fixed;
-    bottom: 0;
-    left: 56px;
-    right: 0;
-    background-color: #187CFF;
-    z-index: 100;
-    color: #FFFFFF;
-    padding: 14px;
+    position: fixed;            /* Fixed position to stay in view */
+    bottom: 0;                  /* Anchored to the bottom */
+    left: 56px;                 /* Offset from the left */
+    right: 0;                   /* Stretch to the right edge */
+    background-color: #187CFF;  /* Blue background color */
+    z-index: 100;               /* Z-index for layering */
+    color: #FFFFFF;             /* Text color */
+    padding: 14px;              /* Padding around the content */
 }
-
 
 
 /* Mobile Specific Styles */
 
 @media (max-width: 768px) {
-
     /* Reset the background gradient for html */
     html {
-        background: none;
+        background: none;       /* Remove any gradient */
     }
 
-    /* Assign the flat blue background for policy and terms pages */
+    /* Solid background color for policy and terms pages */
     body[page="policy"],
     body[page="terms"] {
-        background: #187CFF;
+        background: #187CFF;    /* Blue background */
     }
 
-    /* Assign the gradient background for the home page */
+    /* Gradient background for the home page */
     body[page="home"] {
         background: linear-gradient(45deg, darkblue, #187CFF);
     }
 
-    /* Styling for .content in policy and terms pages */
+    /* Content styling for mobile versions of policy and terms pages */
     body[page="policy"] .content,
     body[page="terms"] .content {
-        margin: 53px 27px 70px 1px;
-        max-width: 120%;
-        padding: 10px 0 68px 4px;
-        /* Increased the padding-bottom value */
+        margin: 53px 27px 70px 1px; /* Margins around the content */
+        max-width: 120%;            /* Allowing content to be wider than the screen */
+        padding: 10px 0 68px 4px;   /* Padding inside content area */
     }
 
-    /* Fixed navigation for policy and terms pages */
+    /* Fixed navigation styling for mobile */
     body[page="policy"] nav,
     body[page="terms"] nav {
         position: fixed;
         bottom: 0;
-        left: 4px;
+        left: 4px;                 /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
         color: #FFFFFF;
-        padding: 16px;
+        padding: 16px;             /* Larger padding on mobile */
     }
 
-    /* Making sure links inside the navigation are white */
+    /* Ensuring text in navigation links is white */
     body[page="policy"] nav a,
     body[page="terms"] nav a {
         color: #FFFFFF;
     }
 
-    /* Adjusted navigation for home page */
+    /* Adjusted navigation position for the home page */
     body[page="home"] nav {
-        left: 16px;
+        left: 16px;                /* More offset on mobile for home page */
     }
 
-    /* Header styles for policy and terms pages */
+    /* Header styles adjustments for mobile */
     body[page="policy"] header,
     body[page="terms"] header {
         position: absolute;
         background-color: transparent;
-        top: 1px;
-        margin-left: -3px;
+        top: 1px;                  /* Minimal top position */
+        margin-left: -3px;         /* Offset to adjust alignment */
     }
 
-    /* Padding for logo and nav links in policy and terms headers */
+    /* Padding adjustments for logo and navigation links */
     body[page="policy"] header #logo,
-    body[page="policy"] header nav a,
     body[page="terms"] header #logo,
+    body[page="policy"] header nav a,
     body[page="terms"] header nav a {
-        padding-bottom: 3px;
+        padding-bottom: 3px;       /* Padding to adjust visual alignment */
     }
 }
