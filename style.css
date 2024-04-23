@@ -214,7 +214,7 @@ header {
 
     20% {
         transform: scale(1.1);
-        box-shadow: 0 0 0 5px rgba(0, 255, 255, 0.3);
+        box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.3);
     }
 
     50% {
