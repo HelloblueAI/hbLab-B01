@@ -511,6 +511,13 @@ body[page="terms"] nav {
     padding: 14px;              /* Padding around the content */
 }
 
+/* Target the copyright text specifically for more control */
+nav .copyright-text {
+    font-size: 13px; /* Set the desired font size */
+    color: white; /* This can be omitted if the color does not need to change */
+}
+
+
 
 /* Mobile Specific Styles */
 
@@ -549,6 +556,7 @@ body[page="terms"] nav {
         background-color: #187CFF;
         z-index: 100;
         color: #FFFFFF;
+        
         padding: 16px;             /* Larger padding on mobile */
     }
 
