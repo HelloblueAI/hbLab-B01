@@ -1,5 +1,5 @@
 
-B01 Contact Assistant
+# B01 Contact Assistant
 Welcome to the GitHub repository of B01 Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
 Features
