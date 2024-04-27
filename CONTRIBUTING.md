@@ -6,10 +6,10 @@ Fork the Repository: Begin by forking the repository on GitHub. This creates a c
 Clone Your Fork: Clone your forked repository to your local machine to start making changes.
 # bash
 Copy code
-git clone [[https://github.com/yourusername/b01-contact-assistant.git](https://github.com/pejmantheory/helloblue.git)]
+git clone https://github.com/pejmantheory/helloblue.git
 cd b01-contact-assistant
 Create a Branch: Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
-# bash
+
 # Copy code
 git checkout -b your-branch-name
 # Making Changes
