@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "Got a company in mind? Just say the word or type it in",
       "Connecting to customer services has never been this fast",
       "Ready to connect?",
-      "I'm here to assist...!",
+      "I'm here to assist!",
     ];
 
     for (const sentence of sentences) {
