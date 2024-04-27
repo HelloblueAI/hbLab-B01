@@ -12,7 +12,7 @@ To get started with B01 Contact Assistant, clone this repository to your local m
 
 # bash
 Copy code
-git clone [https://github.com/yourusername/b01-contact-assistant.git](https://github.com/pejmantheory/helloblue.git)
+git clone [https://github.com/yourusername/b01-contact-assistant.git](https://github.com/pejmantheory/helloblue.git]
 After cloning, navigate into the project directory and open the index.html in your preferred web browser to see the application in action.
 
 # Usage
