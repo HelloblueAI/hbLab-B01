@@ -14,7 +14,7 @@ git checkout -b your-branch-name
 * Code Consistently: Follow the coding standards and guidelines already in place within the project.
 * Test Your Code: Ensure that your code is thoroughly tested and doesn't break the application. Start the server: npx lite-server --verbose 
 * Document Your Changes: Update the README or other documentation as necessary. This is especially important if you're adding new features or changing the setup process.
-Submitting Changes
+* Submitting Changes
 * Push Your Changes: Once you are satisfied with your contributions, push your changes to your fork.
 Copy code
 git push origin your-branch-name
