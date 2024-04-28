@@ -11,11 +11,11 @@ cd b01-contact-assistant
 Copy code
 git checkout -b your-branch-name
 # Making Changes
-Code Consistently: Follow the coding standards and guidelines already in place within the project.
+* Code Consistently: Follow the coding standards and guidelines already in place within the project.
 Test Your Code: Ensure that your code is thoroughly tested and doesn't break the application.
 Document Your Changes: Update the README or other documentation as necessary. This is especially important if you're adding new features or changing the setup process.
 Submitting Changes
-Push Your Changes: Once you are satisfied with your contributions, push your changes to your fork.
+* Push Your Changes: Once you are satisfied with your contributions, push your changes to your fork.
 Copy code
 git push origin your-branch-name
 
@@ -25,7 +25,7 @@ Go to the original B01 Contact Assistant repository you forked from. You should 
 Merge: Once your pull request is approved, it will be merged into the main project.
 
 # Reporting Bugs
-Use GitHub Issues: Report bugs through GitHub Issues.
+* Use GitHub Issues: Report bugs through GitHub Issues.
 Describe the Bug: Provide a detailed description of the bug. Include specific details to help us understand the problem.
 Steps to Reproduce: List the steps that lead up to the bug. Include screenshots or code snippets if applicable.
 
