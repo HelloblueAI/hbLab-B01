@@ -30,6 +30,6 @@ Describe the Bug: Provide a detailed description of the bug. Include specific de
 Steps to Reproduce: List the steps that lead up to the bug. Include screenshots or code snippets if applicable.
 
 # Community and Conduct
-Be Respectful: Respect each other, as well as each other's opinions and viewpoints.
-Open Environment: Encourage open communication, collaboration, and constructive feedback.
+* Open Environment: Encourage open communication, collaboration, and constructive feedback.
+* Be Respectful: Respect each other, as well as each other's opinions and viewpoints.
 Thank you for contributing to B01 Contact Assistant! We look forward to seeing your innovative ideas and improvements to the project.
