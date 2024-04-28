@@ -18,17 +18,21 @@ Test Your Code: Ensure that your code is thoroughly tested and doesn't break the
 Document Your Changes: Update the README or other documentation as necessary. This is especially important if you're adding new features or changing the setup process.
 Submitting Changes
 Push Your Changes: Once you are satisfied with your contributions, push your changes to your fork.
-bash
-# Copy code
+# bash
+Copy code
 git push origin your-branch-name
-Open a Pull Request: Go to the original B01 Contact Assistant repository you forked from. You should see a prompt to open a pull request. Submit it with a clear description of the changes and any other relevant information.
+
+# Open a Pull Request 
+Go to the original B01 Contact Assistant repository you forked from. You should see a prompt to open a pull request. Submit it with a clear description of the changes and any other relevant information.
 Review Process: The repository maintainers will review your pull request. Be open to discussing your contributions and making any necessary adjustments.
 Merge: Once your pull request is approved, it will be merged into the main project.
-Reporting Bugs
+
+# Reporting Bugs
 Use GitHub Issues: Report bugs through GitHub Issues.
 Describe the Bug: Provide a detailed description of the bug. Include specific details to help us understand the problem.
 Steps to Reproduce: List the steps that lead up to the bug. Include screenshots or code snippets if applicable.
-Community and Conduct
+
+# Community and Conduct
 Be Respectful: Respect each other, as well as each other's opinions and viewpoints.
 Open Environment: Encourage open communication, collaboration, and constructive feedback.
 Thank you for contributing to B01 Contact Assistant! We look forward to seeing your innovative ideas and improvements to the project.
