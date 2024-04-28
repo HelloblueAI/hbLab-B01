@@ -9,8 +9,8 @@ Copy code
 git clone https://github.com/pejmantheory/helloblue.git
 cd b01-contact-assistant
 Create a Branch: Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
-
-# Copy code
+# bash
+Copy code
 git checkout -b your-branch-name
 # Making Changes
 Code Consistently: Follow the coding standards and guidelines already in place within the project.
