@@ -2,7 +2,8 @@
 Welcome to the repository of B01 Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
 # Features
-# Voice Recognition: Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
+# Voice Recognition 
+Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
 Dynamic Typing Effect: Watch as B01 types out responses in real-time, mimicking human-like interactions.
 Immediate Company Lookup: Fetch company information quickly through our integrated API, ensuring you're always a step ahead.
 Persistent Storage: Utilize browser's local storage to cache company data for faster subsequent accesses.
