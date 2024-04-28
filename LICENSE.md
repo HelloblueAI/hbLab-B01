@@ -1,5 +1,5 @@
 # License
-MIT License
+MIT License.
 
 Copyright (c) 2024 Helloblue, Inc.
 
