@@ -16,7 +16,6 @@ Test Your Code: Ensure that your code is thoroughly tested and doesn't break the
 Document Your Changes: Update the README or other documentation as necessary. This is especially important if you're adding new features or changing the setup process.
 Submitting Changes
 Push Your Changes: Once you are satisfied with your contributions, push your changes to your fork.
-# bash
 Copy code
 git push origin your-branch-name
 
