@@ -18,7 +18,8 @@ After cloning, navigate into the project directory and open the index.html in yo
 Simply activate the voice recognition by clicking the microphone icon, or type the name of the company you wish to contact in the search box. B01 will handle the rest, displaying the company's contact information and offering direct dialing if available.
 
 # Contributing
-Interested in contributing? We welcome pull requests, bug reports, and other contributions. Please read the CONTRIBUTING.md for guidelines on how to contribute.
+Interested in contributing? We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING.md](./CONTRIBUTING.md)
+
 
 # License
 This project is licensed under the [MIT License](https://github.com/pejmantheory/helloblue/blob/main/LICENSE.md)
