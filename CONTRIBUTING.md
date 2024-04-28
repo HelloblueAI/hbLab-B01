@@ -2,7 +2,7 @@
 We're thrilled that you're interested in contributing to the B01 Contact Assistant project! Your contributions can help make the application even better and more efficient. Here are some guidelines that we ask you to follow to help ensure a smooth collaboration process.
 
 # Getting Started
-Fork the Repository: Begin by forking the repository on GitHub. This creates a copy of the project in your own account which you can modify.
+* Fork the Repository: Begin by forking the repository on GitHub. This creates a copy of the project in your own account which you can modify.
 * Clone Your Fork: Clone your forked repository to your local machine to start making changes.
 Copy code
 git clone https://github.com/pejmantheory/helloblue.git
