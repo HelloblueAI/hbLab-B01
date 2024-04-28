@@ -3,13 +3,11 @@ We're thrilled that you're interested in contributing to the B01 Contact Assista
 
 # Getting Started
 Fork the Repository: Begin by forking the repository on GitHub. This creates a copy of the project in your own account which you can modify.
-Clone Your Fork: Clone your forked repository to your local machine to start making changes.
-# bash
+* Clone Your Fork: Clone your forked repository to your local machine to start making changes.
 Copy code
 git clone https://github.com/pejmantheory/helloblue.git
 cd b01-contact-assistant
-Create a Branch: Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
-# bash
+* Create a Branch: Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
 Copy code
 git checkout -b your-branch-name
 # Making Changes
@@ -24,7 +22,7 @@ git push origin your-branch-name
 
 # Open a Pull Request 
 Go to the original B01 Contact Assistant repository you forked from. You should see a prompt to open a pull request. Submit it with a clear description of the changes and any other relevant information.
-Review Process: The repository maintainers will review your pull request. Be open to discussing your contributions and making any necessary adjustments.
+* Review Process: The repository maintainers will review your pull request. Be open to discussing your contributions and making any necessary adjustments.
 Merge: Once your pull request is approved, it will be merged into the main project.
 
 # Reporting Bugs
