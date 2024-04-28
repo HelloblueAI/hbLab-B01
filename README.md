@@ -21,7 +21,8 @@ Simply activate the voice recognition by clicking the microphone icon, or type t
 Interested in contributing? We welcome pull requests, bug reports, and other contributions. Please read the CONTRIBUTING.md for guidelines on how to contribute.
 
 # License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+This project is licensed under the [MIT License](https://github.com/pejmantheory/helloblue/blob/main/LICENSE.md)
+
 
 # Acknowledgments
 Thanks to everyone who has contributed to the development of B01 Contact Assistant.
