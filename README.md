@@ -4,13 +4,12 @@ Welcome to the repository of B01 Contact Assistant, a cutting-edge web applicati
 # Features
 * Voice Recognition 
 Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
-Dynamic Typing Effect: Watch as B01 types out responses in real-time, mimicking human-like interactions.
-Immediate Company Lookup: Fetch company information quickly through our integrated API, ensuring you're always a step ahead.
-Persistent Storage: Utilize browser's local storage to cache company data for faster subsequent accesses.
+* Dynamic Typing Effect: Watch as B01 types out responses in real-time, mimicking human-like interactions.
+* Immediate Company Lookup: Fetch company information quickly through our integrated API, ensuring you're always a step ahead.
+* Persistent Storage: Utilize browser's local storage to cache company data for faster subsequent accesses.
+* AI Search Bar: Fetch over 13,000 company data points instantly, and make a call on your device simultaneously, providing a seamless integration of data retrieval and communication.
 # Installation
 To get started with B01 Contact Assistant, clone this repository to your local machine:
-
-# bash
 Copy code
 git clone [(https://github.com/pejmantheory/helloblue.git)]
 After cloning, navigate into the project directory and open the index.html in your preferred web browser to see the application in action.
@@ -27,7 +26,6 @@ This project is licensed under the [MIT License](https://github.com/pejmantheory
 
 # Acknowledgments
 Thanks to everyone who has contributed to the development of B01 Contact Assistant.
-Special thanks to the helloblue team for providing the resources and support to make this project possible.
 Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 🚀
 
 # Next + Netlify Starter
