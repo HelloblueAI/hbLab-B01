@@ -10,9 +10,9 @@ Initiate searches with just your voice, reducing the need for typing and enhanci
 * AI Search Bar: Fetch over 13,000 company data points instantly, and make a call on your device simultaneously, providing a seamless integration of data retrieval and communication.
 # Installation
 To get started with B01 Contact Assistant, clone this repository to your local machine:
-Copy code
+* Copy code
 git clone [(https://github.com/pejmantheory/helloblue.git)]
-After cloning, navigate into the project directory and open the index.html in your preferred web browser to see the application in action.
+* After cloning, navigate into the project directory and open the index.html in your preferred web browser to see the application in action.
 
 # Usage
 Simply activate the voice recognition by clicking the microphone icon, or type the name of the company you wish to contact in the search box. B01 will handle the rest, displaying the company's contact information and offering direct dialing if available.
