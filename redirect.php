@@ -1,5 +1,5 @@
 <?php
-// URLs for redirection
+
 $ios_url = 'https://apps.apple.com/us/app/helloblue/id6450708010?ign-itscg=30200&ign-itsct=apps_box_badge';
 $android_url = 'https://play.google.com/store/apps/details?id=com.cloudtenlabs.helloblue&hl=en_US&gl=US&pli=1';
 $default_url = 'http://helloblue.ai';
