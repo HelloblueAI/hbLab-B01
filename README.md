@@ -31,7 +31,6 @@ This project is licensed under the [MIT License](https://github.com/pejmantheory
 
 
 # Acknowledgments
-Thanks to everyone who has contributed to the development of B01 Contact Assistant.
 Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 🚀
 
 # Next + Netlify Starter
