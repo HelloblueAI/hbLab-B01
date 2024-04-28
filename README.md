@@ -1,4 +1,4 @@
-![SVG Image](https://i.postimg.cc/5yPgWRMj/Copy-of-Original-size-Copy-of-Original-size-Original-size-Original-size-Copy-of-Original-si.png)
+![Helloblue Image](https://i.postimg.cc/MThxmqTm/Copy-of-Original-size-Copy-of-Original-size-Original-size-Original-size-Copy-of-Original-si.png)
 # B01 Contact Assistant
 Welcome to the repository of B01 Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
