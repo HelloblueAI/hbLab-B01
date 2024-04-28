@@ -1,4 +1,3 @@
-
 # B01 Contact Assistant
 Welcome to the repository of B01 Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
@@ -28,3 +27,6 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 Thanks to everyone who has contributed to the development of B01 Contact Assistant.
 Special thanks to the helloblue team for providing the resources and support to make this project possible.
 Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 🚀
+
+# Next + Netlify Starter
+[![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
