@@ -29,7 +29,7 @@ This project is licensed under the [MIT License](https://github.com/pejmantheory
 
 
 # Acknowledgments
-Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 🚀
+Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 
 
 # Next + Netlify Starter
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
