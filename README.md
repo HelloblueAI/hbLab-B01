@@ -27,7 +27,7 @@ We welcome pull requests, bug reports, and other contributions. Please read the 
 
 
 # License
-This project is licensed under the [MIT License](https://github.com/pejmantheory/helloblue/blob/main/LICENSE.md)
+This project is licensed under the [MIT License](https://github.com/pejmantheory/gbLab-B01/blob/main/LICENSE.md)
 
 
 # Acknowledgments
