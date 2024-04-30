@@ -2,62 +2,50 @@
 <html lang="en">
 
 <head>
-    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Safari Pinned Tab Icon -->
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <!-- Title -->
     <title>helloblue: Call any company...</title>
-    <!-- Stylesheet Link -->
     <link rel="stylesheet" href="./style.css">
-    <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="helloblue: Call any company">
     <meta name="twitter:description" content="The world's first Voice AI Customer Service Assistant">
     <meta name="twitter:image" content="https://helloblue.ai/images/1.png">
-    <!-- OpenGraph Tags (For Facebook and other social media) -->
     <meta property="og:title" content="helloblue: Call any company">
     <meta property="og:description" content="The world's first Voice AI Customer Service Assistant">
     <meta property="og:image" content="https://helloblue.ai/images/1.png">
     <meta property="og:url" content="https://helloblue.ai/">
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" async></script>
 </head>
 
 <body page="home">
-    <!-- Header Section -->
     <header>
         <div id="logo">
             <a href="index.html">
-                <img src="https://i.postimg.cc/CLYrn5hh/Copy-of-Original-size-Copy-of-Copy-of-Professional-Gradient-Abstract-Circle-Technology-Company-Log.png" alt="Your Logo" />
+                <img src="https://i.postimg.cc/CLYrn5hh/Copy-of-Original-size-Copy-of-Copy-of-Professional-Gradient-Abstract-Circle-Technology-Company-Log.png" alt="Helloblue, Inc. company logo" />
             </a>
         </div>
         <nav>
             <span class="copyright-text">© 2024 Helloblue, Inc.</span>
             <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="terms-of-use.html">Terms of Use</a>
+            <a href="terms-of-use.html" rel="noopener noreferrer">Terms of Use</a>
         </nav>
-
-
     </header>
-    <!-- Main Content Section -->
-    <div class="main-content">
+    <main class="main-content">
         <h1 class="typing-effect">
             <span id="typed-output"></span>
             <span id="cursor">|</span>
         </h1>
         <p class="sub-text">The World's First Voice AI Customer Service Assistant</p>
         <p class="sub-text specific-line">Don't browse for customer services. Use helloblue to get connected!</p>
-        <!-- Search Section -->
         <div class="search-section">
-            <input type="text" id="companySearch" placeholder="Search for a company" inputmode="search">
+            <input type="text" id="companySearch" placeholder="Search for a company" inputmode="search" aria-label="Search for a company">
             <div class="voice-container">
                 <div class="voice-button-container">
                     <button id="voiceButton" aria-label="Voice search for a company">
                         <div class="voice-button-wrapper">
                             <img src="https://i.postimg.cc/bwBLVbVY/Mysterious-Are-you-Ready-Animated-Instagram-Post.png"
-                                alt="Microphone" width="21" height="21">
+                                alt="Microphone icon" width="21" height="21">
                         </div>
                     </button>
                 </div>
@@ -65,8 +53,7 @@
             </div>
             <div id="companyName" class="hidden"></div>
         </div>
-    </div>
-    <!-- Badges Container -->
+    </main>
     <div class="badges-container">
         <a href="https://apps.apple.com/us/app/helloblue/id6450708010?itsct=apps_box_badge&amp;itscg=30200"
             class="app-store-badge">
