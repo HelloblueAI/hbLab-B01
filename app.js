@@ -1,7 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils.js';
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
     voiceButton: document.getElementById('voiceButton'),
