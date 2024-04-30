@@ -5,9 +5,9 @@ Welcome to the repository of hbLab-B01 Contact Assistant, a cutting-edge web app
 * Voice Recognition 
 Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
 * Dynamic Typing Effect: Watch as B01 types out responses in real-time, mimicking human-like interactions.
-* Immediate Company Lookup: Fetch company information quickly through our integrated API, ensuring you're always a step ahead.
+* Immediate Company Lookup: Fetch company information quickly through integrated helloblue independent API, ensuring you're always a step ahead.
 * Persistent Storage: Utilize browser's local storage to cache company data for faster subsequent accesses.
-* AI Search Bar: Fetch over 13,000 company data points instantly, and make a call on your device simultaneously, providing a seamless integration of data retrieval and communication.
+* AI Search Bar: Fetch over 13,000 company data pointing towards helloblue cloud server instantly, and make a call on your device simultaneously, providing a seamless integration of data retrieval and communication.
 # Installation
 To set up the B01 Contact Assistant on your local machine, follow these steps:
 * Clone the Repository:
