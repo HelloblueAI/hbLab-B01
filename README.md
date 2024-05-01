@@ -11,7 +11,7 @@ Initiate searches with just your voice, reducing the need for typing and enhanci
 # Installation
 To set up the B01 Contact Assistant on your local machine, follow these steps:
 * Clone the Repository:
-git clone https://github.com/pejmantheory/helloblue.git
+git clone https://github.com/pejmantheory/hbLab-B01.git
 * Access the Project Directory:
 cd helloblue
 * View the Application:
