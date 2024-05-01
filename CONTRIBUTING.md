@@ -12,20 +12,14 @@ Begin by forking the repository on GitHub. This creates a copy of the project in
 
 Clone your forked repository to your local machine to start making changes.
 
-git clone https://github.com/yourusername/b01-contact-assistant.git
-cd b01-contact-assistant
-
-sql
-Copy code
+'git clone https://github.com/yourusername/b01-contact-assistant.git
+cd b01-contact-assistant'
 
 ### Create a Branch
 
 Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
 
-git checkout -b your-branch-name
-
-shell
-Copy code
+'git checkout -b your-branch-name'
 
 ## Making Changes
 
@@ -37,10 +31,8 @@ Follow the coding standards and guidelines already in place within the project.
 
 Ensure that your code is thoroughly tested and doesn't break the application. Start the server:
 
-npx lite-server --verbose
+'npx lite-server --verbose'
 
-vbnet
-Copy code
 
 ### Document Your Changes
 
@@ -52,10 +44,7 @@ Update the README or other documentation as necessary. This is especially import
 
 Once you are satisfied with your contributions, push your changes to your fork.
 
-git push origin your-branch-name
-
-shell
-Copy code
+'git push origin your-branch-name'
 
 ### Open a Pull Request
 
