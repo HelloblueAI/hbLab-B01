@@ -12,8 +12,9 @@ Begin by forking the repository on GitHub. This creates a copy of the project in
 
 Clone your forked repository to your local machine to start making changes.
 
-`git clone https://github.com/yourusername/b01-contact-assistant.git
-cd b01-contact-assistant`
+`git clone https://github.com/yourusername/b01-contact-assistant.git`
+
+`cd b01-contact-assistant`
 
 ### Create a Branch
 
