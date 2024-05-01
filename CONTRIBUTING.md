@@ -46,8 +46,11 @@ Once you are satisfied with your contributions, push your changes to your fork.
 ### Open a Pull Request
 Go to the original B01 Contact Assistant repository you forked from. You should see a prompt to open a pull request. Submit it with a clear description of the changes and any other relevant information.
 
+
 ## Review Process
 The repository maintainers will review your pull request. Be open to discussing your contributions and making any necessary adjustments.
+
+
 
 ## Reporting Bugs
 
