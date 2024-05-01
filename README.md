@@ -25,7 +25,7 @@ We welcome pull requests, bug reports, and other contributions. Please read the 
 
 
 # License
-This project is licensed under the [Apache-2.0](https://github.com/pejmantheory/hbLab-B01/blob/8a2e0b23bc2fac897d8b21848fddfa667fa3f2ae/LICENSE.md)
+This project is licensed under the [Apache-2.0](https://github.com/pejmantheory/hbLab-B01/blob/1ce0071c308c082f468a7a225aaa8d21444769b4/LICENSE.md)
 
 
 # Acknowledgments
