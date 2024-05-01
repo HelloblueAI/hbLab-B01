@@ -77,11 +77,10 @@ Respect each other, as well as each other's opinions and viewpoints.
 Post thoughts about new features/optimizations that are important to you.
 
 ### Submit Decompilation Issues
-Before submitting any issues, please read the guidelines. [Open issue]([Open issue](https://github.com/pejmantheory/b01-contact-assistant/issues)
-)
+Before submitting any issues, please read the guidelines. [Open issue](https://github.com/pejmantheory/b01-contact-assistant/issues)
 
 ### Open Pull Request
-If you wish to open a pull request, please follow these rules: [Pull Request Process]([Pull Request Process](https://github.com/pejmantheory/b01-contact-assistant/pulls)
-)
+If you wish to open a pull request, please follow these rules: [Pull Request Process](https://github.com/pejmantheory/b01-contact-assistant/pulls)
+
 
 Thank you for contributing to B01 Contact Assistant! We look forward to seeing your innovative ideas and improvements to the project.
