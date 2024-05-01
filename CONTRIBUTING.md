@@ -19,7 +19,7 @@ cd b01-contact-assistant'
 
 Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
 
-'git checkout -b your-branch-name'
+`git checkout -b your-branch-name`
 
 ## Making Changes
 
