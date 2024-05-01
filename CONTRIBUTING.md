@@ -17,6 +17,7 @@ Clone your forked repository to your local machine to start making changes.
 
 ### Create a Branch
 Always create a new branch for your changes. This helps separate new development from stable code and makes the integration process smoother.
+
 `git checkout -b your-branch-name`
 
 
@@ -27,6 +28,7 @@ Follow the coding standards and guidelines already in place within the project.
 
 ### Test Your Code
 Ensure that your code is thoroughly tested and doesn't break the application. Start the server:
+
 `npx lite-server --verbose`
 
 
@@ -37,6 +39,7 @@ Update the README or other documentation as necessary. This is especially import
 
 ### Push Your Changes
 Once you are satisfied with your contributions, push your changes to your fork.
+
 `git push origin your-branch-name`
 
 
