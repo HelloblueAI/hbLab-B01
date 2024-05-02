@@ -24,7 +24,7 @@ Simply activate the voice recognition by clicking the microphone icon, or type t
 We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 # Security Policy
-Please read the [SECURITY.md] 
+Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b6638fdc480cf89d0fe4128a49642adb55fb4b/SECURITY.md) 
 
 
 # License
