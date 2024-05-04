@@ -1,6 +1,6 @@
 
+![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/526db8c8-0854-4964-9b13-6eaa4cea8fd9)
 
-![map](![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/07066d7e-fc9d-4cd9-821d-848874313e0c)) 
 
 # hbLab-B01 Contact Assistant
 Welcome to the repository of hbLab-B01 Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
