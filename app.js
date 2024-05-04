@@ -15,18 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let activeEffect = 'intro';
   let isConfirmationDialogOpen = false;
-  let fetchTimeout;
   let isFetching = false;
 
-  const typeEffect = async (text, effectType) => {
+  async function typeEffect(text, effectType) {
     for (let i = 0; i <= text.length; i++) {
       if (activeEffect !== effectType) break;
       elements.typedOutput.textContent = text.substring(0, i);
       await delay(text[i - 1] === '.' ? 200 : 50);
     }
-  };
+  }
 
-  const introEffect = async () => {
+  async function introEffect() {
     activeEffect = 'intro';
     const sentences = [
       "Hello, I'm B01",
@@ -45,9 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
       await delay(1500);
     }
     if (activeEffect === 'intro') introEffect();
-  };
+  }
 
-  const fetchCompanyData = async (company) => {
+  async function displayCompanyInfo({ company_name: companyName, phone_number: phoneNumber, url }) {
+    activeEffect = 'company';
+    const capitalizedCompanyName = capitalizeCompany(companyName);
+    const sentence = `You asked to call: ${capitalizedCompanyName}`;
+    elements.typedOutput.textContent = '';
+    await typeEffect(sentence, 'company');
+    showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
+  }
+
+  async function fetchCompanyData(company) {
     if (isConfirmationDialogOpen) return;
 
     elements.feedbackText.textContent = "";
@@ -63,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-
         localStorage.setItem(cacheKey, JSON.stringify(data));
         await displayCompanyInfo(data);
         isFetching = false;
@@ -74,18 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         isFetching = false;
       }
     }
-  };
+  }
 
-  const displayCompanyInfo = async ({ company_name: companyName, phone_number: phoneNumber, url }) => {
-    activeEffect = 'company';
-    const capitalizedCompanyName = capitalizeCompany(companyName);
-    const sentence = `You asked to call: ${capitalizedCompanyName}`;
-    elements.typedOutput.textContent = '';
-    await typeEffect(sentence, 'company');
-    showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
-  };
-
-  const showConfirmationDialog = (capitalizedCompanyName, phoneNumber, url) => {
+  function showConfirmationDialog(capitalizedCompanyName, phoneNumber, url) {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
 
@@ -102,10 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     isConfirmationDialogOpen = false;
-  };
+  }
+
+  elements.companySearch.addEventListener('input', handleCompanySearch);
+  elements.companySearch.addEventListener('keypress', handleCompanySearch);
 
   let timer;
-  const handleCompanySearch = async (event) => {
+  async function handleCompanySearch(event) {
     clearTimeout(timer);
 
     if (event.type === 'keypress' && event.key === ' ') {
@@ -124,8 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
       company = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
       event.target.value = company;
 
-      clearTimeout(fetchTimeout);
-
       if (event.key === 'Enter') {
         if (!isFetching) {
           isFetching = true;
@@ -142,12 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       introEffect();
     }
-  };
+  }
 
-  elements.companySearch.addEventListener('input', handleCompanySearch);
-  elements.companySearch.addEventListener('keypress', handleCompanySearch);
+  setupVoiceRecognition();
 
-  const setupVoiceRecognition = () => {
+  function setupVoiceRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
@@ -210,8 +208,18 @@ document.addEventListener('DOMContentLoaded', () => {
         recognition.start();
       }
     });
-  };
 
-  setupVoiceRecognition();
+    // Implementing keyboard shortcut for voice activation
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey && event.key === 'v') { // Pressing "Alt + V" triggers voice recognition
+        if (!elements.voiceButton.classList.contains('active')) {
+          recognition.start();
+        } else {
+          recognition.stop();
+        }
+      }
+    });
+  }
+
   introEffect();
 });
