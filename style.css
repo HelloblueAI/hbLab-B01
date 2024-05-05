@@ -544,28 +544,29 @@ body[page="terms"] .content {
 body[page="policy"] nav,
 body[page="terms"] nav {
     position: fixed;
-    /* Fixed position to stay in view */
-    bottom: 0;
-    /* Anchored to the bottom */
-    left: 56px;
-    /* Offset from the left */
+    bottom: 2;
+    left: 0;
     right: 0;
-    /* Stretch to the right edge */
     background-color: #187CFF;
-    /* Blue background color */
     z-index: 100;
-    /* Z-index for layering */
     color: #FFFFFF;
-    /* Text color */
     padding: 14px;
-    /* Padding around the content */
+    display: flex;
+    flex-direction: row;
+    justify-content: left; /* Keeps items centered */
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Target the copyright text specifically for more control */
+nav a:not(:last-child) {
+    margin-right: 20px; /* Adds space to the right of each link except the last one */
+}
+
 nav .copyright-text {
     font-size: 13px;
     color: white;
 }
+
 
 
 /* Mobile Specific Styles */
@@ -602,15 +603,15 @@ nav .copyright-text {
     body[page="policy"] nav,
     body[page="terms"] nav {
         position: fixed;
-        bottom: 0;
-        left: 4px;
+        bottom: -2px;
+        left: -6px;
         /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
         color: #FFFFFF;
 
-        padding: 16px;
+        padding: 19px;
         /* Larger padding on mobile */
     }
 
