@@ -48,7 +48,7 @@ header {
     color: white;
     font-weight: bold;
     margin-bottom: 4px;
-    margin-top: 150px;
+    margin-top: 149px;
     margin-left: -16px;
     height: 230px;
     overflow: hidden;
@@ -342,7 +342,7 @@ header {
 
     .typing-effect {
         font-size: 30px;
-        margin-top: 107px;
+        margin-top: 103px;
         position: sticky;
         z-index: 200;
         margin-left: -31px;
@@ -405,7 +405,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 541px;
+        top: 530px;
     }
 
     .badges-container a {
@@ -433,39 +433,75 @@ body[page="terms"] {
     color: white;
 }
 
+/* Navigation styles */
 nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 15px 15px 0; /* Consistent padding */
+    background-color: transparent;
+    color: white;
     position: fixed;
-    bottom: 14px;
-    left: 59px;
-    z-index: 1001;
+    bottom: 4px;
+    left: 0;
+    width: calc(100% - 30px); /* Full width minus padding */
+    box-sizing: border-box;
+    transform: translateX(5%); /* Shift to the right for aesthetics */
 }
 
+.social-links,
+.footer-links {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.social-links a,
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin-right: 11px; /* Uniform spacing between links */
+}
+
+.social-links a:last-child,
+.footer-links a:last-child {
+    margin-right: 0; /* Remove margin for the last item */
+}
+
+.footer-links span {
+    margin-right: 10px; /* Space between copyright text and links */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    nav {
+        padding: 12px 12px 8px 0; /* Smaller padding on mobile */
+        transform: translateX(1%); /* Minimal horizontal shift on mobile */
+    }
+}
+
+/* Content styling */
 .content {
     padding: 20px;
     max-width: 1000px;
-    margin: 120px 0 20px;
+    margin: 120px auto 20px; /* Center content and add vertical spacing */
     font-size: 12px;
     line-height: 1.2;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-left: -20px;
+/* Heading styles */
+h1, h2, h3, h4, h5, h6 {
+    margin-left: -20px; /* Adjust if necessary for your design */
     color: #FFF;
     margin-top: 20px;
 }
 
-p,
-ul,
-ol,
-li {
-    margin-bottom: 35px;
+/* Paragraph and list styles */
+p, ul, ol, li {
+    margin-bottom: 35px; /* Consistent bottom margin */
 }
 
+/* Link styles */
 a {
     color: white;
     text-decoration: none;
@@ -473,64 +509,77 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Hover effect for links */
 }
+
 
 /* Desktop Specific Styles for Privacy Policy and Terms Pages */
 
 /* Header styles for policy and terms pages */
 body[page="policy"] header,
 body[page="terms"] header {
-    background-color: #187CFF;  /* Blue background for headers */
-    padding-top: 27px;          /* Padding at the top */
-    height: 23px;               /* Fixed height */
+    background-color: #187CFF;
+    /* Blue background for headers */
+    padding-top: 27px;
+    /* Padding at the top */
+    height: 23px;
+    /* Fixed height */
 }
 
 /* Content styling for policy page */
 body[page="policy"] .content {
-    margin-top: 50px;           /* Space above the content */
-    padding-bottom: 54px;       /* Padding below the content */
+    margin-top: 50px;
+    /* Space above the content */
+    padding-bottom: 54px;
+    /* Padding below the content */
 }
 
 /* Content styling for terms page */
 body[page="terms"] .content {
-    margin-top: 50px;           /* Same top margin as policy page */
-    padding-bottom: 50px;       /* Slightly different padding below content */
+    margin-top: 50px;
+    padding-bottom: 50px;
 }
 
-/* Fixed navigation bar styling shared by policy and terms pages */
 body[page="policy"] nav,
 body[page="terms"] nav {
-    position: fixed;            /* Fixed position to stay in view */
-    bottom: 0;                  /* Anchored to the bottom */
-    left: 56px;                 /* Offset from the left */
-    right: 0;                   /* Stretch to the right edge */
-    background-color: #187CFF;  /* Blue background color */
-    z-index: 100;               /* Z-index for layering */
-    color: #FFFFFF;             /* Text color */
-    padding: 14px;              /* Padding around the content */
+    position: fixed;
+    /* Fixed position to stay in view */
+    bottom: 0;
+    /* Anchored to the bottom */
+    left: 56px;
+    /* Offset from the left */
+    right: 0;
+    /* Stretch to the right edge */
+    background-color: #187CFF;
+    /* Blue background color */
+    z-index: 100;
+    /* Z-index for layering */
+    color: #FFFFFF;
+    /* Text color */
+    padding: 14px;
+    /* Padding around the content */
 }
 
 /* Target the copyright text specifically for more control */
 nav .copyright-text {
-    font-size: 13px; /* Set the desired font size */
-    color: white; /* This can be omitted if the color does not need to change */
+    font-size: 13px;
+    color: white;
 }
-
 
 
 /* Mobile Specific Styles */
 
 @media (max-width: 768px) {
-    /* Reset the background gradient for html */
+
     html {
-        background: none;       /* Remove any gradient */
+        background: none;
     }
 
     /* Solid background color for policy and terms pages */
     body[page="policy"],
     body[page="terms"] {
-        background: #187CFF;    /* Blue background */
+        background: #187CFF;
+        /* Blue background */
     }
 
     /* Gradient background for the home page */
@@ -541,23 +590,27 @@ nav .copyright-text {
     /* Content styling for mobile versions of policy and terms pages */
     body[page="policy"] .content,
     body[page="terms"] .content {
-        margin: 53px 27px 70px 1px; /* Margins around the content */
-        max-width: 120%;            /* Allowing content to be wider than the screen */
-        padding: 10px 0 68px 4px;   /* Padding inside content area */
+        margin: 53px 27px 70px 1px;
+        /* Margins around the content */
+        max-width: 120%;
+        /* Allowing content to be wider than the screen */
+        padding: 10px 0 68px 4px;
+        /* Padding inside content area */
     }
 
-    /* Fixed navigation styling for mobile */
     body[page="policy"] nav,
     body[page="terms"] nav {
         position: fixed;
         bottom: 0;
-        left: 4px;                 /* Smaller left offset on mobile */
+        left: 4px;
+        /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
         color: #FFFFFF;
-        
-        padding: 16px;             /* Larger padding on mobile */
+
+        padding: 16px;
+        /* Larger padding on mobile */
     }
 
     /* Ensuring text in navigation links is white */
@@ -568,7 +621,8 @@ nav .copyright-text {
 
     /* Adjusted navigation position for the home page */
     body[page="home"] nav {
-        left: 16px;                /* More offset on mobile for home page */
+        left: 16px;
+        /* More offset on mobile for home page */
     }
 
     /* Header styles adjustments for mobile */
@@ -576,8 +630,8 @@ nav .copyright-text {
     body[page="terms"] header {
         position: absolute;
         background-color: transparent;
-        top: 1px;                  /* Minimal top position */
-        margin-left: -3px;         /* Offset to adjust alignment */
+        top: 1px;
+        margin-left: -3px;
     }
 
     /* Padding adjustments for logo and navigation links */
@@ -585,6 +639,6 @@ nav .copyright-text {
     body[page="terms"] header #logo,
     body[page="policy"] header nav a,
     body[page="terms"] header nav a {
-        padding-bottom: 3px;       /* Padding to adjust visual alignment */
+        padding-bottom: 3px;
     }
 }
