@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    min-height: 80vh;
+    height: 100vh;
     margin: 0;
     display: flex;
     justify-content: flex-start;
