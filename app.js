@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
       "Hello, I'm B01",
       "I broke out of the internet to help you contact any company",
       "Phone and Instant Live Chat",
-      "All in under 3 seconds",
       "Got a company in mind?",
       "Just say the word or type it in",
       "Connecting to customer services has never been this fast",
@@ -188,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
           errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
           break;
         case "service-not-allowed":
-          errorMessage = "The speech recognition feature is not supported by Instagram browser. For company searches, use your keyboard. Please visit helloblue.ai for the speech recognition feature.";
+          errorMessage = "Instagram’s browser lacks speech recognition support. Utilize keyboard input for company queries or access helloblue.ai for full speech recognition capabilities.";
           break;
         default:
           break;
