@@ -37,7 +37,7 @@ Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web a
 ## Installation
 To set up the B01 Contact Assistant on your local machine, follow these steps:
 * Clone the Repository:
-`git clone https://github.com/pejmantheory/hbLab-B01.git`
+`git clone https://github.com/HelloblueAI/hbLab-B01.git`
 * Access the Project Directory:
 `cd helloblue`
 * View the Application:
