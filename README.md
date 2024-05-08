@@ -54,7 +54,7 @@ Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b663
 
 
 ## License
-This project is licensed under the [LICENSE](https://github.com/pejmantheory/hbLab-B01/blob/1ce0071c308c082f468a7a225aaa8d21444769b4/LICENSE.md)
+This project is licensed under the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/50eea61455cb189a5d34de1026817eca584fa99a/LICENSE.md)
 
 
 ## Acknowledgments
