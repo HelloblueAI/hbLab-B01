@@ -4,7 +4,7 @@
 
 Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
-`hbLab-B01` is your go-to Voice AI Customer Service Assistant, designed to make your interactions with customer service smooth and efficient. It's equipped with top-notch voice recognition and fast processing power to handle your requests. Whether you're speaking up or typing down, hbLab-B01 quickly retrieves the necessary information from our database and, with your nod, can even make phone calls. All this happens in a blink. It's like having a super-efficient helper right at your fingertips.
+`hbLab-B01` is your go-to Voice AI Customer Service Assistant, designed to make interactions with customer service smooth and efficient. It's equipped with top-notch voice recognition and fast processing power to handle requests. Whether speaking up or typing down, hbLab-B01 quickly retrieves the necessary information from the database and, with user's nod, can even make phone calls. All this happens in a blink. It's like having a super-efficient helper right at your fingertips.
 
 ## Features
 ![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/526db8c8-0854-4964-9b13-6eaa4cea8fd9)
