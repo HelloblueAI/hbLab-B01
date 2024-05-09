@@ -10,7 +10,7 @@ Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web a
 ![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/526db8c8-0854-4964-9b13-6eaa4cea8fd9)
 - **Voice Recognition**: Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
 - **Dynamic Typing Effect**: Watch as B01 types out responses in real-time, mimicking human-like interactions.
-- **Immediate Company Lookup**: Fetch company information quickly through integrated helloblue independent API, ensuring you're always a step ahead.
+- **Instant Company Lookup**: Fetch company information quickly through integrated helloblue independent API, ensuring you're always a step ahead.
 - **Persistent Storage**: Utilize browser's local storage to cache company data for faster subsequent accesses.
 - **AI Search Bar**: Fetch over 13,000 company data pointing towards helloblue serverless Postgres, and make a call on your device simultaneously, providing a seamless integration of data retrieval and faster communication.
 
