@@ -16,9 +16,9 @@ Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web a
 
 - ## Technologies Used
 
-- **HTML5 and CSS3**: For structuring and designing the front-end.
-- **JavaScript**: Powers the core functionalities, including voice recognition and data fetching.
 - **Python**: Utilized for backend machine learning operations, enhancing the intelligent processing capabilities of our application.
+- **JavaScript**: Powers the core functionalities, including voice recognition and data fetching.
+- **HTML5 and CSS3**: For structuring and designing the front-end.
 - **JAX**: For high-performance numerical and scientific computation. Used primarily in the backend for accelerating machine learning models and simulations.
 - **Netlify Identity Widget**: For user authentication and secure access.
 - **Fuse.js**: Implements fuzzy search capabilities to enhance the search functionality.
