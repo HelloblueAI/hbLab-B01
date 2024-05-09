@@ -11,7 +11,7 @@ Begin by forking the repository on GitHub. This creates a copy of the project in
 ### Clone Your Fork
 Clone your forked repository to your local machine to start making changes.
 
-`git clone https://github.com/yourusername/b01-contact-assistant.git`
+`git clone https://github.com/HelloblueAI/hbLab-B01.git`
 
 `cd b01-contact-assistant`
 
