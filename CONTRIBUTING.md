@@ -1,6 +1,7 @@
 # Contributing to B01 Contact Assistant
 
-We're thrilled that you're interested in contributing to the B01 Contact Assistant project! Your contributions can help make the application even better and more efficient. Here are some guidelines that we ask you to follow to help ensure a smooth collaboration process.
+We're thrilled that you're interested in contributing to the B01 Contact Assistant project! Your contributions can help make the application even better and more efficient. Here are some guidelines that we ask you to follow to help ensure a smooth collaboration process. Please don't hesitate to reach out or contribute to its growth! 
+
 
 ## Getting Started
 
