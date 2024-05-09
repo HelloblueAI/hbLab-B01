@@ -2,12 +2,13 @@ body {
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    display: absolute;
+    display: absolute;  
     justify-content: flex-start;
     align-items: center;
     padding-left: 5%;
     background: linear-gradient(45deg, darkblue, #187CFF);
 }
+
 
 header {
     width: 100%;
@@ -342,7 +343,7 @@ header {
 
     .typing-effect {
         font-size: 30px;
-        margin-top: 103px;
+        margin-top: 101px;
         position: sticky;
         z-index: 200;
         margin-left: -31px;
