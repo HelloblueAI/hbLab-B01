@@ -2,12 +2,11 @@ body {
     font-family: 'Arial', sans-serif;
     height: 100vh;
     margin: 0;
-    display: flex;
+    display: absolute;
     justify-content: flex-start;
     align-items: center;
     padding-left: 5%;
     background: linear-gradient(45deg, darkblue, #187CFF);
-    background-attachment: fixed;
 }
 
 header {
@@ -434,75 +433,85 @@ body[page="terms"] {
     color: white;
 }
 
-/* Navigation styles */
 nav {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 15px 15px 15px 0; /* Consistent padding */
+    padding: 15px 15px 15px 0;
+    /* Adjust padding as needed */
     background-color: transparent;
     color: white;
     position: fixed;
     bottom: 4px;
     left: 0;
-    width: calc(100% - 30px); /* Full width minus padding */
+    /* Set nav to start from the left edge */
+    width: calc(100% - 30px);
+    /* Adjust width if necessary */
     box-sizing: border-box;
-    transform: translateX(5%); /* Shift to the right for aesthetics */
+    transform: translateX(5%);
+    /* Adjust the X translation to move to the left */
 }
 
-.social-links,
-.footer-links {
+.footer-links,
+.social-links {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.social-links a,
-.footer-links a {
+.footer-links a,
+.social-links a {
     color: white;
     text-decoration: none;
-    margin-right: 11px; /* Uniform spacing between links */
-}
-
-.social-links a:last-child,
-.footer-links a:last-child {
-    margin-right: 0; /* Remove margin for the last item */
+    margin-right: 11px;
 }
 
 .footer-links span {
-    margin-right: 10px; /* Space between copyright text and links */
+    margin-right: 10px;
+}
+
+.footer-links a:last-child,
+.social-links a:last-child {
+    margin-right: 0;
 }
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     nav {
-        padding: 12px 12px 8px 0; /* Smaller padding on mobile */
-        transform: translateX(1%); /* Minimal horizontal shift on mobile */
+        padding: 12px 12px 8px 0px;
+        transform: translateX(1%);
+        /* Less translation on smaller screens */
     }
 }
 
-/* Content styling */
+
+
 .content {
     padding: 20px;
     max-width: 1000px;
-    margin: 120px auto 20px; /* Center content and add vertical spacing */
+    margin: 120px 0 20px;
     font-size: 12px;
     line-height: 1.2;
 }
 
-/* Heading styles */
-h1, h2, h3, h4, h5, h6 {
-    margin-left: -20px; /* Adjust if necessary for your design */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-left: -20px;
     color: #FFF;
     margin-top: 20px;
 }
 
-/* Paragraph and list styles */
-p, ul, ol, li {
-    margin-bottom: 35px; /* Consistent bottom margin */
+p,
+ul,
+ol,
+li {
+    margin-bottom: 35px;
 }
 
-/* Link styles */
 a {
     color: white;
     text-decoration: none;
@@ -510,9 +519,8 @@ a {
 }
 
 a:hover {
-    text-decoration: underline; /* Hover effect for links */
+    text-decoration: underline;
 }
-
 
 /* Desktop Specific Styles for Privacy Policy and Terms Pages */
 
@@ -544,29 +552,28 @@ body[page="terms"] .content {
 body[page="policy"] nav,
 body[page="terms"] nav {
     position: fixed;
-    bottom: 2;
-    left: 0;
+    /* Fixed position to stay in view */
+    bottom: 0;
+    /* Anchored to the bottom */
+    left: 56px;
+    /* Offset from the left */
     right: 0;
+    /* Stretch to the right edge */
     background-color: #187CFF;
+    /* Blue background color */
     z-index: 100;
+    /* Z-index for layering */
     color: #FFFFFF;
+    /* Text color */
     padding: 14px;
-    display: flex;
-    flex-direction: row;
-    justify-content: left; /* Keeps items centered */
-    width: 100%;
-    box-sizing: border-box;
+    /* Padding around the content */
 }
 
-nav a:not(:last-child) {
-    margin-right: 20px; /* Adds space to the right of each link except the last one */
-}
-
+/* Target the copyright text specifically for more control */
 nav .copyright-text {
     font-size: 13px;
     color: white;
 }
-
 
 
 /* Mobile Specific Styles */
@@ -603,15 +610,15 @@ nav .copyright-text {
     body[page="policy"] nav,
     body[page="terms"] nav {
         position: fixed;
-        bottom: -2px;
-        left: -6px;
+        bottom: 0;
+        left: 4px;
         /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
         color: #FFFFFF;
 
-        padding: 19px;
+        padding: 16px;
         /* Larger padding on mobile */
     }
 
