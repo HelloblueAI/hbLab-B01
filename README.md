@@ -57,8 +57,5 @@ Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b663
 This project is licensed under the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/50eea61455cb189a5d34de1026817eca584fa99a/LICENSE.md)
 
 
-## Acknowledgments
-Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 
-
 ## Next + Netlify Starter
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
