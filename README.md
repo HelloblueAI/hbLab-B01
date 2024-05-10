@@ -4,13 +4,13 @@
 
 Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
-`hbLab-B01` is your go-to Voice AI Customer Service Assistant, designed to make your interactions with customer service smooth and efficient. It's equipped with top-notch voice recognition and fast processing power to handle your requests. Whether you're speaking up or typing down, hbLab-B01 quickly retrieves the necessary information from our database and, with your nod, can even make phone calls. All this happens in a blink. It's like having a super-efficient helper right at your fingertips.
+`hbLab-B01` is your go-to Voice AI Customer Service Assistant, designed to make interactions with customer service smooth and efficient. It's equipped with top-notch voice recognition and fast processing power to handle requests. Whether speaking up or typing down, hbLab-B01 quickly retrieves the necessary information from the database and, with user's nod, can even make phone calls. All this happens in a blink. It's like having a super-efficient helper right at your fingertips.
 
 ## Features
 ![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/526db8c8-0854-4964-9b13-6eaa4cea8fd9)
 - **Voice Recognition**: Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
 - **Dynamic Typing Effect**: Watch as B01 types out responses in real-time, mimicking human-like interactions.
-- **Immediate Company Lookup**: Fetch company information quickly through integrated helloblue independent API, ensuring you're always a step ahead.
+- **Instant Company Lookup**: Fetch company information quickly through integrated helloblue independent API, ensuring you're always a step ahead.
 - **Persistent Storage**: Utilize browser's local storage to cache company data for faster subsequent accesses.
 - **AI Search Bar**: Fetch over 13,000 company data pointing towards helloblue serverless Postgres, and make a call on your device simultaneously, providing a seamless integration of data retrieval and faster communication.
 
@@ -56,9 +56,6 @@ Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b663
 ## License
 This project is licensed under the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/50eea61455cb189a5d34de1026817eca584fa99a/LICENSE.md)
 
-
-## Acknowledgments
-Feel free to explore the application, and don't hesitate to reach out or contribute to its growth! 
 
 ## Next + Netlify Starter
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)

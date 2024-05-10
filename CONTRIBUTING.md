@@ -1,6 +1,7 @@
 # Contributing to B01 Contact Assistant
 
-We're thrilled that you're interested in contributing to the B01 Contact Assistant project! Your contributions can help make the application even better and more efficient. Here are some guidelines that we ask you to follow to help ensure a smooth collaboration process.
+We're thrilled that you're interested in contributing to the B01 Contact Assistant project! Your contributions can help make the application even better and more efficient. Here are some guidelines that we ask you to follow to help ensure a smooth collaboration process. Please don't hesitate to reach out or contribute to its growth! 
+
 
 ## Getting Started
 
@@ -10,7 +11,7 @@ Begin by forking the repository on GitHub. This creates a copy of the project in
 ### Clone Your Fork
 Clone your forked repository to your local machine to start making changes.
 
-`git clone https://github.com/yourusername/b01-contact-assistant.git`
+`git clone https://github.com/HelloblueAI/hbLab-B01.git`
 
 `cd b01-contact-assistant`
 
