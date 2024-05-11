@@ -8,11 +8,31 @@ Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web a
 
 ## Features
 ![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/526db8c8-0854-4964-9b13-6eaa4cea8fd9)
-- **Voice Recognition**: Initiate searches with just your voice, reducing the need for typing and enhancing accessibility.
-- **Dynamic Typing Effect**: Watch as B01 types out responses in real-time, mimicking human-like interactions.
-- **Instant Company Lookup**: Fetch company information quickly through integrated helloblue independent API, ensuring you're always a step ahead.
-- **Persistent Storage**: Utilize browser's local storage to cache company data for faster subsequent accesses.
-- **AI Search Bar**: Fetch over 13,000 company data pointing towards helloblue serverless Postgres, and make a call on your device simultaneously, providing a seamless integration of data retrieval and faster communication.
+# Enhanced Voice AI Assistant
+## Feature Overview
+The Enhanced Voice AI Assistant in our application allows users to initiate searches and make calls simultaneously using just their voice. This feature reduces the need for typing, enhances accessibility, and supports efficient multitasking.
+
+## Key Capabilities
+- **Voice Recognition**: Users can activate searches and initiate calls simultaneously with voice commands. This dual-functionality not only minimizes the need for manual input but also makes the app more accessible and convenient for multitasking.
+
+## Technical Implementation
+
+### 1. Voice Command Recognition
+We use a speech-to-text API to convert spoken words into text. This can be integrated using services like Google Speech-to-Text or IBM Watson Speech to Text, which provide robust speech recognition capabilities.
+### 2. Command Parsing
+After converting speech to text, the system employs natural language processing (NLP) techniques to parse the text and determine the user's intent, categorizing it as either a search query or a call request.
+
+### 3. Handling Searches and Calls
+- **Search Functionality**: For search queries, the parsed command is used to retrieve information from the database or perform web searches, depending on the context specified by the user.
+- **Call Functionality**: For call commands, the assistant identifies the contact name or number from the user's voice input and initiates a call using the device's calling capabilities or through an integrated VoIP service.
+
+## Usage
+
+To use the Voice AI Assistant, simply activate it using a predefined hotword (e.g., "Hey Assistant"), followed by your command. For example:
+- Say e.g. "Amazon" to initiate the call to the customer service department.
+- Sat e.g."Apple" to initiate the call or text box to the customer service department.
+
+This hands-free operation allows users to perform tasks on the go, making our application more user-friendly and efficient.
 
 - ## Technologies Used
 
