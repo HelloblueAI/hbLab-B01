@@ -28,9 +28,9 @@ After converting speech to text, the system employs natural language processing 
 
 ## Usage
 
-To use the Voice AI Assistant, simply activate it using a predefined hotword (e.g., "Hey Assistant"), followed by your command. For example:
+To use the Voice AI Assistant, simply activate it using a predefined hotword followed by your command:
 - Say e.g. "Amazon" to initiate the call to the customer service department.
-- Sat e.g."Apple" to initiate the call or text box to the customer service department.
+- Sat e.g. "Apple" to initiate the call or text box to the customer service department.
 
 This hands-free operation allows users to perform tasks on the go, making our application more user-friendly and efficient.
 
