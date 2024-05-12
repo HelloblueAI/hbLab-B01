@@ -67,15 +67,14 @@ Open the index.html file in your preferred web browser to launch the application
 Simply activate the voice recognition by clicking the microphone icon, or type the name of the company you wish to contact in the search box. B01 will handle the rest, displaying the company's contact information and offering direct dialing if available.
 
 ## Contributing
-We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](./CONTRIBUTING.md)
+We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](./CONTRIBUTING.md). If you encounter any issues, please submit a new issue on our [issues page](https://github.com/HelloblueAI/hbLab-B01/issues).
 
 ## Security Policy
 Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b6638fdc480cf89d0fe4128a49642adb55fb4b/SECURITY.md) 
 
-
 ## License
 This project is licensed under the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/50eea61455cb189a5d34de1026817eca584fa99a/LICENSE.md)
 
-
 ## Next + Netlify Starter
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
+
