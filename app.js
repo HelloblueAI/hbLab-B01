@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isConfirmationDialogOpen = false;
   let isFetching = false;
 
+  // Typing effect for displaying text character by character
   async function typeEffect(text, effectType) {
     for (let i = 0; i <= text.length; i++) {
       if (activeEffect !== effectType) break;
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Intro effect to display initial messages
   async function introEffect() {
     activeEffect = 'intro';
     const sentences = [
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeEffect === 'intro') introEffect();
   }
 
+  // Display company information after fetching
   async function displayCompanyInfo({ company_name: companyName, phone_number: phoneNumber, url }) {
     activeEffect = 'company';
     const capitalizedCompanyName = capitalizeCompany(companyName);
@@ -54,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
   }
 
+  // Fetch company data from API or cache
   async function fetchCompanyData(company) {
     if (isConfirmationDialogOpen) return;
 
@@ -64,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cachedData) {
       const data = JSON.parse(cachedData);
       await displayCompanyInfo(data);
-      isFetching = false;
     } else {
       try {
         const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
@@ -72,16 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
         localStorage.setItem(cacheKey, JSON.stringify(data));
         await displayCompanyInfo(data);
-        isFetching = false;
       } catch (error) {
         console.error('Error fetching company data:', error);
         displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
         introEffect();
-        isFetching = false;
       }
     }
+    isFetching = false;
   }
 
+  // Show confirmation dialog to the user
   function showConfirmationDialog(capitalizedCompanyName, phoneNumber, url) {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
@@ -101,9 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isConfirmationDialogOpen = false;
   }
 
-  elements.companySearch.addEventListener('input', handleCompanySearch);
-  elements.companySearch.addEventListener('keypress', handleCompanySearch);
-
+  // Handle company search input and keypress events
   let timer;
   async function handleCompanySearch(event) {
     clearTimeout(timer);
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       company = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
       event.target.value = company;
 
-      if (event.key === 'Enter') {
+      if (event.key === 'Enter' || event.type === 'input') {
         if (!isFetching) {
           isFetching = true;
           await fetchCompanyData(company);
@@ -142,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  setupVoiceRecognition();
-
+  // Setup voice recognition for voice input
   function setupVoiceRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -220,5 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Initialize the intro effect and event listeners
   introEffect();
+  elements.companySearch.addEventListener('input', handleCompanySearch);
+  elements.companySearch.addEventListener('keypress', handleCompanySearch);
+  setupVoiceRecognition();
 });
