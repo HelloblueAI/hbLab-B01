@@ -280,7 +280,7 @@ header {
 
 
 
-/* Existing CSS for larger screens */
+
 @media (min-width: 768px) {
     header {
         padding: 0 5%;
@@ -297,7 +297,6 @@ header {
     }
 }
 
-/* New CSS for smaller screens (like iPhone 4) */
 @media (max-width: 767px) {
     .badges-container {
         position: absolute;
@@ -310,23 +309,21 @@ header {
 @media (max-width: 768px) {
     html {
         height: 100%;
-        /* Ensure the html element covers the entire viewport */
         background: linear-gradient(180deg, #191970, #187CFF);
 
     }
 
     body {
         height: inherit;
-        /* Let the body take the height of its content */
+        
         margin: 0;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        /* Align items to the start */
         padding-left: 3%;
         padding-bottom: 0px;
         background: none;
-        /* Remove the background from the body */
+
     }
     
 
@@ -399,7 +396,7 @@ header {
         transform: translateY(-50%);
     }
 
-    /* Ino top bayad tanzim koni age mikhay badgeharo bala payin koni */
+    /* main one */
     .badges-container {
         position: absolute;
         right: 60px;
@@ -427,7 +424,6 @@ header {
     }
 }
 
-/* General Styles (Affecting both Desktop and Mobile) */
 
 body[page="policy"],
 body[page="terms"] {
@@ -440,18 +436,16 @@ nav {
     flex-direction: column;
     align-items: flex-start;
     padding: 15px 15px 15px 0;
-    /* Adjust padding as needed */
     background-color: transparent;
     color: white;
     position: fixed;
     bottom: 4px;
     left: 0;
-    /* Set nav to start from the left edge */
+
     width: calc(100% - 30px);
-    /* Adjust width if necessary */
+
     box-sizing: border-box;
     transform: translateX(5%);
-    /* Adjust the X translation to move to the left */
 }
 
 .footer-links,
