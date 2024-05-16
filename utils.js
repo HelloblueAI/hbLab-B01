@@ -1,7 +1,11 @@
 // utils.js
 import { config } from './config.js';
 
-
+/**
+ * Capitalizes the company name appropriately.
+ * @param {string} company - The company name to capitalize.
+ * @returns {string} - The capitalized company name.
+ */
 export const capitalizeCompany = (company) => {
   const uppercasedCompany = company.toUpperCase();
   if (config.UPPERCASE_COMPANIES.has(uppercasedCompany)) {
@@ -12,12 +16,28 @@ export const capitalizeCompany = (company) => {
   }
 };
 
+/**
+ * Displays a notification to the user.
+ * @param {string} message - The message to display.
+ * @param {string} [type='info'] - The type of notification (e.g., 'info', 'error', 'success').
+ */
+export const displayNotification = (message, type = 'info') => {
+  const notificationContainer = document.createElement('div');
+  notificationContainer.className = `notification ${type}`;
+  notificationContainer.textContent = message;
 
-export const displayNotification = (message) => {
-  // Implement the logic to display notifications to the user
-  alert(message);
+  document.body.appendChild(notificationContainer);
+
+  setTimeout(() => {
+    notificationContainer.remove();
+  }, 3000); // Auto-remove notification after 3 seconds
 };
 
+/**
+ * Validates a URL.
+ * @param {string} url - The URL to validate.
+ * @returns {boolean} - True if the URL is valid, otherwise false.
+ */
 export const isValidURL = (url) => {
   try {
     new URL(url);
@@ -27,6 +47,11 @@ export const isValidURL = (url) => {
   }
 };
 
+/**
+ * Delays execution for a specified amount of time.
+ * @param {number} ms - The delay time in milliseconds.
+ * @returns {Promise<void>} - A promise that resolves after the delay.
+ */
 export const delay = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
