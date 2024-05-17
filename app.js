@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Implementing keyboard shortcut for voice activation
+  
     document.addEventListener('keydown', (event) => {
       if (event.altKey && event.key === 'v') { // Pressing "Alt + V" triggers voice recognition
         if (!elements.voiceButton.classList.contains('active')) {
