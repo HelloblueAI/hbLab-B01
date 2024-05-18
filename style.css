@@ -547,25 +547,16 @@ body[page="terms"] .content {
 
 body[page="policy"] nav,
 body[page="terms"] nav {
-    position: fixed;
-    /* Fixed position to stay in view */
     bottom: 0;
-    /* Anchored to the bottom */
     left: 15px;
-    /* Offset from the left */
     right: 0;
-    /* Stretch to the right edge */
     background-color: #187CFF;
-    /* Blue background color */
     z-index: 100;
-    /* Z-index for layering */
     color: #FFFFFF;
-    /* Text color */
     padding: 14px;
-    /* Padding around the content */
 }
 
-/* Target the copyright text specifically for more control */
+
 nav .copyright-text {
     font-size: 13px;
     color: white;
