@@ -54,23 +54,31 @@ document.addEventListener('DOMContentLoaded', () => {
     showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
   }
 
+  function cacheData(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  function getCachedData(key) {
+    const cachedData = localStorage.getItem(key);
+    return cachedData ? JSON.parse(cachedData) : null;
+  }
+
   async function fetchCompanyData(company) {
     if (isConfirmationDialogOpen) return;
 
     elements.feedbackText.textContent = "";
     const cacheKey = `companyData-${company}`;
-    const cachedData = localStorage.getItem(cacheKey);
+    const cachedData = getCachedData(cacheKey);
 
     if (cachedData) {
-      const data = JSON.parse(cachedData);
-      await displayCompanyInfo(data);
+      await displayCompanyInfo(cachedData);
       isFetching = false;
     } else {
       try {
         const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        localStorage.setItem(cacheKey, JSON.stringify(data));
+        cacheData(cacheKey, data);
         await displayCompanyInfo(data);
         isFetching = false;
       } catch (error) {
@@ -142,8 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  setupVoiceRecognition();
-
   function setupVoiceRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -168,32 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     recognition.onerror = (event) => {
-      let errorMessage = "An error occurred with voice recognition.";
-
-      switch (event.error) {
-        case "no-speech":
-          errorMessage = "No speech was detected. Please try again.";
-          break;
-        case "aborted":
-          errorMessage = "Voice recognition was aborted. Please try again.";
-          break;
-        case "audio-capture":
-          errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
-          break;
-        case "network":
-          errorMessage = "Network issues prevented voice recognition. Please check your connection.";
-          break;
-        case "not-allowed":
-          errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
-          break;
-        case "service-not-allowed":
-          errorMessage = "Instagram’s browser lacks speech recognition support. Utilize keyboard input for company queries or access helloblue.ai for full speech recognition capabilities.";
-          break;
-        default:
-          break;
-      }
-
-      displayNotification(errorMessage);
+      handleVoiceRecognitionError(event);
     };
 
     recognition.onend = () => {
@@ -208,17 +189,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-  
     document.addEventListener('keydown', (event) => {
       if (event.altKey && event.key === 'v') { // Pressing "Alt + V" triggers voice recognition
-        if (!elements.voiceButton.classList.contains('active')) {
-          recognition.start();
-        } else {
-          recognition.stop();
-        }
+        toggleVoiceRecognition(recognition);
       }
     });
   }
 
+  function toggleVoiceRecognition(recognition) {
+    if (elements.voiceButton.classList.contains('active')) {
+      recognition.stop();
+    } else {
+      recognition.start();
+    }
+  }
+
+  function handleVoiceRecognitionError(event) {
+    let errorMessage = "An error occurred with voice recognition.";
+
+    switch (event.error) {
+      case "no-speech":
+        errorMessage = "No speech was detected. Please try again.";
+        break;
+      case "aborted":
+        errorMessage = "Voice recognition was aborted. Please try again.";
+        break;
+      case "audio-capture":
+        errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
+        break;
+      case "network":
+        errorMessage = "Network issues prevented voice recognition. Please check your connection.";
+        break;
+      case "not-allowed":
+        errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
+        break;
+      case "service-not-allowed":
+        errorMessage = "This browser lacks speech recognition support. Use keyboard input or access helloblue.ai for full speech recognition capabilities.";
+        break;
+      default:
+        break;
+    }
+
+    displayNotification(errorMessage);
+  }
+
   introEffect();
+  setupVoiceRecognition();
 });
