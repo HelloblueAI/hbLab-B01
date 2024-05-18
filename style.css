@@ -551,7 +551,7 @@ body[page="terms"] nav {
     /* Fixed position to stay in view */
     bottom: 0;
     /* Anchored to the bottom */
-    left: 56px;
+    left: 15px;
     /* Offset from the left */
     right: 0;
     /* Stretch to the right edge */
@@ -647,3 +647,4 @@ nav .copyright-text {
         padding-bottom: 3px;
     }
 }
+
