@@ -1,12 +1,16 @@
+html {
+    height: 100%;
+    background: linear-gradient(45deg, darkblue, #187CFF);
+}
+
 body {
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
     margin: 0;
-    display: absolute;  
+    overflow-x: hidden; 
     justify-content: flex-start;
-    align-items: center;
-    padding-left: 5%;
-    
+    padding-left: 3%;
+    height: 100%;
     background: linear-gradient(45deg, darkblue, #187CFF);
 }
 
@@ -21,7 +25,8 @@ header {
     top: 0;
     left: 0;
     background-color: transparent;
-    z-index: 999;
+    margin-left: -20px;
+    
 }
 
 .main-content {
@@ -332,6 +337,7 @@ header {
         background-color: transparent;
         height: 17px;
         padding-top: 33px;
+        padding-left: 18px;
         padding-bottom: 5px;
         z-index: 0;
     }
@@ -711,4 +717,3 @@ nav {
         margin-bottom: 19px;
     }
 }
-
