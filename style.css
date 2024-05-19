@@ -648,7 +648,7 @@ nav {
     background-color: transparent;
     color: white;
     position: fixed;
-    bottom: 4px;
+    bottom: 1px;
     left: 0;
     width: 100%;
     box-sizing: border-box;
@@ -680,7 +680,7 @@ nav {
 
 @media (max-width: 768px) {
     nav {
-        padding: 3px 0;
+        padding: 1px 1px;
         width: 100%;
         box-sizing: border-box;
         align-items: flex-start;
@@ -697,8 +697,8 @@ nav {
     }
 
     .footer-links a, .footer-links span, .social-links a {
-        font-size: 11px;
-        margin: 3px 7px 2px 5px; 
+        font-size: 12px;
+        margin: 2px 2px 1px 3px; 
         white-space: nowrap;
     }
 
