@@ -526,7 +526,7 @@ body[page="policy"] header,
 body[page="terms"] header {
     background-color: #187CFF;
     padding-top: 27px;
-    padding-left: 0px;
+    padding-left: 58px;
     height: 23px;
 }
 
@@ -624,7 +624,7 @@ nav .copyright-text {
         position: absolute;
         background-color: transparent;
         top: 1px;
-        margin-left: -3px;
+        margin-left: -62px;
     }
 
     /* Padding adjustments for logo and navigation links */
@@ -641,14 +641,12 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 15px 0 15px 0;
     background-color: transparent;
     color: white;
     position: fixed;
     bottom: 1px;
     left: 0;
     width: 100%;
-    box-sizing: border-box;
 }
 
 .footer-links,
