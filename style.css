@@ -574,7 +574,6 @@ nav .copyright-text {
     body[page="policy"],
     body[page="terms"] {
         background: #187CFF;
-        /* Blue background */
     }
 
     /* Gradient background for the home page */
@@ -605,7 +604,6 @@ nav .copyright-text {
         color: #FFFFFF;
 
         padding: 16px;
-        /* Larger padding on mobile */
     }
 
     /* Ensuring text in navigation links is white */
