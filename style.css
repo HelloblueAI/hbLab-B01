@@ -1,18 +1,25 @@
-html {
-    background: linear-gradient(45deg, darkblue, #187CFF);
+* {
+    box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 body {
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
-    margin: 0;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
-    padding-left: 3%;
-    background: linear-gradient(45deg, darkblue, #187CFF) no-repeat;
-    background-size: cover;
+    align-items: center;
+    background: linear-gradient(45deg, darkblue, #187CFF);
 }
-
 
 header {
     width: 100%;
@@ -24,17 +31,16 @@ header {
     top: 0;
     left: 0;
     background-color: transparent;
-    margin-left: -20px;
-    
+    z-index: 999;
 }
 
 .main-content {
-    padding-left: 40px;
+    padding: 0 5%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    padding-right: 5%;
+    flex-grow: 1; /* Ensures the main content grows to fill available space */
 }
 
 #logo {
@@ -55,7 +61,7 @@ header {
     font-weight: bold;
     margin-bottom: 4px;
     margin-top: 149px;
-    margin-left: -16px;
+    margin-left: 0;
     height: 230px;
     overflow: hidden;
 }
@@ -65,22 +71,14 @@ header {
 }
 
 @keyframes blink {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .sub-text {
     font-size: 29px;
-    margin-left: -14px;
+    margin-left: 0;
     color: white;
     margin-top: -99px;
     font-weight: 400;
@@ -89,12 +87,12 @@ header {
 .sub-text.specific-line {
     font-size: 17px;
     width: 94%;
-    margin-left: -14px;
+    margin-left: 0;
     margin-right: auto;
     margin-top: 22px;
 }
 
-.main-content>p {
+.main-content > p {
     color: white;
     margin-bottom: 10px;
 }
@@ -148,10 +146,10 @@ header {
 }
 
 #companySearch {
-    width: 54%;
+    width: 66%;
     padding: 12px 60px 12px 15px;
     font-size: 1.4em;
-    margin-left: -14px;
+    margin-left: 0;
     border: 2px solid #888;
     border-radius: 30px;
     outline: none;
@@ -168,7 +166,6 @@ header {
     border-color: white;
     background-color: transparent;
 }
-
 
 #voiceButton {
     position: absolute;
@@ -211,27 +208,10 @@ header {
 }
 
 @keyframes futuristicAnimation {
-
-    0%,
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
-    }
-
-    20% {
-        transform: scale(1.1);
-        box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-    50% {
-        transform: scale(1.2);
-        box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.1);
-    }
-
-    75% {
-        transform: scale(1.1);
-        box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.05);
-    }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); }
+    20% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.3); }
+    50% { transform: scale(1.2); box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.1); }
+    75% { transform: scale(1.1); box-shadow: 0 0 0 30px rgba(0, 255, 255, 0.05); }
 }
 
 #voiceButton:active {
@@ -251,7 +231,6 @@ header {
     visibility: visible;
     opacity: 1;
 }
-
 
 .position-app-store {
     position: fixed;
@@ -283,9 +262,6 @@ header {
     gap: 8px;
 }
 
-
-
-
 @media (min-width: 768px) {
     header {
         padding: 0 5%;
@@ -310,33 +286,29 @@ header {
     }
 }
 
-
 @media (max-width: 768px) {
     html {
         height: 100%;
         background: linear-gradient(180deg, #191970, #187CFF);
-
     }
 
     body {
         height: inherit;
-        
         margin: 0;
         display: flex;
+        flex-direction: column;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
         padding-left: 3%;
+        padding-right: 3%;
         padding-bottom: 0px;
         background: none;
-
     }
-    
 
     header {
         background-color: transparent;
         height: 17px;
         padding-top: 33px;
-        padding-left: 19px;
         padding-bottom: 5px;
         z-index: 0;
     }
@@ -350,7 +322,7 @@ header {
         margin-top: 101px;
         position: sticky;
         z-index: 200;
-        margin-left: -31px;
+        margin-left: 0;
     }
 
     .sub-text {
@@ -358,21 +330,21 @@ header {
         position: sticky;
         width: 82%;
         margin-top: -88px;
-        margin-left: -29px;
+        margin-left: 0;
     }
 
     .sub-text.specific-line {
         font-size: 17px;
         width: 94%;
-        margin-left: -28px;
+        margin-left: 0;
         margin-right: auto;
         margin-top: 11px;
     }
 
     #companySearch {
-        width: 88%;
+        width: 105%;
         padding: 12px 60px 12px 15px;
-        margin-left: -28px;
+        margin-left: 0;
         font-size: 1.4em;
         border: 2px solid #888;
         transition: border-color 0.3s;
@@ -402,7 +374,6 @@ header {
         transform: translateY(-50%);
     }
 
-    /* main one */
     .badges-container {
         position: absolute;
         right: 60px;
@@ -430,7 +401,6 @@ header {
     }
 }
 
-
 body[page="policy"],
 body[page="terms"] {
     background: #187CFF;
@@ -447,9 +417,7 @@ nav {
     position: fixed;
     bottom: 4px;
     left: 0;
-
     width: calc(100% - 30px);
-
     box-sizing: border-box;
     transform: translateX(5%);
 }
@@ -477,16 +445,12 @@ nav {
     margin-right: 0;
 }
 
-/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     nav {
         padding: 12px 12px 8px 0px;
         transform: translateX(1%);
-        /* Less translation on smaller screens */
     }
 }
-
-
 
 .content {
     padding: 20px;
@@ -496,21 +460,13 @@ nav {
     line-height: 1.2;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-left: -20px;
+h1, h2, h3, h4, h5, h6 {
+    margin-left: 0;
     color: #FFF;
     margin-top: 20px;
 }
 
-p,
-ul,
-ol,
-li {
+p, ul, ol, li {
     margin-bottom: 35px;
 }
 
@@ -524,28 +480,18 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Desktop Specific Styles for Privacy Policy and Terms Pages */
-
-/* Header styles for policy and terms pages */
 body[page="policy"] header,
 body[page="terms"] header {
     background-color: #187CFF;
-    /* Blue background for headers */
     padding-top: 27px;
-    /* Padding at the top */
     height: 23px;
-    /* Fixed height */
 }
 
-/* Content styling for policy page */
 body[page="policy"] .content {
     margin-top: 50px;
-    /* Space above the content */
     padding-bottom: 54px;
-    /* Padding below the content */
 }
 
-/* Content styling for terms page */
 body[page="terms"] .content {
     margin-top: 50px;
     padding-bottom: 50px;
@@ -562,42 +508,30 @@ body[page="terms"] nav {
     padding: 14px;
 }
 
-
 nav .copyright-text {
     font-size: 13px;
     color: white;
 }
 
-
-/* Mobile Specific Styles */
-
 @media (max-width: 768px) {
-
     html {
         background: none;
     }
 
-    /* Solid background color for policy and terms pages */
     body[page="policy"],
     body[page="terms"] {
         background: #187CFF;
-        /* Blue background */
     }
 
-    /* Gradient background for the home page */
     body[page="home"] {
         background: linear-gradient(45deg, darkblue, #187CFF);
     }
 
-    /* Content styling for mobile versions of policy and terms pages */
     body[page="policy"] .content,
     body[page="terms"] .content {
         margin: 53px 27px 70px 1px;
-        /* Margins around the content */
-        max-width: 120%;
-        /* Allowing content to be wider than the screen */
+        max-width: 100%;
         padding: 10px 0 68px 4px;
-        /* Padding inside content area */
     }
 
     body[page="policy"] nav,
@@ -605,38 +539,30 @@ nav .copyright-text {
         position: fixed;
         bottom: -5px;
         left: 4px;
-        /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
         color: #FFFFFF;
-
         padding: 16px;
-        /* Larger padding on mobile */
     }
 
-    /* Ensuring text in navigation links is white */
     body[page="policy"] nav a,
     body[page="terms"] nav a {
         color: #FFFFFF;
     }
 
-    /* Adjusted navigation position for the home page */
     body[page="home"] nav {
         left: 16px;
-        /* More offset on mobile for home page */
     }
 
-    /* Header styles adjustments for mobile */
     body[page="policy"] header,
     body[page="terms"] header {
         position: absolute;
         background-color: transparent;
         top: 1px;
-        margin-left: -3px;
+        margin-left: 0;
     }
 
-    /* Padding adjustments for logo and navigation links */
     body[page="policy"] header #logo,
     body[page="terms"] header #logo,
     body[page="policy"] header nav a,
@@ -644,7 +570,6 @@ nav .copyright-text {
         padding-bottom: 3px;
     }
 }
-
 
 nav {
     display: flex;
@@ -690,7 +615,7 @@ nav {
         width: 100%;
         box-sizing: border-box;
         align-items: flex-start;
-        margin-left: -11px; /* Shift the entire nav to the left */
+        margin-left: 0;
     }
 
     .footer-links, .social-links {
@@ -704,7 +629,7 @@ nav {
 
     .footer-links a, .footer-links span, .social-links a {
         font-size: 12px;
-        margin: 4px 2px 6px 3px; 
+        margin: 4px 2px 6px 3px;
         white-space: nowrap;
     }
 
