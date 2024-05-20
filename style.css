@@ -690,7 +690,7 @@ nav {
         width: 100%;
         box-sizing: border-box;
         align-items: flex-start;
-        margin-left: -11px; /* Shift the entire nav to the left */
+        margin-left: -1px; /* Shift the entire nav to the left */
     }
 
     .footer-links, .social-links {
