@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let isConfirmationDialogOpen = false;
   let isFetching = false;
 
+  function setBodyHeight() {
+    document.body.style.minHeight = window.innerHeight + 'px';
+  }
+
+  window.addEventListener('resize', setBodyHeight);
+  setBodyHeight();
+
   async function typeEffect(text, effectType) {
     for (let i = 0; i <= text.length; i++) {
       if (activeEffect !== effectType) break;
