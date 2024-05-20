@@ -1,5 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils.js';
+import VoiceRecognition from './voiceRecognition.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
@@ -83,14 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       try {
         const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         cacheData(cacheKey, data);
         await displayCompanyInfo(data);
         isFetching = false;
       } catch (error) {
-        console.error('Error fetching company data:', error);
-        displayNotification(`Failed to fetch data for ${capitalizeCompany(company)}. Please try again.`);
+        const errorMessage = error.message || 'An error occurred while fetching company data.';
+        displayNotification(`${errorMessage} Please try again.`);
         introEffect();
         isFetching = false;
       }
@@ -120,6 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.companySearch.addEventListener('keypress', handleCompanySearch);
 
   let timer;
+  const debounceDelay = 500; // Adjust the debounce delay as needed
+
   async function handleCompanySearch(event) {
     clearTimeout(timer);
 
@@ -150,96 +155,15 @@ document.addEventListener('DOMContentLoaded', () => {
             isFetching = true;
             await fetchCompanyData(company);
           }
-        }, 1000);
+        }, debounceDelay);
       }
     } else {
       introEffect();
     }
   }
 
-  function setupVoiceRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      console.error("This browser does not support Speech Recognition.");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-
-    recognition.onstart = () => {
-      elements.feedbackText.textContent = "Listening...";
-      elements.voiceButton.classList.add('active');
-    };
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      elements.companySearch.value = transcript;
-      fetchCompanyData(transcript.trim());
-      recognition.stop();
-    };
-
-    recognition.onerror = (event) => {
-      handleVoiceRecognitionError(event);
-    };
-
-    recognition.onend = () => {
-      elements.voiceButton.classList.remove('active');
-    };
-
-    elements.voiceButton.addEventListener('click', () => {
-      if (elements.voiceButton.classList.contains('active')) {
-        recognition.stop();
-      } else {
-        recognition.start();
-      }
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey && event.key === 'v') { // Pressing "Alt + V" triggers voice recognition
-        toggleVoiceRecognition(recognition);
-      }
-    });
-  }
-
-  function toggleVoiceRecognition(recognition) {
-    if (elements.voiceButton.classList.contains('active')) {
-      recognition.stop();
-    } else {
-      recognition.start();
-    }
-  }
-
-  function handleVoiceRecognitionError(event) {
-    let errorMessage = "An error occurred with voice recognition.";
-
-    switch (event.error) {
-      case "no-speech":
-        errorMessage = "No speech was detected. Please try again.";
-        break;
-      case "aborted":
-        errorMessage = "Voice recognition was aborted. Please try again.";
-        break;
-      case "audio-capture":
-        errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
-        break;
-      case "network":
-        errorMessage = "Network issues prevented voice recognition. Please check your connection.";
-        break;
-      case "not-allowed":
-        errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
-        break;
-      case "service-not-allowed":
-        errorMessage = "This browser lacks speech recognition support. Use keyboard input or access helloblue.ai for full speech recognition capabilities.";
-        break;
-      default:
-        break;
-    }
-
-    displayNotification(errorMessage);
-  }
+  const voiceRecognition = new VoiceRecognition(elements, fetchCompanyData);
+  voiceRecognition.setupVoiceRecognition();
 
   introEffect();
-  setupVoiceRecognition();
 });
