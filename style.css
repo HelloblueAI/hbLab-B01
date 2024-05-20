@@ -525,11 +525,9 @@ a:hover {
 body[page="policy"] header,
 body[page="terms"] header {
     background-color: #187CFF;
-    /* Blue background for headers */
     padding-top: 27px;
-    /* Padding at the top */
+    padding-left: 0px;
     height: 23px;
-    /* Fixed height */
 }
 
 /* Content styling for policy page */
