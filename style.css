@@ -547,7 +547,7 @@ body[page="terms"] .content {
 body[page="policy"] nav,
 body[page="terms"] nav {
     bottom: 0;
-    left: 15px;
+    left: -7px;
     right: 0;
     background-color: #187CFF;
     z-index: 100;
