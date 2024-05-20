@@ -19,5 +19,6 @@
         "stylelint",
         "tanzim",
         "timeframe"
-    ]
+    ],
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
