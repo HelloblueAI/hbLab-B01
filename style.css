@@ -496,21 +496,16 @@ nav {
     line-height: 1.2;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-left: -20px;
-    color: #FFF;
-    margin-top: 20px;
+:root {
+    --primary-color: #FFF; /* or any other color value */
 }
 
-p,
-ul,
-ol,
-li {
+h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0 0 -20px;
+    color: #FFF;
+}
+
+p, ul, ol, li {
     margin-bottom: 35px;
 }
 
