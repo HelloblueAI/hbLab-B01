@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isFetching = false;
 
   function setBodyHeight() {
-    document.body.style.minHeight = window.innerHeight + 'px';
+    document.body.style.minHeight = `${window.innerHeight}px`;
   }
 
   window.addEventListener('resize', setBodyHeight);
@@ -72,8 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function fetchCompanyData(company) {
-    if (isConfirmationDialogOpen) return;
+    if (isConfirmationDialogOpen || isFetching) return;
 
+    isFetching = true;
     elements.feedbackText.textContent = "";
     const cacheKey = `companyData-${company}`;
     const cachedData = getCachedData(cacheKey);
@@ -81,22 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cachedData) {
       await displayCompanyInfo(cachedData);
       isFetching = false;
-    } else {
-      try {
-        const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        cacheData(cacheKey, data);
-        await displayCompanyInfo(data);
-        isFetching = false;
-      } catch (error) {
-        const errorMessage = error.message || 'An error occurred while fetching company data.';
-        displayNotification(`${errorMessage} Please try again.`);
-        introEffect();
-        isFetching = false;
+      return;
+    }
+
+    try {
+      const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      const data = await response.json();
+      cacheData(cacheKey, data);
+      await displayCompanyInfo(data);
+    } catch (error) {
+      const errorMessage = error.message || 'An error occurred while fetching company data.';
+      displayNotification(`${errorMessage} Please try again.`);
+      introEffect();
+    } finally {
+      isFetching = false;
     }
   }
 
@@ -123,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.companySearch.addEventListener('keypress', handleCompanySearch);
 
   let timer;
-  const debounceDelay = 500; // Adjust the debounce delay as needed
+  const debounceDelay = 500;
 
   async function handleCompanySearch(event) {
     clearTimeout(timer);
@@ -138,22 +140,22 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    let company = event.target.value.trim();
+    const company = event.target.value.trim();
 
-    if (company !== '') {
-      company = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-      event.target.value = company;
+    if (company) {
+      const formattedCompany = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      event.target.value = formattedCompany;
 
       if (event.key === 'Enter') {
         if (!isFetching) {
           isFetching = true;
-          await fetchCompanyData(company);
+          await fetchCompanyData(formattedCompany);
         }
       } else {
         timer = setTimeout(async () => {
           if (!isFetching) {
             isFetching = true;
-            await fetchCompanyData(company);
+            await fetchCompanyData(formattedCompany);
           }
         }, debounceDelay);
       }
