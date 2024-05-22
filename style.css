@@ -285,7 +285,6 @@ header {
 
 
 
-
 @media (min-width: 768px) {
     header {
         padding: 0 5%;
@@ -691,7 +690,7 @@ nav {
 
     .footer-links a, .footer-links span, .social-links a {
         font-size: 10px;
-        margin: 0px 0px 3px 3px; 
+        margin: 0px 1px 3px 3px; 
         white-space: nowrap;
     }
 
