@@ -486,8 +486,6 @@ nav {
     }
 }
 
-
-
 .content {
     padding: 20px;
     max-width: 1000px;
@@ -653,7 +651,7 @@ nav {
 .social-links {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
     width: 100%;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -693,7 +691,7 @@ nav {
 
     .footer-links a, .footer-links span, .social-links a {
         font-size: 10px;
-        margin: 4px 2px 6px 3px; 
+        margin: 0px 0px 3px 3px; 
         white-space: nowrap;
     }
 
@@ -702,6 +700,6 @@ nav {
     }
 
     .social-links {
-        margin-bottom: 19px;
+        margin-bottom: 14px;
     }
 }
