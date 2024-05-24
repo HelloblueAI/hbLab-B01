@@ -303,12 +303,12 @@ header {
         padding-bottom: 0px;
         background: none;
         overflow-x: hidden;
-        /* Removing flex-direction: column */
     }
 
     header {
+        width: 100%;
         background-color: transparent;
-        height: 17px;
+        height: 50px; /* Adjust height to your needs */
         padding-top: 33px;
         padding-left: 19px;
         padding-bottom: 5px;
@@ -486,6 +486,7 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
 
 
 /* Desktop Specific Styles for Privacy Policy and Terms Pages */
