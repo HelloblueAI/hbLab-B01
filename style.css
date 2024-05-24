@@ -1,6 +1,5 @@
 html {
     background: linear-gradient(45deg, darkblue, #187CFF);
-    height: 100%;
 }
 
 body {
@@ -319,8 +318,7 @@ header {
     }
 
     body {
-        height: inherit;
-        
+        height: 100%;
         margin: 0;
         display: flex;
         justify-content: flex-start;
