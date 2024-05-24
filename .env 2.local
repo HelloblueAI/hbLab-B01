@@ -1,5 +1,0 @@
-AUTH0_SECRET='use [openssl rand -hex 32] to generate a 32 bytes value'
-AUTH0_BASE_URL='http://localhost:3000'
-AUTH0_ISSUER_BASE_URL='https://dev-1hra7hjzqmb8mhpk.us.auth0.com'
-AUTH0_CLIENT_ID='eGIgxwmPiq88wJR1gUkBz521ldRf6CTO'
-AUTH0_CLIENT_SECRET='_i4lVHPX5p6j5KbMV6bWgoz-aVG9Oq2dWFl0tN2L6JgBjzXwj9HSIqSGgO7_qOKE'
