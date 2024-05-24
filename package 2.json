@@ -1,0 +1,47 @@
+{
+  "name": "cpanel-public_html",
+  "version": "1.0.0",
+  "description": "[Netlify Status Badge]",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check-updates": "ncu",
+    "lint:css": "stylelint '**/*.css'",
+    "format": "prettier --write '**/*.{html,js,css}'",
+    "lint:js": "eslint '**/*.js'",
+    "build:css": "postcss style.css -o style.min.css",
+    "build": "npm run build:css",
+    "start": "http-server",
+    "serve": "serve -s .",
+    "prepare": "husky install"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cssnano": "^7.0.1",
+    "eslint": "^9.0.0",
+    "http-server": "^14.1.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "npm-check-updates": "^16.14.17",
+    "postcss": "^8.4.24",
+    "postcss-cli": "^11.0.0",
+    "prettier": "^3.2.5",
+    "serve": "^14.2.1",
+    "stylelint": "^16.1.0",
+    "stylelint-config-standard": "^36.0.0"
+  },
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-openid-connect": "^2.17.1",
+    "gotrue-js": "^0.9.29"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,html}": "prettier --write"
+  },
+  "keywords": []
+}
