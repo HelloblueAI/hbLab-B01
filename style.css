@@ -294,7 +294,7 @@ header {
     }
 
     body {
-        height: 170%;
+        height: 100%;
         margin: 0;
         display: flex;
         justify-content: flex-start;
