@@ -99,6 +99,13 @@ header {
     margin-bottom: 10px;
 }
 
+.email-access {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+}
 
 #search-input {
     flex: none;
@@ -120,6 +127,17 @@ header {
     border-color: darkblue;
 }
 
+#access-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid #187CFF;
+    background-color: #187CFF;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    outline: none;
+}
 
 .search-section {
     position: relative;
@@ -268,25 +286,24 @@ header {
 
 
 @media (max-width: 768px) {
-    html, body {
+    html {
         height: 100%;
+        background: linear-gradient(180deg, #191970, #187CFF);
         margin: 0;
         padding: 0;
-        overflow-x: hidden;
-    }
-
-    html {
-        background: linear-gradient(180deg, #191970, #187CFF);
     }
 
     body {
+        height: 100%;
+        margin: 0;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: 0 0 0 3%;
+        padding-left: 3%;
+        padding-bottom: 0px;
         background: none;
+        overflow-x: hidden;
     }
-
 
     header {
         width: 100%;
@@ -299,6 +316,10 @@ header {
         z-index: 0;
     }
     
+
+    #text-logo {
+        font-size: 20px;
+    }
 
     .typing-effect {
         font-size: 30px;
@@ -433,6 +454,7 @@ nav {
     nav {
         padding: 12px 12px 8px 0px;
         transform: translateX(1%);
+        /* Less translation on smaller screens */
     }
 }
 
@@ -535,8 +557,11 @@ nav .copyright-text {
     body[page="policy"] .content,
     body[page="terms"] .content {
         margin: 53px 27px 70px 1px;
+        /* Margins around the content */
         max-width: 120%;
+        /* Allowing content to be wider than the screen */
         padding: 10px 0 68px 4px;
+        /* Padding inside content area */
     }
 
     body[page="policy"] nav,
@@ -544,6 +569,7 @@ nav .copyright-text {
         position: fixed;
         bottom: -5px;
         left: 4px;
+        /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
@@ -552,7 +578,7 @@ nav .copyright-text {
         padding: 16px;
     }
 
-
+    /* Ensuring text in navigation links is white */
     body[page="policy"] nav a,
     body[page="terms"] nav a {
         color: #FFFFFF;

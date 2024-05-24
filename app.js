@@ -19,37 +19,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let isFetching = false;
   const cache = new Map();
 
-  const setBodyHeight = () => {
+  function setBodyHeight() {
     document.body.style.minHeight = `${window.innerHeight}px`;
-  };
+  }
 
-  const throttle = (func, limit) => {
-    let inThrottle;
-    return function() {
-      const args = arguments;
-      const context = this;
-      if (!inThrottle) {
-        func.apply(context, args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  };
-
-  window.addEventListener('resize', throttle(setBodyHeight, 200));
+  window.addEventListener('resize', setBodyHeight);
   window.addEventListener('load', setBodyHeight);
   window.addEventListener('orientationchange', setBodyHeight);
   setBodyHeight();
 
-  const typeEffect = async (text, effectType) => {
+  async function typeEffect(text, effectType) {
     for (let i = 0; i <= text.length; i++) {
       if (activeEffect !== effectType) break;
       elements.typedOutput.textContent = text.substring(0, i);
       await delay(text[i - 1] === '.' ? 200 : 50);
     }
-  };
+  }
 
-  const introEffect = async () => {
+  async function introEffect() {
     activeEffect = 'intro';
     const sentences = [
       "Hello, I'm B01",
@@ -67,24 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
       await delay(1500);
     }
     if (activeEffect === 'intro') introEffect();
-  };
+  }
 
-  const displayCompanyInfo = async ({ company_name: companyName, phone_number: phoneNumber, url }) => {
+  async function displayCompanyInfo({ company_name: companyName, phone_number: phoneNumber, url }) {
     activeEffect = 'company';
     const capitalizedCompanyName = capitalizeCompany(companyName);
     const sentence = `You asked to call: ${capitalizedCompanyName}`;
     elements.typedOutput.textContent = '';
     await typeEffect(sentence, 'company');
     showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
-  };
+  }
 
-  const fetchCompanyData = async (company) => {
+  async function fetchCompanyData(company) {
+    elements.feedbackText.textContent = "";
+    elements.voiceButton.classList.remove('voiceButton-listening');
+
     if (isConfirmationDialogOpen || isFetching) return;
 
     isFetching = true;
     elements.feedbackText.textContent = "";
-    elements.voiceButton.classList.remove('voiceButton-listening');
-
     const cacheKey = `companyData-${company}`;
     const cachedData = cache.get(company);
 
@@ -103,14 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
       cache.set(company, data);
       await displayCompanyInfo(data);
     } catch (error) {
-      displayNotification(`${error.message || 'An error occurred while fetching company data.'} Please try again.`);
+      const errorMessage = error.message || 'An error occurred while fetching company data.';
+      displayNotification(`${errorMessage} Please try again.`);
       introEffect();
     } finally {
       isFetching = false;
     }
-  };
+  }
 
-  const showConfirmationDialog = (capitalizedCompanyName, phoneNumber, url) => {
+  function showConfirmationDialog(capitalizedCompanyName, phoneNumber, url) {
     if (isConfirmationDialogOpen) return;
     isConfirmationDialogOpen = true;
 
@@ -127,25 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     isConfirmationDialogOpen = false;
-  };
+  }
 
-  const debounce = (func, delay) => {
-    let timeout;
-    return function() {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(context, args), delay);
-    };
-  };
+  elements.companySearch.addEventListener('input', event => {
+    const value = event.target.value;
+    event.target.value = capitalizeCompany(value);
+  });
 
-  elements.companySearch.addEventListener('input', debounce(event => {
-    event.target.value = capitalizeCompany(event.target.value);
-  }, 300));
-
-  elements.companySearch.addEventListener('keypress', event => {
-    if (event.key === 'Enter') {
-      fetchCompanyData(capitalizeCompany(event.target.value));
+  elements.companySearch.addEventListener('keypress', e => {
+    if (e.key === 'Enter') {
+      fetchCompanyData(capitalizeCompany(e.target.value));
     }
   });
 
