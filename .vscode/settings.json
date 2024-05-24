@@ -18,7 +18,8 @@
         "payin",
         "stylelint",
         "tanzim",
-        "timeframe"
+        "timeframe",
+        "uppercased"
     ],
     "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
