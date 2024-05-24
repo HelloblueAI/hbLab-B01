@@ -290,7 +290,7 @@ header {
         height: 100%;
         margin: 0;
         padding: 0;
-        overflow-x: hidden; /* Hide horizontal overflow */
+        overflow-x: hidden; 
     }
 
     html {
@@ -578,7 +578,7 @@ nav .copyright-text {
         padding: 16px;
     }
 
-    /* Ensuring text in navigation links is white */
+
     body[page="policy"] nav a,
     body[page="terms"] nav a {
         color: #FFFFFF;
