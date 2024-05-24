@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeEffect = 'intro';
   let isConfirmationDialogOpen = false;
   let isFetching = false;
+  const cache = new Map();
 
   function setBodyHeight() {
     document.body.style.minHeight = `${window.innerHeight}px`;
@@ -62,22 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
     showConfirmationDialog(capitalizedCompanyName, phoneNumber, url);
   }
 
-  function cacheData(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
-  function getCachedData(key) {
-    const cachedData = localStorage.getItem(key);
-    return cachedData ? JSON.parse(cachedData) : null;
-  }
-
   async function fetchCompanyData(company) {
+    elements.feedbackText.textContent = "";
+    elements.voiceButton.classList.remove('voiceButton-listening');
+
     if (isConfirmationDialogOpen || isFetching) return;
 
     isFetching = true;
     elements.feedbackText.textContent = "";
     const cacheKey = `companyData-${company}`;
-    const cachedData = getCachedData(cacheKey);
+    const cachedData = cache.get(company);
 
     if (cachedData) {
       await displayCompanyInfo(cachedData);
@@ -91,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      cacheData(cacheKey, data);
+      cache.set(company, data);
       await displayCompanyInfo(data);
     } catch (error) {
       const errorMessage = error.message || 'An error occurred while fetching company data.';
@@ -121,48 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
     isConfirmationDialogOpen = false;
   }
 
-  elements.companySearch.addEventListener('input', handleCompanySearch);
-  elements.companySearch.addEventListener('keypress', handleCompanySearch);
+  elements.companySearch.addEventListener('input', event => {
+    const value = event.target.value;
+    event.target.value = capitalizeCompany(value);
+  });
 
-  let timer;
-  const debounceDelay = 500;
-
-  async function handleCompanySearch(event) {
-    clearTimeout(timer);
-
-    if (event.type === 'keypress' && event.key === ' ') {
-      event.preventDefault();
-      event.target.value += ' ';
-      return;
+  elements.companySearch.addEventListener('keypress', e => {
+    if (e.key === 'Enter') {
+      fetchCompanyData(capitalizeCompany(e.target.value));
     }
-
-    if (event.type === 'keypress' && event.key !== 'Enter') {
-      return;
-    }
-
-    const company = event.target.value.trim();
-
-    if (company) {
-      const formattedCompany = company.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-      event.target.value = formattedCompany;
-
-      if (event.key === 'Enter') {
-        if (!isFetching) {
-          isFetching = true;
-          await fetchCompanyData(formattedCompany);
-        }
-      } else {
-        timer = setTimeout(async () => {
-          if (!isFetching) {
-            isFetching = true;
-            await fetchCompanyData(formattedCompany);
-          }
-        }, debounceDelay);
-      }
-    } else {
-      introEffect();
-    }
-  }
+  });
 
   const voiceRecognition = new VoiceRecognition(elements, fetchCompanyData);
   voiceRecognition.setupVoiceRecognition();
