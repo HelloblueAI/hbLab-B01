@@ -24,7 +24,7 @@ header {
     top: 0;
     left: 0;
     background-color: transparent;
-    margin-left: -20px;
+    margin-left: 27px;
     
 }
 
@@ -308,12 +308,14 @@ header {
     header {
         width: 100%;
         background-color: transparent;
-        height: 50px; /* Adjust height to your needs */
-        padding-top: 33px;
-        padding-left: 19px;
+        height: 50px; 
+        padding-top: 12px;
+        padding-left: 0px;
         padding-bottom: 5px;
+        margin-left: 0px; 
         z-index: 0;
     }
+    
 
     #text-logo {
         font-size: 20px;
