@@ -290,7 +290,7 @@ header {
         height: 100%;
         margin: 0;
         padding: 0;
-        overflow-x: hidden; 
+        overflow-x: hidden;
     }
 
     html {
@@ -298,16 +298,13 @@ header {
     }
 
     body {
-        height: 100%;
-        margin: 0;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        padding-left: 3%;
-        padding-bottom: 0px;
+        padding: 0 0 0 3%;
         background: none;
-        overflow-x: hidden;
     }
+
 
     header {
         width: 100%;
