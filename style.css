@@ -433,7 +433,6 @@ nav {
     nav {
         padding: 12px 12px 8px 0px;
         transform: translateX(1%);
-        /* Less translation on smaller screens */
     }
 }
 
