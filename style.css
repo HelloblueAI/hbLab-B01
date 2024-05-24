@@ -554,11 +554,8 @@ nav .copyright-text {
     body[page="policy"] .content,
     body[page="terms"] .content {
         margin: 53px 27px 70px 1px;
-        /* Margins around the content */
         max-width: 120%;
-        /* Allowing content to be wider than the screen */
         padding: 10px 0 68px 4px;
-        /* Padding inside content area */
     }
 
     body[page="policy"] nav,
@@ -566,7 +563,6 @@ nav .copyright-text {
         position: fixed;
         bottom: -5px;
         left: 4px;
-        /* Smaller left offset on mobile */
         right: 0;
         background-color: #187CFF;
         z-index: 100;
