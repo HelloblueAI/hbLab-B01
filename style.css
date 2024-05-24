@@ -286,11 +286,15 @@ header {
 
 
 @media (max-width: 768px) {
-    html {
+    html, body {
         height: 100%;
-        background: linear-gradient(180deg, #191970, #187CFF);
         margin: 0;
         padding: 0;
+        overflow-x: hidden; /* Hide horizontal overflow */
+    }
+
+    html {
+        background: linear-gradient(180deg, #191970, #187CFF);
     }
 
     body {
@@ -316,10 +320,6 @@ header {
         z-index: 0;
     }
     
-
-    #text-logo {
-        font-size: 20px;
-    }
 
     .typing-effect {
         font-size: 30px;
