@@ -274,9 +274,9 @@ header {
 }
 
 .badges-container {
-    position: fixed;
-    bottom: 200px;
-    right: 1106px;
+    position: fixed; /* Changed 'flexed' to 'fixed' */
+    bottom: 70px;
+    right: 138px;
     z-index: 200;
     display: flex;
     align-items: center;
@@ -385,7 +385,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 530px;
+        top: 470px;
     }
 
     .badges-container a {
