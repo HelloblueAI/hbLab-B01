@@ -1,16 +1,14 @@
 import { config } from './config.js';
-import { capitalizeCompany, displayNotification, isValidURL, delay } from './utils.js';
+import { capitalizeCompany, displayNotification, isValidURL, delay, debounce } from './utils.js';
 import VoiceRecognition from './voiceRecognition.js';
 
-document.addEventListener('DOMContentLoaded', init);
-
-function init() {
+document.addEventListener('DOMContentLoaded', () => {
   const elements = getDOMElements();
   const state = getInitialState();
   setupEventListeners(elements, state);
   setInitialBodyHeight();
   introEffect(elements, state);
-}
+});
 
 function getDOMElements() {
   return {
@@ -39,10 +37,24 @@ function setupEventListeners(elements, state) {
   window.addEventListener('load', setBodyHeight);
   window.addEventListener('orientationchange', setBodyHeight);
 
-  elements.companySearch.addEventListener('input', handleCompanySearchInput);
-  elements.companySearch.addEventListener('keypress', e => {
-    if (e.key === 'Enter') {
-      fetchCompanyData(capitalizeCompany(e.target.value), elements, state);
+  const debouncedFetchCompanyData = debounce(() => {
+    const value = elements.companySearch.value.trim();
+    if (value) {
+      fetchCompanyData(capitalizeCompany(value), elements, state);
+    }
+  }, 500);
+
+  elements.companySearch.addEventListener('input', (event) => {
+    const { value } = event.target;
+    const capitalizedValue = capitalizeCompany(value);
+    if (value !== capitalizedValue) {
+      const start = event.target.selectionStart;
+      const end = event.target.selectionEnd;
+      event.target.value = capitalizedValue;
+      event.target.setSelectionRange(start, end);
+    }
+    if (value.trim() && value.length > 1) {
+      debouncedFetchCompanyData();
     }
   });
 
@@ -115,15 +127,16 @@ async function fetchCompanyData(company, elements, state) {
   try {
     const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
     if (!response.ok) {
+      if (response.status === 404) {
+        return; // Suppress 404 errors for non-existing companies
+      }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     state.cache.set(company, data);
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
-    const errorMessage = error.message || 'An error occurred while fetching company data.';
-    displayNotification(`${errorMessage} Please try again.`);
-    introEffect(elements, state);
+    console.error('Fetch error:', error.message); // Log the error for debugging, but don't show to the user
   } finally {
     state.isFetching = false;
   }
@@ -146,9 +159,4 @@ function showConfirmationDialog(companyName, phoneNumber, url, elements, state) 
   }
 
   state.isConfirmationDialogOpen = false;
-}
-
-function handleCompanySearchInput(event) {
-  const value = event.target.value;
-  event.target.value = capitalizeCompany(value);
 }
