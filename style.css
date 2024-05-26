@@ -311,7 +311,7 @@ header {
         padding-top: 21px;
         padding-left: 0px;
         padding-bottom: 5px;
-        margin-left: 0px; 
+        margin-left: -1px; 
         z-index: 0;
     }
     
@@ -650,7 +650,7 @@ nav {
         width: 100%;
         box-sizing: border-box;
         align-items: flex-start;
-        margin-left: -1px; /* Shift the entire nav to the left */
+        margin-left: -10px; 
     }
 
     .footer-links, .social-links {
@@ -663,7 +663,7 @@ nav {
     }
 
     .footer-links a, .footer-links span, .social-links a {
-        font-size: 10px;
+        font-size: 11px;
         margin: 0px 1px 3px 3px; 
         white-space: nowrap;
     }
