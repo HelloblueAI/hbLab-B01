@@ -2,88 +2,80 @@ export default class VoiceRecognition {
   constructor(elements, fetchCompanyData) {
     this.elements = elements;
     this.fetchCompanyData = fetchCompanyData;
+    this.recognition = this.initSpeechRecognition();
+    this.addEventListeners();
   }
 
-  setupVoiceRecognition() {
+  initSpeechRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       console.error("This browser does not support Speech Recognition.");
-      return;
+      return null;
     }
 
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
+    recognition.onstart = this.handleStart.bind(this);
+    recognition.onresult = this.handleResult.bind(this);
+    recognition.onerror = this.handleError.bind(this);
+    recognition.onend = this.handleEnd.bind(this);
 
-    recognition.onstart = () => {
-      this.elements.feedbackText.textContent = "Listening...";
-      this.elements.voiceButton.classList.add('active');
-    };
+    return recognition;
+  }
 
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      this.elements.companySearch.value = transcript;
-      this.fetchCompanyData(transcript.trim());
-      recognition.stop();
-    };
+  addEventListeners() {
+    this.elements.voiceButton.addEventListener('click', this.toggleVoiceRecognition.bind(this));
+    document.addEventListener('keydown', this.handleKeydown.bind(this));
+  }
 
-    recognition.onerror = (event) => {
-      this.handleVoiceRecognitionError(event);
-    };
+  handleStart() {
+    this.elements.feedbackText.textContent = "Listening...";
+    this.elements.voiceButton.classList.add('active');
+  }
 
-    recognition.onend = () => {
-      this.elements.voiceButton.classList.remove('active');
-    };
+  handleResult(event) {
+    const transcript = event.results[0][0].transcript.trim();
+    this.elements.companySearch.value = transcript;
+    this.fetchCompanyData(transcript);
+    this.recognition.stop();
+  }
 
-    this.elements.voiceButton.addEventListener('click', () => {
+  handleError(event) {
+    const errorMessage = this.getErrorMessage(event.error);
+    displayNotification(errorMessage); // Assuming displayNotification is globally available
+  }
+
+  handleEnd() {
+    this.elements.voiceButton.classList.remove('active');
+  }
+
+  toggleVoiceRecognition() {
+    if (this.recognition) {
       if (this.elements.voiceButton.classList.contains('active')) {
-        recognition.stop();
+        this.recognition.stop();
       } else {
-        recognition.start();
+        this.recognition.start();
       }
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey && event.key === 'v') { // Pressing "Alt + V" triggers voice recognition
-        this.toggleVoiceRecognition(recognition);
-      }
-    });
-  }
-
-  toggleVoiceRecognition(recognition) {
-    if (this.elements.voiceButton.classList.contains('active')) {
-      recognition.stop();
-    } else {
-      recognition.start();
     }
   }
 
-  handleVoiceRecognitionError(event) {
-    let errorMessage = "An error occurred with voice recognition.";
-
-    switch (event.error) {
-      case "no-speech":
-        errorMessage = "No speech was detected. Please try again.";
-        break;
-      case "aborted":
-        errorMessage = "Voice recognition was aborted. Please try again.";
-        break;
-      case "audio-capture":
-        errorMessage = "Microphone is not accessible. Please ensure you've granted the necessary permissions.";
-        break;
-      case "network":
-        errorMessage = "Network issues prevented voice recognition. Please check your connection.";
-        break;
-      case "not-allowed":
-        errorMessage = "Permission to access microphone was denied. Please allow access to use this feature.";
-        break;
-      case "service-not-allowed":
-        errorMessage = "This browser lacks speech recognition support. Use keyboard input or access helloblue.ai for full speech recognition capabilities.";
-        break;
-      default:
-        break;
+  handleKeydown(event) {
+    if (event.altKey && event.key === 'v') {
+      this.toggleVoiceRecognition();
     }
+  }
 
-    displayNotification(errorMessage);
+  getErrorMessage(error) {
+    const errorMessages = {
+      "no-speech": "No speech was detected. Please try again.",
+      "aborted": "Voice recognition was aborted. Please try again.",
+      "audio-capture": "Microphone is not accessible. Please ensure you've granted the necessary permissions.",
+      "network": "Network issues prevented voice recognition. Please check your connection.",
+      "not-allowed": "Permission to access microphone was denied. Please allow access to use this feature.",
+      "service-not-allowed": "This browser lacks speech recognition support. Use keyboard input or access helloblue.ai for full speech recognition capabilities."
+    };
+
+    return errorMessages[error] || "An error occurred with voice recognition.";
   }
 }

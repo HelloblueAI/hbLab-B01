@@ -58,8 +58,7 @@ function setupEventListeners(elements, state) {
     }
   });
 
-  const voiceRecognition = new VoiceRecognition(elements, company => fetchCompanyData(company, elements, state));
-  voiceRecognition.setupVoiceRecognition();
+  new VoiceRecognition(elements, company => fetchCompanyData(company, elements, state));
 }
 
 function setInitialBodyHeight() {

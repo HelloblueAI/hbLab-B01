@@ -24,7 +24,7 @@ header {
     top: -10px;
     left: 0;
     background-color: transparent;
-    margin-left: 33px;
+    margin-left: 44px;
     
 }
 
@@ -276,13 +276,12 @@ header {
 .badges-container {
     position: fixed; /* Changed 'flexed' to 'fixed' */
     bottom: 70px;
-    right: 138px;
+    right: 498px;
     z-index: 200;
     display: flex;
     align-items: center;
     gap: 8px;
 }
-
 
 
 @media (max-width: 768px) {
