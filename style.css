@@ -286,20 +286,21 @@ header {
 
 @media (max-width: 768px) {
     html {
-        min-height: 100vh;
+        min-height: 100%;
         background: linear-gradient(180deg, #191970, #187CFF);
         margin: 0;
         padding: 0;
+        display: flex;
+        flex-direction: column;
     }
 
     body {
-        min-height: 100vh;
-        margin: 0;
+        flex: 1;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         padding-left: 3%;
-        padding-bottom: 0;
+        margin: 0;
         background: none;
         overflow-x: hidden;
     }
@@ -403,7 +404,7 @@ header {
         width: 154px !important;
         border-radius: 2.5px;
     }
-    
+
 
 body[page="policy"],
 body[page="terms"] {
