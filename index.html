@@ -23,6 +23,13 @@
     <meta property="og:url" content="https://helloblue.ai/">
     <!-- Netlify Identity Widget -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+        // Prevent users from returning to the homepage using the back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
 </head>
 
 <body page="home">
