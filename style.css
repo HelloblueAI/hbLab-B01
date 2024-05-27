@@ -368,7 +368,7 @@ header {
 
     #voiceButton {
         position: absolute;
-        right: -2px;
+        right: 1px;
         top: 7px;
     }
 
