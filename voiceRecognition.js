@@ -3,6 +3,7 @@ export default class VoiceRecognition {
     this.elements = elements;
     this.fetchCompanyData = fetchCompanyData;
     this.recognition = this.initSpeechRecognition();
+    this.isListening = false;
     this.addEventListeners();
   }
 
@@ -16,6 +17,7 @@ export default class VoiceRecognition {
 
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
+    recognition.interimResults = false; // Ensures only final results are processed
     recognition.onstart = this.handleStart.bind(this);
     recognition.onresult = this.handleResult.bind(this);
     recognition.onerror = this.handleError.bind(this);
@@ -25,37 +27,39 @@ export default class VoiceRecognition {
   }
 
   addEventListeners() {
-    this.elements.voiceButton.addEventListener('click', this.toggleVoiceRecognition.bind(this));
-    document.addEventListener('keydown', this.handleKeydown.bind(this));
+    this.elements.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
+    document.addEventListener('keydown', (event) => this.handleKeydown(event));
   }
 
   handleStart() {
-    this.elements.feedbackText.textContent = "Listening...";
-    this.elements.voiceButton.classList.add('active');
+    this.isListening = true;
+    this.updateFeedback("Listening...", true);
   }
 
   handleResult(event) {
     const transcript = event.results[0][0].transcript.trim();
     this.elements.companySearch.value = transcript;
     this.fetchCompanyData(transcript);
-    this.recognition.stop();
+    this.stopRecognition();
   }
 
   handleError(event) {
     const errorMessage = this.getErrorMessage(event.error);
-    displayNotification(errorMessage); // Assuming displayNotification is globally available
+    this.updateFeedback(errorMessage, false);
+    this.stopRecognition();
   }
 
   handleEnd() {
-    this.elements.voiceButton.classList.remove('active');
+    this.isListening = false;
+    this.updateFeedback("", false);
   }
 
   toggleVoiceRecognition() {
     if (this.recognition) {
-      if (this.elements.voiceButton.classList.contains('active')) {
-        this.recognition.stop();
+      if (this.isListening) {
+        this.stopRecognition();
       } else {
-        this.recognition.start();
+        this.startRecognition();
       }
     }
   }
@@ -64,6 +68,26 @@ export default class VoiceRecognition {
     if (event.altKey && event.key === 'v') {
       this.toggleVoiceRecognition();
     }
+  }
+
+  startRecognition() {
+    try {
+      this.recognition.start();
+    } catch (error) {
+      console.error("Error starting speech recognition:", error);
+      this.updateFeedback("Error starting voice recognition. Please try again.", false);
+    }
+  }
+
+  stopRecognition() {
+    if (this.isListening) {
+      this.recognition.stop();
+    }
+  }
+
+  updateFeedback(message, isActive) {
+    this.elements.feedbackText.textContent = message;
+    this.elements.voiceButton.classList.toggle('active', isActive);
   }
 
   getErrorMessage(error) {

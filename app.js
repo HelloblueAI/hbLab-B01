@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const elements = getDOMElements();
   const state = getInitialState();
   setupEventListeners(elements, state);
-  setInitialBodyHeight();
+  setBodyHeight();
+  window.addEventListener('resize', debounce(setBodyHeight, 200));
+  window.addEventListener('orientationchange', setBodyHeight);
   introEffect(elements, state);
 });
 
@@ -33,12 +35,6 @@ function getInitialState() {
 }
 
 function setupEventListeners(elements, state) {
-  const handleResize = debounce(setBodyHeight, 200);
-  
-  window.addEventListener('resize', handleResize);
-  window.addEventListener('load', setBodyHeight);
-  window.addEventListener('orientationchange', setBodyHeight);
-
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) {
@@ -47,13 +43,13 @@ function setupEventListeners(elements, state) {
   }, 500);
 
   elements.companySearch.addEventListener('input', (event) => {
-    handleCompanySearchInput(event, elements, state, debouncedFetchCompanyData);
+    handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
   });
 
-  new VoiceRecognition(elements, company => fetchCompanyData(company, elements, state));
+  new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state));
 }
 
-function handleCompanySearchInput(event, elements, state, debouncedFetchCompanyData) {
+function handleCompanySearchInput(event, elements, debouncedFetchCompanyData) {
   const { value } = event.target;
   const capitalizedValue = capitalizeCompany(value);
   if (value !== capitalizedValue) {
@@ -65,10 +61,6 @@ function handleCompanySearchInput(event, elements, state, debouncedFetchCompanyD
   if (value.trim() && value.length > 1) {
     debouncedFetchCompanyData();
   }
-}
-
-function setInitialBodyHeight() {
-  setBodyHeight();
 }
 
 function setBodyHeight() {
