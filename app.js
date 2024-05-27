@@ -33,7 +33,9 @@ function getInitialState() {
 }
 
 function setupEventListeners(elements, state) {
-  window.addEventListener('resize', setBodyHeight);
+  const handleResize = debounce(setBodyHeight, 200);
+  
+  window.addEventListener('resize', handleResize);
   window.addEventListener('load', setBodyHeight);
   window.addEventListener('orientationchange', setBodyHeight);
 
@@ -45,20 +47,24 @@ function setupEventListeners(elements, state) {
   }, 500);
 
   elements.companySearch.addEventListener('input', (event) => {
-    const { value } = event.target;
-    const capitalizedValue = capitalizeCompany(value);
-    if (value !== capitalizedValue) {
-      const start = event.target.selectionStart;
-      const end = event.target.selectionEnd;
-      event.target.value = capitalizedValue;
-      event.target.setSelectionRange(start, end);
-    }
-    if (value.trim() && value.length > 1) {
-      debouncedFetchCompanyData();
-    }
+    handleCompanySearchInput(event, elements, state, debouncedFetchCompanyData);
   });
 
   new VoiceRecognition(elements, company => fetchCompanyData(company, elements, state));
+}
+
+function handleCompanySearchInput(event, elements, state, debouncedFetchCompanyData) {
+  const { value } = event.target;
+  const capitalizedValue = capitalizeCompany(value);
+  if (value !== capitalizedValue) {
+    const start = event.target.selectionStart;
+    const end = event.target.selectionEnd;
+    event.target.value = capitalizedValue;
+    event.target.setSelectionRange(start, end);
+  }
+  if (value.trim() && value.length > 1) {
+    debouncedFetchCompanyData();
+  }
 }
 
 function setInitialBodyHeight() {
@@ -107,16 +113,14 @@ async function displayCompanyInfo({ company_name: companyName, phone_number: pho
 }
 
 async function fetchCompanyData(company, elements, state) {
-  elements.feedbackText.textContent = "";
-  elements.voiceButton.classList.remove('voiceButton-listening');
-
   if (state.isConfirmationDialogOpen || state.isFetching) return;
 
   state.isFetching = true;
   elements.feedbackText.textContent = "";
+  elements.voiceButton.classList.remove('voiceButton-listening');
   const cacheKey = `companyData-${company}`;
-  const cachedData = state.cache.get(company);
 
+  const cachedData = state.cache.get(company);
   if (cachedData) {
     await displayCompanyInfo(cachedData, elements, state);
     state.isFetching = false;
@@ -126,9 +130,7 @@ async function fetchCompanyData(company, elements, state) {
   try {
     const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
     if (!response.ok) {
-      if (response.status === 404) {
-        return; // Suppress 404 errors for non-existing companies
-      }
+      if (response.status === 404) return; // Suppress 404 errors for non-existing companies
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
