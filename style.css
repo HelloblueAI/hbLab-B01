@@ -498,16 +498,14 @@ body[page="policy"] header,
 body[page="terms"] header {
     background-color: #187CFF;
     padding-top: 27px;
-    padding-left: 58px;
-    height: 23px;
+    padding-left: -5px;
+    height: 53px;
 }
 
 /* Content styling for policy page */
 body[page="policy"] .content {
     margin-top: 50px;
-    /* Space above the content */
     padding-bottom: 54px;
-    /* Padding below the content */
 }
 
 /* Content styling for terms page */
@@ -557,11 +555,8 @@ nav .copyright-text {
     body[page="policy"] .content,
     body[page="terms"] .content {
         margin: 53px 27px 70px 1px;
-        /* Margins around the content */
         max-width: 120%;
-        /* Allowing content to be wider than the screen */
         padding: 10px 0 68px 4px;
-        /* Padding inside content area */
     }
 
     body[page="policy"] nav,
@@ -586,8 +581,7 @@ nav .copyright-text {
 
     /* Adjusted navigation position for the home page */
     body[page="home"] nav {
-        left: 16px;
-        /* More offset on mobile for home page */
+        left: 14px;
     }
 
     /* Header styles adjustments for mobile */
@@ -595,8 +589,8 @@ nav .copyright-text {
     body[page="terms"] header {
         position: absolute;
         background-color: transparent;
-        top: 1px;
-        margin-left: -62px;
+        top: -14px;
+        margin-left: -2px;
     }
 
     /* Padding adjustments for logo and navigation links */
