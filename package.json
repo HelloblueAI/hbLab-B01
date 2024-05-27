@@ -1,7 +1,7 @@
 {
   "name": "helloblue-ai",
   "version": "1.0.0",
-  "description": "[Netlify Status Badge]",
+  "description": "A project to facilitate connecting users to company customer services quickly and efficiently.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,6 +19,10 @@
   },
   "author": "Pejman Haghighatnia",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HelloblueAI/hbLab-B01.git"
+  },
   "devDependencies": {
     "concurrently": "^8.1.0",
     "cssnano": "^7.0.1",
