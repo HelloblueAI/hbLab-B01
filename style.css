@@ -275,8 +275,8 @@ header {
 
 .badges-container {
     position: fixed; /* Changed 'flexed' to 'fixed' */
-    bottom: 70px;
-    right: 498px;
+    bottom: 290px;
+    right: 198px;
     z-index: 200;
     display: flex;
     align-items: center;
@@ -385,7 +385,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 454px;
+        top: 535px;
     }
 
     .badges-container a {
@@ -498,7 +498,7 @@ body[page="policy"] header,
 body[page="terms"] header {
     background-color: #187CFF;
     padding-top: 27px;
-    padding-left: -5px;
+    padding-left: 0px;
     height: 53px;
 }
 
@@ -563,8 +563,7 @@ nav .copyright-text {
     body[page="terms"] nav {
         position: fixed;
         bottom: -5px;
-        left: 4px;
-        /* Smaller left offset on mobile */
+        left: 7px;
         right: 0;
         background-color: #187CFF;
         z-index: 100;
@@ -573,7 +572,6 @@ nav .copyright-text {
         padding: 16px;
     }
 
-    /* Ensuring text in navigation links is white */
     body[page="policy"] nav a,
     body[page="terms"] nav a {
         color: #FFFFFF;
