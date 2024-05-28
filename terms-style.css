@@ -17,8 +17,8 @@ body {
 
 #logo {
     display: flex;
-    align-items: center;
-    margin-right: 26px; 
+    align-items: auto;
+    margin-right: 18px; 
 }
 
 #logo img {
@@ -28,7 +28,7 @@ body {
 nav {
     display: flex; 
     align-items: center; 
-    margin-top: -7px; 
+    margin-top: -8px; 
 }
 
 nav a {
