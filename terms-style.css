@@ -9,10 +9,10 @@ body {
 
 .inner-page-header {
     background-color: #0073e6;
-    padding: 0; 
+    padding: 0;
     display: flex;
-    justify-content: flex-start; 
-    align-items: center;
+    justify-content: flex-start;
+    align-items: center; 
 }
 
 #logo {
@@ -28,6 +28,7 @@ body {
 nav {
     display: flex; 
     align-items: center; 
+    margin-top: -7px; 
 }
 
 nav a {
