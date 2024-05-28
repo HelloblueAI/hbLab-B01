@@ -308,10 +308,9 @@ header {
         width: 100%;
         background-color: transparent;
         height: 50px; 
-        padding-top: 29px;
+        padding-top: 27px;
         padding-left: 0px;
         position: fixed;
-        padding-bottom: 5px;
         margin-left: 1px; 
         z-index: 0;
     }
@@ -485,7 +484,6 @@ a:hover {
 }
 
 
-
 /* Mobile Specific Styles */
 
 @media (max-width: 768px) {
@@ -503,23 +501,6 @@ a:hover {
     /* Adjusted navigation position for the home page */
     body[page="home"] nav {
         left: 17px;
-    }
-
-    /* Header styles adjustments for mobile */
-    body[page="policy"] header,
-    body[page="terms"] header {
-        position: absolute;
-        background-color: transparent;
-        top: -14px;
-        margin-left: -5px;
-    }
-
-    /* Padding adjustments for logo and navigation links */
-    body[page="policy"] header #logo,
-    body[page="terms"] header #logo,
-    body[page="policy"] header nav a,
-    body[page="terms"] header nav a {
-        padding-bottom: 3px;
     }
 }
 
