@@ -490,16 +490,15 @@ a:hover {
 }
 
 
-
 /* Desktop Specific Styles for Privacy Policy and Terms Pages */
 
 /* Header styles for policy and terms pages */
 body[page="policy"] header,
 body[page="terms"] header {
     background-color: #187CFF;
-    padding-top: 27px;
-    padding-left: 1px;
-    height: 53px;
+    margin-top: 10px;
+    margin-left: 36px;
+    height: 63px;
 }
 
 /* Content styling for policy page */
@@ -517,7 +516,7 @@ body[page="terms"] .content {
 body[page="policy"] nav,
 body[page="terms"] nav {
     bottom: 0;
-    left: -7px;
+    left: -19px;
     right: 0;
     background-color: #187CFF;
     z-index: 100;
