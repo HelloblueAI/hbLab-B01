@@ -24,7 +24,7 @@ header {
     top: -10px;
     left: 0;
     background-color: transparent;
-    margin-left: 31px;
+    margin-left: 41px;
     
 }
 
@@ -275,8 +275,8 @@ header {
 
 .badges-container {
     position: fixed; 
-    bottom: 60px;
-    right: 147px;
+    bottom: 70px;
+    right: 377px;
     z-index: 200;
     display: flex;
     align-items: center;
@@ -405,11 +405,6 @@ header {
     }
 }
 
-body[page="policy"],
-body[page="terms"] {
-    background: #187CFF;
-    color: white;
-}
 
 nav {
     display: flex;
@@ -490,46 +485,6 @@ a:hover {
 }
 
 
-/* Desktop Specific Styles for Privacy Policy and Terms Pages */
-
-/* Header styles for policy and terms pages */
-body[page="policy"] header,
-body[page="terms"] header {
-    background-color: #187CFF;
-    margin-top: 10px;
-    margin-left: 36px;
-    height: 63px;
-}
-
-/* Content styling for policy page */
-body[page="policy"] .content {
-    margin-top: 50px;
-    padding-bottom: 54px;
-}
-
-/* Content styling for terms page */
-body[page="terms"] .content {
-    margin-top: 50px;
-    padding-bottom: 50px;
-}
-
-body[page="policy"] nav,
-body[page="terms"] nav {
-    bottom: 0;
-    left: -19px;
-    right: 0;
-    background-color: #187CFF;
-    z-index: 100;
-    color: #FFFFFF;
-    padding: 14px;
-}
-
-
-nav .copyright-text {
-    font-size: 13px;
-    color: white;
-}
-
 
 /* Mobile Specific Styles */
 
@@ -539,46 +494,15 @@ nav .copyright-text {
         background: none;
     }
 
-    /* Solid background color for policy and terms pages */
-    body[page="policy"],
-    body[page="terms"] {
-        background: #187CFF;
-    }
-
     /* Gradient background for the home page */
     body[page="home"] {
         background: linear-gradient(45deg, darkblue, #187CFF);
     }
 
-    /* Content styling for mobile versions of policy and terms pages */
-    body[page="policy"] .content,
-    body[page="terms"] .content {
-        margin: 53px 27px 70px 1px;
-        max-width: 120%;
-        padding: 10px 0 68px 4px;
-    }
-
-    body[page="policy"] nav,
-    body[page="terms"] nav {
-        position: fixed;
-        bottom: -5px;
-        left: 7px;
-        right: 0;
-        background-color: #187CFF;
-        z-index: 100;
-        color: #FFFFFF;
-
-        padding: 16px;
-    }
-
-    body[page="policy"] nav a,
-    body[page="terms"] nav a {
-        color: #FFFFFF;
-    }
 
     /* Adjusted navigation position for the home page */
     body[page="home"] nav {
-        left: 14px;
+        left: 17px;
     }
 
     /* Header styles adjustments for mobile */
