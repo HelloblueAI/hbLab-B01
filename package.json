@@ -4,18 +4,21 @@
   "description": "A project to facilitate connecting users to company customer services quickly and efficiently.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "check-updates": "ncu",
     "lint:css": "stylelint '**/*.css'",
     "format": "prettier --write '**/*.{html,js,css}'",
     "lint:js": "eslint '**/*.js'",
     "build:css": "postcss style.css -o style.min.css",
-    "build": "npm run build:css",
-    "start": "http-server",
+    "build:js": "babel app.js -o app.min.js",
+    "build": "npm run build:css && npm run build:js",
+    "start": "lite-server --baseDir='.' --verbose",
     "serve": "serve -s .",
     "prepare": "husky install",
     "dev": "concurrently \"npm run start\" \"npm run watch:css\"",
-    "watch:css": "postcss style.css -o style.min.css --watch"
+    "watch:css": "postcss style.css -o style.min.css --watch",
+    "security": "nsp check",
+    "precommit": "lint-staged"
   },
   "author": "Pejman Haghighatnia",
   "license": "Apache-2.0",
@@ -24,11 +27,14 @@
     "url": "https://github.com/HelloblueAI/hbLab-B01.git"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "concurrently": "^8.1.0",
     "cssnano": "^7.0.1",
     "eslint": "^9.0.0",
     "http-server": "^14.1.1",
     "husky": "^9.0.11",
+    "jest": "^29.5.0",
+    "lite-server": "^2.6.1",
     "lint-staged": "^15.2.2",
     "npm-check-updates": "^16.14.17",
     "postcss": "^8.4.24",
@@ -50,5 +56,11 @@
     "*.js": "eslint --cache --fix",
     "*.{js,css,html}": "prettier --write"
   },
-  "keywords": []
+  "keywords": [
+    "customer service",
+    "voice AI",
+    "company search",
+    "automation",
+    "web app"
+  ]
 }
