@@ -286,10 +286,11 @@ header {
 @media (max-width: 768px) {
     html {
         height: 100%;
-        position: fixed;
         background: linear-gradient(180deg, #191970, #187CFF);
         margin: 0;
         padding: 0;
+        overflow-y: auto;
+        position: relative;
     }
 
     body {
@@ -302,6 +303,7 @@ header {
         padding-bottom: 0px;
         background: none;
         overflow-x: hidden;
+        position: relative;
     }
 
     header {
@@ -384,7 +386,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 301px;
+        top: 341px;
     }
 
     .badges-container a {
@@ -412,7 +414,7 @@ nav {
     padding: 15px 15px 15px 0;
     background-color: transparent;
     color: white;
-    position: fixed;
+    position: relative;
     bottom: 4px;
     left: 0;
     width: calc(100% - 30px);
