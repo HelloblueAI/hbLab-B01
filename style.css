@@ -297,7 +297,7 @@ header {
     }
 
     body {
-        min-height: 100vh;
+        min-height: 200vh;
         margin: 0;
         display: flex;
         justify-content: flex-start;
