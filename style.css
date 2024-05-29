@@ -286,24 +286,22 @@ header {
 @media (max-width: 768px) {
     html {
         height: 100%;
+        position: fixed;
         background: linear-gradient(180deg, #191970, #187CFF);
         margin: 0;
         padding: 0;
-        overflow-y: auto;
     }
 
     body {
         height: 100%;
         margin: 0;
         display: flex;
-        flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         padding-left: 3%;
         padding-bottom: 0px;
         background: none;
         overflow-x: hidden;
-        position: relative;
     }
 
     header {
@@ -312,10 +310,10 @@ header {
         height: 50px; 
         padding-top: 27px;
         position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 100;
+        margin-left: -12px; 
+        z-index: 0;
     }
+    
 
     #text-logo {
         font-size: 20px;
@@ -406,6 +404,7 @@ header {
     }
 }
 
+
 nav {
     display: flex;
     flex-direction: column;
@@ -419,7 +418,6 @@ nav {
     width: calc(100% - 30px);
     box-sizing: border-box;
     transform: translateX(5%);
-    z-index: 100;
 }
 
 .footer-links,
@@ -434,7 +432,6 @@ nav {
     color: white;
     text-decoration: none;
     margin-right: 11px;
-    z-index: 100;
 }
 
 .footer-links span {
@@ -445,7 +442,6 @@ nav {
 .social-links a:last-child {
     margin-right: 0;
 }
-
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
