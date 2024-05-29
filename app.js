@@ -100,7 +100,7 @@ async function introEffect(elements, state) {
 async function displayCompanyInfo({ company_name: companyName, phone_number: phoneNumber, url }, elements, state) {
   state.activeEffect = 'company';
   const capitalizedCompanyName = capitalizeCompany(companyName);
-  const sentence = `Sure, You asked to call: ${capitalizedCompanyName}`;
+  const sentence = `You asked to call: ${capitalizedCompanyName}`;
   elements.typedOutput.textContent = '';
   await typeEffect(sentence, 'company', elements, state);
   speak(sentence, state);
@@ -172,7 +172,7 @@ async function loadVoices(state) {
     }
   }).then(voices => {
     state.voices = voices;
-    state.preferredVoice = voices.find(voice => voice.name === 'Microsoft David Desktop - English (United States)') || voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Male')) || voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+    state.preferredVoice = voices.find(voice => voice.name === 'Google US English' && voice.gender === 'male') || voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Male')) || voices[0];
   });
 }
 
