@@ -390,7 +390,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 118px; 
+        bottom: 125px; 
         z-index: 1;
     }
 
