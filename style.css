@@ -386,7 +386,8 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 341px;
+        top: 353px;
+        z-index: 1;
     }
 
     .badges-container a {
