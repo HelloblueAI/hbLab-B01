@@ -309,9 +309,8 @@ header {
         background-color: transparent;
         height: 50px; 
         padding-top: 27px;
-        padding-left: 0px;
         position: fixed;
-        margin-left: 1px; 
+        margin-left: -12px; 
         z-index: 0;
     }
     
