@@ -22,9 +22,8 @@ header {
     align-items: center;
     position: fixed;
     top: -10px;
-    left: 0;
     background-color: transparent;
-    margin-left: 41px;
+    margin-left: 4px;
     
 }
 
@@ -274,14 +273,15 @@ header {
 }
 
 .badges-container {
-    position: fixed; 
-    bottom: 70px;
-    right: 377px;
+    position: relative; /* or 'absolute', 'fixed', depending on the desired effect */
+    bottom: -70px;
+    right: -400px;
     z-index: 200;
     display: flex;
     align-items: center;
     gap: 8px;
 }
+
 
 
 @media (max-width: 768px) {
