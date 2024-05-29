@@ -186,8 +186,9 @@ header {
     height: 40px;
     border-radius: 50%;
     transition: background-color 0.3s;
-    z-index: 10;
+    z-index: 10;  /* Added z-index to ensure it stays on top */
 }
+
 
 #voiceButton.active {
     animation: futuristicAnimation 2s infinite;
@@ -275,10 +276,10 @@ header {
 }
 
 .badges-container {
-    position: relative; 
-    bottom: -30px;
-    right: -500px;
-    z-index: 200;
+    position: fixed;  
+    bottom: 50px;     
+    right: 210px;     
+    z-index: 200;     
     display: flex;
     align-items: center;
     gap: 8px;
