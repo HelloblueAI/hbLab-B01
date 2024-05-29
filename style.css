@@ -277,8 +277,8 @@ header {
 
 .badges-container {
     position: fixed;  
-    bottom: 70px;     
-    right: 210px;     
+    bottom: 80px;     
+    right: 230px;     
     z-index: 200;     
     display: flex;
     align-items: center;
@@ -288,26 +288,26 @@ header {
 
 
 @media (max-width: 768px) {
-    html {
-        height: 100%;
-        background: linear-gradient(180deg, #191970, #187CFF);
+   
+    html, body {
+        height: 100%; 
         margin: 0;
         padding: 0;
-        overflow-y: auto;
+        overflow: hidden; 
         position: relative;
     }
 
     body {
-        min-height: 200vh;
-        margin: 0;
+        background: linear-gradient(180deg, #191970, #187CFF);
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         padding-left: 3%;
-        padding-bottom: 0px;
         background: none;
         overflow-x: hidden;
         position: relative;
+        min-height: 100vh; 
+        box-sizing: border-box;
     }
 
     header {
@@ -391,7 +391,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 125px; 
+        bottom: 135px; 
         z-index: 1;
     }
 
