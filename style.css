@@ -277,7 +277,7 @@ header {
 
 .badges-container {
     position: fixed;  
-    bottom: 50px;     
+    bottom: 70px;     
     right: 210px;     
     z-index: 200;     
     display: flex;
