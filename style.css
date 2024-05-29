@@ -9,7 +9,6 @@ body {
     overflow-x: hidden;
     justify-content: flex-start;
     padding-left: 3%;
-    background: linear-gradient(45deg, darkblue, #187CFF) no-repeat;
     background-size: cover;
 }
 
@@ -385,7 +384,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 453px;
+        top: 301px;
     }
 
     .badges-container a {
