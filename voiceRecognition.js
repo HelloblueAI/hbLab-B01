@@ -1,7 +1,7 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = fetchCompanyData;
+    this.fetchCompanyData = this.debounce(fetchCompanyData, 300); // Debounce API calls
     this.options = {
       interimResults: options.interimResults || false,
       continuous: options.continuous || false,
@@ -25,7 +25,6 @@ export default class VoiceRecognition {
     recognition.interimResults = this.options.interimResults;
     recognition.onstart = this.handleStart.bind(this);
     recognition.onresult = this.handleResult.bind(this);
-    recognition.onerror = this.handleError.bind(this);
     recognition.onend = this.handleEnd.bind(this);
 
     return recognition;
@@ -42,16 +41,15 @@ export default class VoiceRecognition {
   }
 
   handleResult(event) {
-    const transcript = event.results[0][0].transcript.trim();
-    this.elements.companySearch.value = transcript;
-    this.fetchCompanyData(transcript);
-    this.stopRecognition();
-  }
-
-  handleError(event) {
-    const errorMessage = this.getErrorMessage(event.error);
-    this.updateFeedback(errorMessage, false);
-    this.stopRecognition();
+    const transcript = Array.from(event.results)
+      .map(result => result[0].transcript)
+      .join(' ')
+      .trim();
+    if (event.results[0].isFinal) {
+      this.elements.companySearch.value = transcript;
+      this.fetchCompanyData(transcript);
+      this.stopRecognition();
+    }
   }
 
   handleEnd() {
@@ -61,11 +59,7 @@ export default class VoiceRecognition {
 
   toggleVoiceRecognition() {
     if (this.recognition) {
-      if (this.isListening) {
-        this.stopRecognition();
-      } else {
-        this.startRecognition();
-      }
+      this.isListening ? this.stopRecognition() : this.startRecognition();
     }
   }
 
@@ -76,16 +70,13 @@ export default class VoiceRecognition {
   }
 
   startRecognition() {
-    try {
+    if (this.recognition) {
       this.recognition.start();
-    } catch (error) {
-      console.error("Error starting speech recognition:", error);
-      this.updateFeedback("Error starting voice recognition. Please try again.", false);
     }
   }
 
   stopRecognition() {
-    if (this.isListening) {
+    if (this.recognition && this.isListening) {
       this.recognition.stop();
     }
   }
@@ -95,16 +86,11 @@ export default class VoiceRecognition {
     this.elements.voiceButton.classList.toggle('active', isActive);
   }
 
-  getErrorMessage(error) {
-    const errorMessages = {
-      "no-speech": "No speech was detected. Please try again.",
-      "aborted": "Voice recognition was aborted. Please try again.",
-      "audio-capture": "Microphone is not accessible. Please ensure you've granted the necessary permissions.",
-      "network": "Network issues prevented voice recognition. Please check your connection.",
-      "not-allowed": "Permission to access microphone was denied. Please allow access to use this feature.",
-      "service-not-allowed": "This browser lacks speech recognition support. Use keyboard input or access helloblue.ai for full speech recognition capabilities."
+  debounce(func, wait) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
     };
-
-    return errorMessages[error] || "An error occurred with voice recognition.";
   }
 }

@@ -103,7 +103,6 @@ async function displayCompanyInfo({ company_name: companyName, phone_number: pho
   const sentence = `You asked to call: ${capitalizedCompanyName}`;
   elements.typedOutput.textContent = '';
   await typeEffect(sentence, 'company', elements, state);
-  speak(sentence, state);
   showConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 }
 
@@ -115,9 +114,8 @@ async function fetchCompanyData(company, elements, state) {
   elements.voiceButton.classList.remove('voiceButton-listening');
   const cacheKey = `companyData-${company}`;
 
-  const cachedData = state.cache.get(company);
+  const cachedData = state.cache.get(cacheKey);
   if (cachedData) {
-    speak(`Fetching data for ${company}`, state);
     await displayCompanyInfo(cachedData, elements, state);
     state.isFetching = false;
     return;
@@ -130,8 +128,7 @@ async function fetchCompanyData(company, elements, state) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    state.cache.set(company, data);
-    speak(`Fetching data for ${company}`, state);
+    state.cache.set(cacheKey, data);
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
     console.error('Fetch error:', error.message); // Log the error for debugging, but don't show to the user
@@ -172,14 +169,8 @@ async function loadVoices(state) {
     }
   }).then(voices => {
     state.voices = voices;
-    state.preferredVoice = voices.find(voice => voice.name === 'Google US English' && voice.gender === 'male') || voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Male')) || voices[0];
+    state.preferredVoice = voices.find(voice => voice.name === 'Google US English' && voice.gender === 'male') 
+      ?? voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Male')) 
+      ?? voices[0];
   });
-}
-
-function speak(text, state) {
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = state.preferredVoice;
-  utterance.pitch = 1;
-  utterance.rate = 1;
-  speechSynthesis.speak(utterance);
 }
