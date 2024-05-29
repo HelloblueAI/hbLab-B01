@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = getInitialState();
   setupEventListeners(elements, state);
   setBodyHeight();
+  loadVoices(state).then(() => introEffect(elements, state));
   window.addEventListener('resize', debounce(setBodyHeight, 200));
   window.addEventListener('orientationchange', setBodyHeight);
-  introEffect(elements, state);
 });
 
 function getDOMElements() {
@@ -31,6 +31,8 @@ function getInitialState() {
     isConfirmationDialogOpen: false,
     isFetching: false,
     cache: new Map(),
+    voices: [],
+    preferredVoice: null,
   };
 }
 
@@ -98,9 +100,10 @@ async function introEffect(elements, state) {
 async function displayCompanyInfo({ company_name: companyName, phone_number: phoneNumber, url }, elements, state) {
   state.activeEffect = 'company';
   const capitalizedCompanyName = capitalizeCompany(companyName);
-  const sentence = `You asked to call: ${capitalizedCompanyName}`;
+  const sentence = `Sure, You asked to call: ${capitalizedCompanyName}`;
   elements.typedOutput.textContent = '';
   await typeEffect(sentence, 'company', elements, state);
+  speak(sentence, state);
   showConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 }
 
@@ -114,6 +117,7 @@ async function fetchCompanyData(company, elements, state) {
 
   const cachedData = state.cache.get(company);
   if (cachedData) {
+    speak(`Fetching data for ${company}`, state);
     await displayCompanyInfo(cachedData, elements, state);
     state.isFetching = false;
     return;
@@ -127,6 +131,7 @@ async function fetchCompanyData(company, elements, state) {
     }
     const data = await response.json();
     state.cache.set(company, data);
+    speak(`Fetching data for ${company}`, state);
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
     console.error('Fetch error:', error.message); // Log the error for debugging, but don't show to the user
@@ -152,4 +157,29 @@ function showConfirmationDialog(companyName, phoneNumber, url, elements, state) 
   }
 
   state.isConfirmationDialogOpen = false;
+}
+
+async function loadVoices(state) {
+  return new Promise((resolve) => {
+    let voices = speechSynthesis.getVoices();
+    if (voices.length !== 0) {
+      resolve(voices);
+    } else {
+      speechSynthesis.onvoiceschanged = () => {
+        voices = speechSynthesis.getVoices();
+        resolve(voices);
+      };
+    }
+  }).then(voices => {
+    state.voices = voices;
+    state.preferredVoice = voices.find(voice => voice.name === 'Microsoft David Desktop - English (United States)') || voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Male')) || voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+  });
+}
+
+function speak(text, state) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = state.preferredVoice;
+  utterance.pitch = 1;
+  utterance.rate = 1;
+  speechSynthesis.speak(utterance);
 }
