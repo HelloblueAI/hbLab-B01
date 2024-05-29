@@ -1,7 +1,12 @@
 export default class VoiceRecognition {
-  constructor(elements, fetchCompanyData) {
+  constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
     this.fetchCompanyData = fetchCompanyData;
+    this.options = {
+      interimResults: options.interimResults || false,
+      continuous: options.continuous || false,
+      ...options
+    };
     this.recognition = this.initSpeechRecognition();
     this.isListening = false;
     this.addEventListeners();
@@ -16,8 +21,8 @@ export default class VoiceRecognition {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false; // Ensures only final results are processed
+    recognition.continuous = this.options.continuous;
+    recognition.interimResults = this.options.interimResults;
     recognition.onstart = this.handleStart.bind(this);
     recognition.onresult = this.handleResult.bind(this);
     recognition.onerror = this.handleError.bind(this);
