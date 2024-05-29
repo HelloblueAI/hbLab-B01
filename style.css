@@ -368,6 +368,7 @@ header {
         position: absolute;
         right: -1px;
         top: 7px;
+        z-index: 1000;
     }
 
     #feedbackText {
