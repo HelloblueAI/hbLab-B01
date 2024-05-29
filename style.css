@@ -382,6 +382,7 @@ header {
         transform: translateY(-50%);
     }
 
+
     .badges-container {
         position: absolute;
         right: 60px;
@@ -389,7 +390,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        top: 353px;
+        bottom: 118px; 
         z-index: 1;
     }
 
