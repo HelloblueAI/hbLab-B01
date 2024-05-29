@@ -428,6 +428,8 @@ nav {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    z-index: 20; /* Ensure this is necessary */
+    position: relative; /* Add this to ensure they are positioned correctly */
 }
 
 .footer-links a,
@@ -436,6 +438,7 @@ nav {
     text-decoration: none;
     margin-right: 11px;
     z-index: 20;
+    position: relative; /* Add this to ensure they are positioned correctly */
 }
 
 .footer-links span {
@@ -451,7 +454,6 @@ nav {
     nav {
         padding: 12px 12px 8px 0px;
         transform: translateX(1%);
-        /* Less translation on smaller screens */
     }
 }
 
