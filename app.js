@@ -124,14 +124,14 @@ async function fetchCompanyData(company, elements, state) {
   try {
     const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
     if (!response.ok) {
-      if (response.status === 404) return; // Suppress 404 errors for non-existing companies
+      if (response.status === 404) return; 
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     state.cache.set(cacheKey, data);
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
-    console.error('Fetch error:', error.message); // Log the error for debugging, but don't show to the user
+    console.error('Fetch error:', error.message); 
   } finally {
     state.isFetching = false;
   }
