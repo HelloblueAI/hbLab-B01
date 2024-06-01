@@ -34,7 +34,7 @@ const setupEventListeners = (elements, state) => {
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
-  }, 500);
+  }, 300); // Reduced debounce time for faster response
 
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
@@ -62,7 +62,7 @@ const typeEffect = async (text, effectType, elements, state) => {
   for (let i = 0; i <= text.length; i++) {
     if (state.activeEffect !== effectType) break;
     elements.typedOutput.textContent = text.substring(0, i);
-    await delay(text[i - 1] === '.' ? 200 : 50);
+    await delay(text[i - 1] === '.' ? 100 : 30); // Reduced delay for faster typing effect
   }
 };
 
@@ -81,7 +81,7 @@ const introEffect = async (elements, state) => {
 
   for (const sentence of sentences) {
     await typeEffect(sentence, 'intro', elements, state);
-    await delay(1500);
+    await delay(1000); // Reduced delay between sentences
   }
   if (state.activeEffect === 'intro') introEffect(elements, state);
 };
