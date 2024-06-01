@@ -1,7 +1,7 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = this.debounce(fetchCompanyData, 300); // Debounce API calls
+    this.fetchCompanyData = this.debounce(this.retryFetch(fetchCompanyData), 300); // Adjusted debounce time
     this.options = {
       interimResults: options.interimResults || false,
       continuous: options.continuous || false,
@@ -92,5 +92,30 @@ export default class VoiceRecognition {
       clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
+  }
+
+  retryFetch(fetchCompanyData, retries = 3, delay = 1000) {
+    return async (...args) => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          await this.withTimeout(fetchCompanyData(...args));
+          return;
+        } catch (error) {
+          if (i === retries - 1) throw error;
+          await this.delay(delay);
+        }
+      }
+    };
+  }
+
+  withTimeout(promise, timeout = 5000) {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('Timeout')), timeout);
+      promise.then(resolve).catch(reject).finally(() => clearTimeout(timer));
+    });
+  }
+
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
