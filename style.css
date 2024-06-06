@@ -495,7 +495,6 @@ a:hover {
     text-decoration: underline;
 }
 
-
 /* Mobile Specific Styles */
 
 @media (max-width: 768px) {
@@ -503,8 +502,6 @@ a:hover {
     html {
         background: none;
     }
-
-    /* Gradient background for the home page */
     body[page="home"] {
         background: linear-gradient(45deg, darkblue, #187CFF);
     }

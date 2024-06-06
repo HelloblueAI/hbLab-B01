@@ -34,7 +34,7 @@ const setupEventListeners = (elements, state) => {
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
-  }, 300); // Reduced debounce time for faster response
+  }, 300); 
 
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
