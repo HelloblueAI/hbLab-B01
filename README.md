@@ -63,9 +63,6 @@ To set up the B01 Contact Assistant on your local machine, follow these steps:
 * View the Application:
 Open the index.html file in your preferred web browser to launch the application.
 
-## Usage
-Simply activate the voice recognition by clicking the microphone icon, or type the name of the company you wish to contact in the search box. B01 will handle the rest, displaying the company's contact information and offering direct dialing if available.
-
 ## Contributing
 We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](./CONTRIBUTING.md). If you encounter any issues, please submit a new issue on our [issues page](https://github.com/HelloblueAI/hbLab-B01/issues).
 
