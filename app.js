@@ -34,7 +34,7 @@ const setupEventListeners = (elements, state) => {
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
-  }, 300); 
+  }, 300);
 
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
@@ -81,7 +81,7 @@ const introEffect = async (elements, state) => {
 
   for (const sentence of sentences) {
     await typeEffect(sentence, 'intro', elements, state);
-    await delay(1000); 
+    await delay(1000); // Reduced delay between sentences
   }
   if (state.activeEffect === 'intro') introEffect(elements, state);
 };
@@ -121,6 +121,7 @@ const fetchCompanyData = async (company, elements, state) => {
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
     console.error('Fetch error:', error.message);
+    elements.feedbackText.textContent = 'Failed to fetch company data. Please try again.';
   } finally {
     state.isFetching = false;
   }
