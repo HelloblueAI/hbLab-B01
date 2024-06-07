@@ -62,7 +62,7 @@ const typeEffect = async (text, effectType, elements, state) => {
   for (let i = 0; i <= text.length; i++) {
     if (state.activeEffect !== effectType) break;
     elements.typedOutput.textContent = text.substring(0, i);
-    await delay(text[i - 1] === '.' ? 100 : 30); // Reduced delay for faster typing effect
+    await delay(text[i - 1] === '.' ? 100 : 30); 
   }
 };
 
