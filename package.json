@@ -9,13 +9,15 @@
     "lint:css": "stylelint '**/*.css'",
     "format": "prettier --write '**/*.{html,js,css}'",
     "lint:js": "eslint '**/*.js'",
-    "build:css": "postcss style.css -o style.min.css",
-    "build": "pnpm run build:css",
-    "start": "npx lite-server --verbose",
-    "serve": "serve -s .",
+    "build:css": "postcss style.css -o public/style.min.css",
+    "copy-html": "cp-cli index.html public/index.html",
+    "copy-assets": "cp-cli assets public/assets",
+    "build": "pnpm run build:css && pnpm run copy-html && pnpm run copy-assets",
+    "start": "npx lite-server --baseDir=public --verbose",
+    "serve": "serve -s public",
     "prepare": "husky install",
     "dev": "concurrently \"pnpm run start\" \"pnpm run watch:css\"",
-    "watch:css": "postcss style.css -o style.min.css --watch"
+    "watch:css": "postcss style.css -o public/style.min.css --watch"
   },
   "author": "Pejman Haghighatnia",
   "license": "Apache-2.0",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "cp-cli": "^2.0.0",
     "cssnano": "^7.0.2",
     "eslint": "^9.4.0",
     "http-server": "^14.1.1",
