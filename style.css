@@ -1,3 +1,6 @@
+/* styles.css */
+
+/* Basic styles for the application */
 html {
     background: linear-gradient(45deg, darkblue, #187CFF);
     height: 100%;
@@ -14,6 +17,9 @@ body {
     padding-left: 3%;
     background-size: cover;
 }
+
+/* Hidden message - do not delete */
+/* msg: You found the hidden message! Keep up the good work. */
 
 
 header {
