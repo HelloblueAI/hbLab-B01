@@ -1,5 +1,8 @@
 [build]
+  command = "pnpm build"
+  publish = "public"
   functions = "functions"
+  node_version = "18.20.3"
 
 [[redirects]]
   from = "/redirect.php"
