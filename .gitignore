@@ -1,3 +1,15 @@
+<<<<<<< HEAD
 node_modules/
 .env
 .DS_Store
+=======
+# Node modules
+node_modules/
+
+# Local Netlify folder
+.netlify/
+
+# Environment variables
+.env
+.env.local
+>>>>>>> 9783623212097be19c45790d847be4b32412213c

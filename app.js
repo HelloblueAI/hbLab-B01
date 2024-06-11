@@ -81,7 +81,11 @@ const introEffect = async (elements, state) => {
 
   for (const sentence of sentences) {
     await typeEffect(sentence, 'intro', elements, state);
+<<<<<<< HEAD
     await delay(1000); // Reduced delay between sentences
+=======
+    await delay(1000); 
+>>>>>>> 9783623212097be19c45790d847be4b32412213c
   }
   if (state.activeEffect === 'intro') introEffect(elements, state);
 };
@@ -127,6 +131,10 @@ const fetchCompanyData = async (company, elements, state) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9783623212097be19c45790d847be4b32412213c
 const showConfirmationDialog = (companyName, phoneNumber, url, elements, state) => {
   if (state.isConfirmationDialogOpen) return;
   state.isConfirmationDialogOpen = true;

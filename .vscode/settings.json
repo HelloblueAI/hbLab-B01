@@ -1,3 +1,31 @@
 {
+<<<<<<< HEAD
     "git.ignoreLimitWarning": true
+=======
+    "liveServer.settings.port": 5501,
+    "cSpell.words": [
+        "aboutads",
+        "allaboutcookies",
+        "badgeharo",
+        "bayad",
+        "cpanel",
+        "cssnano",
+        "Decompilation",
+        "gifs",
+        "gotrue",
+        "Haghighatnia",
+        "helloblue",
+        "koni",
+        "mikhay",
+        "networkadvertising",
+        "nextjs",
+        "payin",
+        "Pejman",
+        "stylelint",
+        "tanzim",
+        "timeframe",
+        "uppercased"
+    ],
+    "CodeGPT.apiKey": "OpenAI"
+>>>>>>> 9783623212097be19c45790d847be4b32412213c
 }

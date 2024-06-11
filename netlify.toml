@@ -1,5 +1,12 @@
 [build]
+<<<<<<< HEAD
   functions = "functions"
+=======
+  command = "pnpm build"
+  publish = "public"
+  functions = "functions"
+  node_version = "18.20.3"
+>>>>>>> 9783623212097be19c45790d847be4b32412213c
 
 [[redirects]]
   from = "/redirect.php"
