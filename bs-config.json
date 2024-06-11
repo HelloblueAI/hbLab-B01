@@ -1,7 +1,7 @@
 {
-    "port": 3000,
+    "port": 4000,
     "files": [
-        "./**/*.{html,htm,css,js}"
+      "./**/*.{html,htm,css,js}"
     ],
     "injectChanges": true,
     "logFileChanges": true,
@@ -10,6 +10,7 @@
     "notify": false,
     "reloadDelay": 0,
     "server": {
-        "baseDir": "./"
+      "baseDir": "./"
     }
-}
+  }
+  

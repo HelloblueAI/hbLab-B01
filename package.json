@@ -13,7 +13,7 @@
     "copy-html": "cp-cli index.html public/index.html",
     "copy-other-assets": "cp-cli privacy-policy.html public/privacy-policy.html && cp-cli terms-of-use.html public/terms-of-use.html && cp-cli terms-style.css public/terms-style.css && cp-cli 404.shtml public/404.shtml",
     "build": "pnpm run build:css && pnpm run copy-html && pnpm run copy-other-assets",
-    "start": "npx lite-server --baseDir=public",
+    "start": "npx lite-server --baseDir=public --port 4000",
     "serve": "serve -s public",
     "prepare": "husky install",
     "dev": "concurrently \"pnpm run start\" \"pnpm run watch:css\"",
