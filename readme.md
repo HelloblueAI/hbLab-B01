@@ -64,7 +64,7 @@ To set up the B01 Contact Assistant on your local machine, follow these steps:
 Open the index.html file in your preferred web browser to launch the application.
 
 ## Contributing
-We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](./CONTRIBUTING.md). If you encounter any issues, please submit a new issue on our [issues page](https://github.com/HelloblueAI/hbLab-B01/issues).
+We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING]([./CONTRIBUTING.md](https://github.com/HelloblueAI/hbLab-B01/blob/cc39570a45a9738f5f8b329f230382fe1f75c6aa/CONTRIBUTING.md)). If you encounter any issues, please submit a new issue on our [issues page](https://github.com/HelloblueAI/hbLab-B01/issues).
 
 ## Security Policy
 Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b6638fdc480cf89d0fe4128a49642adb55fb4b/SECURITY.md) 
