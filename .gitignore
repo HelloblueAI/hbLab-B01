@@ -69,3 +69,6 @@ dist/
 
 # Serverless directories
 .serverless/
+
+# Copilot files
+copilot.md
