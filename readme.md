@@ -8,7 +8,7 @@ Welcome to the repository of `hbLab-B01` Contact Assistant, a cutting-edge web a
 
 ## Features
 ![cd8f9ae0-7fdf-4cf2-b559-e814e15442da](https://github.com/pejmantheory/hbLab-B01/assets/81389644/526db8c8-0854-4964-9b13-6eaa4cea8fd9)
-# Enhanced Voice AI Assistant
+
 ## Feature Overview
 The Enhanced Voice AI Assistant in our application allows users to initiate searches and make calls simultaneously using just their voice. This feature reduces the need for typing, enhances accessibility, and supports efficient multitasking.
 
