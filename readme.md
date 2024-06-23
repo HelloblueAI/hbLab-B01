@@ -26,7 +26,6 @@ After converting speech to text, the system employs natural language processing 
 - **Call Functionality**: For call commands, the assistant identifies the contact name or number from the user's voice input and initiates a call using the device's calling capabilities or through an integrated VoIP service.
 
 ## Usage
-
 To use the Voice AI Assistant, simply activate it using a predefined hotword followed by your command:
 - Say e.g. "Amazon" to initiate the call to the customer service department.
 - Sat e.g. "Apple" to initiate the call or text box to the customer service department.
