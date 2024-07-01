@@ -1,6 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay, debounce } from './utils.js';
-import VoiceRecognition from './voiceRecognition.js';
+import VoiceRecognition from './voicerecognition.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = getDOMElements();
@@ -81,7 +81,7 @@ const introEffect = async (elements, state) => {
 
   for (const sentence of sentences) {
     await typeEffect(sentence, 'intro', elements, state);
-    await delay(1000); // Reduced delay between sentences
+    await delay(1000); 
   }
   if (state.activeEffect === 'intro') introEffect(elements, state);
 };
