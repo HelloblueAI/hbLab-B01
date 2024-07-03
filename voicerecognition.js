@@ -1,11 +1,11 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = this.debounce(this.retryFetch(fetchCompanyData), 300); 
+    this.fetchCompanyData = this.debounce(this.retryFetch(fetchCompanyData), 300);
     this.options = {
-      interimResults: options.interimResults || false,
-      continuous: options.continuous || false,
-      ...options
+      interimResults: false,
+      continuous: false,
+      ...options,
     };
     this.recognition = this.initSpeechRecognition();
     this.isListening = false;
