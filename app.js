@@ -1,6 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay, debounce } from './utils.js';
-import VoiceRecognition from './voicerecognition.js';
+import VoiceRecognition from './voiceRecognition.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = getDOMElements();
@@ -38,14 +38,6 @@ const setupEventListeners = (elements, state) => {
 
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
-  });
-
-  elements.companySearch.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const value = elements.companySearch.value.trim();
-      if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
-    }
   });
 
   new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state));
