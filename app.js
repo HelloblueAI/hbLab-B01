@@ -40,6 +40,14 @@ const setupEventListeners = (elements, state) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
   });
 
+  elements.companySearch.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const value = elements.companySearch.value.trim();
+      if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
+    }
+  });
+
   new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state));
 };
 
