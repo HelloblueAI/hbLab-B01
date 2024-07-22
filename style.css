@@ -507,7 +507,7 @@ a:hover {
     }
 
 
-    /* Adjusted navigation position for the home page */
+    
     body[page="home"] nav {
         left: 17px;
     }
