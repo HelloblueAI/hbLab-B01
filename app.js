@@ -70,7 +70,7 @@ const typeEffect = async (text, effectType, elements, state) => {
   for (let i = 0; i <= text.length; i++) {
     if (state.activeEffect !== effectType) break;
     elements.typedOutput.textContent = text.substring(0, i);
-    await delay(text[i - 1] === '.' ? 100 : 30); 
+    await delay(text[i - 1] === '.' ? 100 : 30);
   }
 };
 
@@ -89,7 +89,7 @@ const introEffect = async (elements, state) => {
 
   for (const sentence of sentences) {
     await typeEffect(sentence, 'intro', elements, state);
-    await delay(1000); 
+    await delay(1000);
   }
   if (state.activeEffect === 'intro') introEffect(elements, state);
 };
