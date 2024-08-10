@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
-    "braces": "^2.3.1",
+    "braces": "^3.0.3",
     "cookie-parser": "^1.4.6",
     "defaults-deep": "^0.2.4",
     "dotenv": "^16.4.5",
@@ -48,9 +48,9 @@
     "express-openid-connect": "^2.17.1",
     "glob": "^11.0.0",
     "gotrue-js": "^0.9.29",
-    "set-value": "^2.0.1",
+    "set-value": "^4.1.0",
     "update": "^0.7.4",
-    "yargs-parser": "^5.0.1"
+    "yargs-parser": "^21.1.1"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
