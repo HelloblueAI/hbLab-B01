@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = getInitialState();
   setupEventListeners(elements, state);
   setBodyHeight();
-  introEffect(elements, state);
+  smartIntroEffect(elements, state);
   window.addEventListener('resize', debounce(setBodyHeight, 200));
   window.addEventListener('orientationchange', setBodyHeight);
 });
@@ -21,6 +21,7 @@ const getDOMElements = () => ({
   loginForm: document.getElementById('loginForm'),
   emailInput: document.getElementById('emailInput'),
   passwordInput: document.getElementById('passwordInput'),
+  suggestionBox: document.getElementById('suggestionBox'),
 });
 
 const getInitialState = () => ({
@@ -28,6 +29,7 @@ const getInitialState = () => ({
   isConfirmationDialogOpen: false,
   isFetching: false,
   cache: new Map(),
+  recentCompanies: [],
 });
 
 const setupEventListeners = (elements, state) => {
@@ -37,7 +39,7 @@ const setupEventListeners = (elements, state) => {
   }, 300);
 
   elements.companySearch.addEventListener('input', (event) => {
-    handleCompanySearchInput(event, elements, debouncedFetchCompanyData);
+    handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
   });
 
   elements.companySearch.addEventListener('keypress', (event) => {
@@ -51,7 +53,7 @@ const setupEventListeners = (elements, state) => {
   new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state));
 };
 
-const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData) => {
+const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData, state) => {
   const { value } = event.target;
   const capitalizedValue = capitalizeCompany(value);
   if (value !== capitalizedValue) {
@@ -59,7 +61,13 @@ const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData) =>
     event.target.value = capitalizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   }
-  if (value.trim() && value.length > 1) debouncedFetchCompanyData();
+
+  if (value.trim() && value.length > 1) {
+    debouncedFetchCompanyData();
+    showSuggestions(value, elements, state);
+  } else {
+    elements.suggestionBox.innerHTML = '';
+  }
 };
 
 const setBodyHeight = () => {
@@ -74,24 +82,28 @@ const typeEffect = async (text, effectType, elements, state) => {
   }
 };
 
-const introEffect = async (elements, state) => {
-  state.activeEffect = 'intro';
-  const sentences = [
-    "Hello, I'm B01",
-    "I broke out of the internet to help you contact any company",
-    "Phone and Instant Live Chat",
-    "Got a company in mind?",
-    "Just say the word or type it in",
-    "Connecting to customer services has never been this fast",
-    "Ready to connect?",
-    "I'm here to assist!",
-  ];
+const smartIntroSentences = [
+  "Hello, I'm B01",
+  "I broke out of the internet to help you contact any company",
+  "Phone and Instant Live Chat",
+  "Got a company in mind?",
+  "Just say the word or type it in",
+  "Connecting to customer services has never been this fast",
+  "Ready to connect?",
+  "I'm here to assist!",
+];
 
-  for (const sentence of sentences) {
+const smartIntroEffect = async (elements, state) => {
+  if (state.recentCompanies.length > 0) {
+    smartIntroSentences.push(`It looks like you're interested in ${state.recentCompanies.join(', ')}. Need help?`);
+  }
+
+  state.activeEffect = 'intro';
+  for (const sentence of smartIntroSentences) {
     await typeEffect(sentence, 'intro', elements, state);
     await delay(1000);
   }
-  if (state.activeEffect === 'intro') introEffect(elements, state);
+  if (state.activeEffect === 'intro') smartIntroEffect(elements, state);
 };
 
 const displayCompanyInfo = async ({ company_name: companyName, phone_number: phoneNumber, url }, elements, state) => {
@@ -100,6 +112,8 @@ const displayCompanyInfo = async ({ company_name: companyName, phone_number: pho
   const sentence = `You asked to call: ${capitalizedCompanyName}`;
   elements.typedOutput.textContent = '';
   await typeEffect(sentence, 'company', elements, state);
+  state.recentCompanies.unshift(capitalizedCompanyName);
+  if (state.recentCompanies.length > 5) state.recentCompanies.pop();
   showConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 };
 
@@ -112,27 +126,35 @@ const fetchCompanyData = async (company, elements, state) => {
   const cacheKey = `companyData-${company}`;
 
   const cachedData = state.cache.get(cacheKey);
-  if (cachedData) {
-    await displayCompanyInfo(cachedData, elements, state);
+  if (cachedData && !isCacheExpired(cachedData.timestamp)) {
+    await displayCompanyInfo(cachedData.data, elements, state);
     state.isFetching = false;
     return;
   }
 
   try {
     const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
-    if (!response.ok) {
-      if (response.status === 404) return;
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.ok) {
+      const data = await response.json();
+      state.cache.set(cacheKey, { data, timestamp: Date.now() });
+      await displayCompanyInfo(data, elements, state);
+    } else if (response.status === 404) {
+      elements.feedbackText.textContent = 'Company not found. Please try another one.';
+    } else {
+      throw new Error(`Unexpected HTTP status: ${response.status}`);
     }
-    const data = await response.json();
-    state.cache.set(cacheKey, data);
-    await displayCompanyInfo(data, elements, state);
   } catch (error) {
     console.error('Fetch error:', error.message);
-    elements.feedbackText.textContent = 'Failed to fetch company data. Please try again.';
+    elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
+    setTimeout(() => fetchCompanyData(company, elements, state), 3000);
   } finally {
     state.isFetching = false;
   }
+};
+
+const isCacheExpired = (timestamp) => {
+  const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
+  return (Date.now() - timestamp) > cacheDuration;
 };
 
 const showConfirmationDialog = (companyName, phoneNumber, url, elements, state) => {
@@ -144,12 +166,23 @@ const showConfirmationDialog = (companyName, phoneNumber, url, elements, state) 
     if (confirm(messageContent)) {
       window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
     } else {
-      introEffect(elements, state);
+      smartIntroEffect(elements, state);
     }
   } else {
     displayNotification(`${companyName} does not have a phone number available.`);
-    introEffect(elements, state);
+    smartIntroEffect(elements, state);
   }
 
   state.isConfirmationDialogOpen = false;
+};
+
+const showSuggestions = (input, elements, state) => {
+  const suggestions = state.recentCompanies.filter(company => company.toLowerCase().includes(input.toLowerCase()));
+  elements.suggestionBox.innerHTML = suggestions.map(suggestion => `<div class="suggestion">${suggestion}</div>`).join('');
+  elements.suggestionBox.querySelectorAll('.suggestion').forEach(item => {
+    item.addEventListener('click', () => {
+      elements.companySearch.value = item.textContent;
+      fetchCompanyData(capitalizeCompany(item.textContent), elements, state);
+    });
+  });
 };
