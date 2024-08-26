@@ -16,8 +16,7 @@ export default class VoiceRecognition {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      console.error("This browser does not support Speech Recognition.");
-      return null;
+      throw new Error("This browser does not support Speech Recognition.");
     }
 
     const recognition = new SpeechRecognition();
@@ -26,6 +25,7 @@ export default class VoiceRecognition {
     recognition.onstart = this.handleStart.bind(this);
     recognition.onresult = this.handleResult.bind(this);
     recognition.onend = this.handleEnd.bind(this);
+    recognition.onerror = this.handleError.bind(this); // Handle errors from the recognition instance
 
     return recognition;
   }
@@ -47,7 +47,7 @@ export default class VoiceRecognition {
       .trim();
     if (event.results[0].isFinal) {
       this.elements.companySearch.value = transcript;
-      this.fetchCompanyData(transcript);
+      this.fetchCompanyData(transcript).catch(error => this.handleError(error));
       this.stopRecognition();
     }
   }
@@ -55,6 +55,11 @@ export default class VoiceRecognition {
   handleEnd() {
     this.isListening = false;
     this.updateFeedback("", false);
+  }
+
+  handleError(error) {
+    console.error("Speech Recognition Error:", error);
+    this.updateFeedback("An error occurred. Please try again.", false);
   }
 
   toggleVoiceRecognition() {
@@ -90,7 +95,7 @@ export default class VoiceRecognition {
     let timeout;
     return (...args) => {
       clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
+      timeout = setTimeout(() => func(...args), wait);
     };
   }
 
@@ -101,6 +106,7 @@ export default class VoiceRecognition {
           await this.withTimeout(fetchCompanyData(...args));
           return;
         } catch (error) {
+          console.warn(`Retry ${i + 1}/${retries} failed: ${error.message}`);
           if (i === retries - 1) throw error;
           await this.delay(delay);
         }

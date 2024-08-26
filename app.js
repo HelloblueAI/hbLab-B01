@@ -1,6 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, displayNotification, isValidURL, delay, debounce } from './utils.js';
-import VoiceRecognition from './voicerecognition.js';
+import VoiceRecognition from './voiceRecognition.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = getDOMElements();
@@ -112,9 +112,13 @@ const displayCompanyInfo = async ({ company_name: companyName, phone_number: pho
   const sentence = `You asked to call: ${capitalizedCompanyName}`;
   elements.typedOutput.textContent = '';
   await typeEffect(sentence, 'company', elements, state);
-  state.recentCompanies.unshift(capitalizedCompanyName);
-  if (state.recentCompanies.length > 5) state.recentCompanies.pop();
+  updateRecentCompanies(state, capitalizedCompanyName);
   showConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
+};
+
+const updateRecentCompanies = (state, companyName) => {
+  state.recentCompanies.unshift(companyName);
+  if (state.recentCompanies.length > 5) state.recentCompanies.pop();
 };
 
 const fetchCompanyData = async (company, elements, state) => {
@@ -145,11 +149,15 @@ const fetchCompanyData = async (company, elements, state) => {
     }
   } catch (error) {
     console.error('Fetch error:', error.message);
-    elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
-    setTimeout(() => fetchCompanyData(company, elements, state), 3000);
+    handleFetchError(elements, state, company);
   } finally {
     state.isFetching = false;
   }
+};
+
+const handleFetchError = (elements, state, company) => {
+  elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
+  setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 };
 
 const isCacheExpired = (timestamp) => {
