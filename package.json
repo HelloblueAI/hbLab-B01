@@ -31,7 +31,7 @@
     "husky": "^9.1.5",
     "lint-staged": "^15.2.10",
     "npm-check-updates": "^17.1.1",
-    "postcss": "^8.4.43",
+    "postcss": "^8.4.44",
     "postcss-cli": "^11.0.0",
     "prettier": "^3.3.3",
     "serve": "^14.2.3",
