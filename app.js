@@ -98,7 +98,7 @@ const smartIntroSentences = [
   "Whether it's Apple, Discover, or Netflix",
   "Ready to connect?",
   "I'm here to assist!",
-  "I can also help with Expedia, Tesla, and even American Airlines!",
+  "I can also help with Expedia, Tesla, and even American Airlines",
   "Simply say Delta, eBay, or FedEx, and I'll take care of the rest",
 ];
 
