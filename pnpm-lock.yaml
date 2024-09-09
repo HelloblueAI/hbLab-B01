@@ -17,6 +17,9 @@ importers:
       cookie-parser:
         specifier: ^1.4.6
         version: 1.4.6
+      defaults-deep:
+        specifier: ^0.2.4
+        version: 0.2.4
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -38,6 +41,9 @@ importers:
       lodash.merge:
         specifier: ^4.6.2
         version: 4.6.2
+      micromatch:
+        specifier: ^4.0.8
+        version: 4.0.8
       set-value:
         specifier: ^4.1.0
         version: 4.1.0
@@ -831,6 +837,9 @@ packages:
 
   caniuse-lite@1.0.30001655:
     resolution: {integrity: sha512-jRGVy3iSGO5Uutn2owlb5gR6qsGngTw9ZTb4ali9f3glshcNmJ2noam4Mo9zia5P9Dk3jNNydy7vQjuE5dQmfg==}
+
+  caniuse-lite@1.0.30001659:
+    resolution: {integrity: sha512-Qxxyfv3RdHAfJcXelgf0hU4DFUVXBGTjqrBUZLUh8AtlGnsDo+CnncYtTd95+ZKfnANUOzxyIQCuU/UeBZBYoA==}
 
   chalk-template@0.4.0:
     resolution: {integrity: sha512-/ghrgmhfY8RaSdeo43hNXxpoHAtxdbskUHjPpfqUWGttFgycUhYPGx3YZBCnUCvOa7Doivn1IZec3DEGFoMgLg==}
@@ -3571,6 +3580,10 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
 
+  source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
+    engines: {node: '>=0.10.0'}
+
   split-string@1.0.1:
     resolution: {integrity: sha512-ZuVODgxrpJnBD5LezfE484E2ArRF8HGgJqaiGBWvCbGS1iqynO45FQxBx7Ze4t45X9a994ejFD5kLhI6WtL1xA==}
     engines: {node: '>=0.10.0'}
@@ -5115,6 +5128,8 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001655: {}
+
+  caniuse-lite@1.0.30001659: {}
 
   chalk-template@0.4.0:
     dependencies:
@@ -7209,7 +7224,7 @@ snapshots:
       '@next/env': 14.2.7
       '@swc/helpers': 0.5.5
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001655
+      caniuse-lite: 1.0.30001659
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.3.1
@@ -7725,7 +7740,7 @@ snapshots:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.1.0
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   postcss@8.4.45:
     dependencies:
@@ -8233,6 +8248,8 @@ snapshots:
       kind-of: 3.2.2
 
   source-map-js@1.2.0: {}
+
+  source-map-js@1.2.1: {}
 
   split-string@1.0.1:
     dependencies:
