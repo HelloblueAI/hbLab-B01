@@ -93,13 +93,11 @@ const smartIntroSentences = [
   "Hello, I'm B01",
   "I broke out of the internet to help you contact any company",
   "Phone and Instant Live Chat",
-  "Just say the company's name like Verizon or Amazon or type it in",
-  "I'll connect you in seconds",
-  "Whether it's Apple, Discover, or Netflix",
+  "Simply say or type the company's name like Verizon or Amazon",
+  "I'll connect you in seconds!",
+  "Whether it's Apple, Discover, Delta, or Netflix",
   "Ready to connect?",
   "I'm here to assist!",
-  "I can also help with Expedia, Tesla, and even American Airlines",
-  "Simply say Delta, eBay, or FedEx, and I'll take care of the rest",
 ];
 
 const smartIntroEffect = async (elements, state) => {
