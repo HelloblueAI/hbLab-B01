@@ -24,7 +24,7 @@
     "url": "https://github.com/HelloblueAI/hbLab-B01.git"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.0",
     "cssnano": "^7.0.6",
     "eslint": "^9.10.0",
     "http-server": "^14.1.1",
