@@ -38,6 +38,7 @@ const setupEventListeners = (elements, state) => {
     if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
   }, 300);
 
+
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
   });
@@ -50,7 +51,11 @@ const setupEventListeners = (elements, state) => {
     }
   });
 
-  new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state));
+  new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state), {
+    interimResults: true, 
+    continuous: true,
+    autoRestart: true,
+  });
 };
 
 const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData, state) => {
@@ -62,6 +67,7 @@ const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData, st
     event.target.setSelectionRange(selectionStart, selectionEnd);
   }
 
+  
   if (value.trim() && value.length > 1) {
     debouncedFetchCompanyData();
     showSuggestions(value, elements, state);
@@ -82,20 +88,20 @@ const typeEffect = async (text, effectType, elements, state) => {
   }
 };
 
+
 const smartIntroSentences = [
   "Hello, I'm B01",
   "I broke out of the internet to help you contact any company",
   "Phone and Instant Live Chat",
-  "Got a company in mind?",
-  "Just say the word or type it in",
-  "Connecting to customer services has never been this fast",
+  "Just say the company's name or type it in",
+  "I'll connect you in seconds",
   "Ready to connect?",
   "I'm here to assist!",
 ];
 
 const smartIntroEffect = async (elements, state) => {
   if (state.recentCompanies.length > 0) {
-    smartIntroSentences.push(`It looks like you're interested in ${state.recentCompanies.join(', ')}. Need help?`);
+    smartIntroSentences.push(`You recently searched for ${state.recentCompanies.join(', ')}.`);
   }
 
   state.activeEffect = 'intro';
@@ -120,6 +126,7 @@ const updateRecentCompanies = (state, companyName) => {
   state.recentCompanies.unshift(companyName);
   if (state.recentCompanies.length > 5) state.recentCompanies.pop();
 };
+
 
 const fetchCompanyData = async (company, elements, state) => {
   if (state.isConfirmationDialogOpen || state.isFetching) return;
@@ -183,6 +190,7 @@ const showConfirmationDialog = (companyName, phoneNumber, url, elements, state) 
 
   state.isConfirmationDialogOpen = false;
 };
+
 
 const showSuggestions = (input, elements, state) => {
   const suggestions = state.recentCompanies.filter(company => company.toLowerCase().includes(input.toLowerCase()));
