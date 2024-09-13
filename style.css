@@ -337,7 +337,7 @@ header {
         font-size: 22px;
         position: sticky;
         width: 82%;
-        margin-top: -98px;
+        margin-top: -67px;
         margin-left: -29px;
     }
 
@@ -391,7 +391,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 119px; 
+        bottom: 103px; 
         z-index: 1;
     }
 
