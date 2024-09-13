@@ -24,11 +24,11 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       express:
-        specifier: ^4.20.0
-        version: 4.20.0
+        specifier: ^4.21.0
+        version: 4.21.0
       express-openid-connect:
         specifier: ^2.17.1
-        version: 2.17.1(express@4.20.0)
+        version: 2.17.1(express@4.21.0)
       fuse.js:
         specifier: ^7.0.0
         version: 7.0.0
@@ -55,8 +55,8 @@ importers:
         version: 21.1.1
     devDependencies:
       concurrently:
-        specifier: ^9.0.0
-        version: 9.0.0
+        specifier: ^9.0.1
+        version: 9.0.1
       cssnano:
         specifier: ^7.0.6
         version: 7.0.6(postcss@8.4.45)
@@ -67,8 +67,8 @@ importers:
         specifier: ^14.1.1
         version: 14.1.1
       husky:
-        specifier: ^9.1.5
-        version: 9.1.5
+        specifier: ^9.1.6
+        version: 9.1.6
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10
@@ -1001,8 +1001,8 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  concurrently@9.0.0:
-    resolution: {integrity: sha512-iAxbsDeUkn8E/4+QalT7T3WvlyTfmsoez+19lbbcsxZdOEMfBukd8LA30KYez2UR5xkKFzbcqXIZy5RisCbaxw==}
+  concurrently@9.0.1:
+    resolution: {integrity: sha512-wYKvCd/f54sTXJMSfV6Ln/B8UrfLBKOYa+lzc6CHay3Qek+LorVSBdMVfyewFhRbH0Rbabsk4D+3PL/VjQ5gzg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -1457,8 +1457,8 @@ packages:
     peerDependencies:
       express: '>= 4.17.0'
 
-  express@4.20.0:
-    resolution: {integrity: sha512-pLdae7I6QqShF5PnNTCVn4hI91Dx0Grkn2+IAsMTgMIKuQVte2dN9PeGSSAME2FR8anOhVA62QDIUaWVfEXVLw==}
+  express@4.21.0:
+    resolution: {integrity: sha512-VqcNGcj/Id5ZT1LZ/cfihi3ttTn+NJmkli2eZADigjq29qTlWi/hAQ43t/VLPq8+UX06FCEx3ByOYet6ZFblng==}
     engines: {node: '>= 0.10.0'}
 
   extend-shallow@1.1.4:
@@ -1554,8 +1554,8 @@ packages:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
 
-  finalhandler@1.2.0:
-    resolution: {integrity: sha512-5uXcUVftlQMFnWC9qu/svkWv3GTd2PfUhK/3PLkYNAe7FbqJMt3515HaxE6eRL74GdsriiwujiawdaB1BpEISg==}
+  finalhandler@1.3.1:
+    resolution: {integrity: sha512-6BN9trH7bp3qvnrRyzsBz+g3lZxTNZTbVO2EV1CS0WIcDbawYVdYvGflME/9QP0h0pYlCDBCTjYa9nZzMDpyxQ==}
     engines: {node: '>= 0.8'}
 
   find-file-up@0.1.3:
@@ -1910,8 +1910,8 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  husky@9.1.5:
-    resolution: {integrity: sha512-rowAVRUBfI0b4+niA4SJMhfQwc107VLkBUgEYYAOQAbqDCnra1nYh83hF/MDmhYs9t9n1E3DuKOrs2LYNC+0Ag==}
+  husky@9.1.6:
+    resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3243,10 +3243,6 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  qs@6.11.0:
-    resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
-    engines: {node: '>=0.6'}
-
   qs@6.13.0:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
     engines: {node: '>=0.6'}
@@ -3473,10 +3469,6 @@ packages:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
 
-  send@0.18.0:
-    resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
-    engines: {node: '>= 0.8.0'}
-
   send@0.19.0:
     resolution: {integrity: sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==}
     engines: {node: '>= 0.8.0'}
@@ -3484,8 +3476,8 @@ packages:
   serve-handler@6.1.5:
     resolution: {integrity: sha512-ijPFle6Hwe8zfmBxJdE+5fta53fdIY0lHISJvuikXB3VYFafRjMRpOffSPvCYsbKyBA7pvy9oYr/BT1O3EArlg==}
 
-  serve-static@1.16.0:
-    resolution: {integrity: sha512-pDLK8zwl2eKaYrs8mrPZBJua4hMplRWJ1tIFksVC3FtBEBnl8dxgeHtsaMS8DhS9i4fLObaon6ABoc4/hQGdPA==}
+  serve-static@1.16.2:
+    resolution: {integrity: sha512-VqpjJZKadQB/PEbEwvFdO43Ax5dFBZ2UECszz8bQ7pi7wt//PWe1P6MN7eCnjsatYtBT6EuiClbjSWP2WrIoTw==}
     engines: {node: '>= 0.8.0'}
 
   serve@14.2.3:
@@ -5334,7 +5326,7 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  concurrently@9.0.0:
+  concurrently@9.0.1:
     dependencies:
       chalk: 4.1.2
       lodash: 4.17.21
@@ -5846,13 +5838,13 @@ snapshots:
     dependencies:
       lazy-cache: 1.0.4
 
-  express-openid-connect@2.17.1(express@4.20.0):
+  express-openid-connect@2.17.1(express@4.21.0):
     dependencies:
       base64url: 3.0.1
       clone: 2.1.2
       cookie: 0.5.0
       debug: 4.3.6
-      express: 4.20.0
+      express: 4.21.0
       futoin-hkdf: 1.5.3
       http-errors: 1.8.1
       joi: 17.13.3
@@ -5863,7 +5855,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  express@4.20.0:
+  express@4.21.0:
     dependencies:
       accepts: 1.3.8
       array-flatten: 1.1.1
@@ -5877,7 +5869,7 @@ snapshots:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1
-      finalhandler: 1.2.0
+      finalhandler: 1.3.1
       fresh: 0.5.2
       http-errors: 2.0.0
       merge-descriptors: 1.0.3
@@ -5886,11 +5878,11 @@ snapshots:
       parseurl: 1.3.3
       path-to-regexp: 0.1.10
       proxy-addr: 2.0.7
-      qs: 6.11.0
+      qs: 6.13.0
       range-parser: 1.2.1
       safe-buffer: 5.2.1
       send: 0.19.0
-      serve-static: 1.16.0
+      serve-static: 1.16.2
       setprototypeof: 1.2.0
       statuses: 2.0.1
       type-is: 1.6.18
@@ -6009,10 +6001,10 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
-  finalhandler@1.2.0:
+  finalhandler@1.3.1:
     dependencies:
       debug: 2.6.9
-      encodeurl: 1.0.2
+      encodeurl: 2.0.0
       escape-html: 1.0.3
       on-finished: 2.4.1
       parseurl: 1.3.3
@@ -6436,7 +6428,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  husky@9.1.5: {}
+  husky@9.1.6: {}
 
   iconv-lite@0.4.24:
     dependencies:
@@ -7793,10 +7785,6 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  qs@6.11.0:
-    dependencies:
-      side-channel: 1.0.6
-
   qs@6.13.0:
     dependencies:
       side-channel: 1.0.6
@@ -8102,24 +8090,6 @@ snapshots:
 
   semver@5.7.2: {}
 
-  send@0.18.0:
-    dependencies:
-      debug: 2.6.9
-      depd: 2.0.0
-      destroy: 1.2.0
-      encodeurl: 1.0.2
-      escape-html: 1.0.3
-      etag: 1.8.1
-      fresh: 0.5.2
-      http-errors: 2.0.0
-      mime: 1.6.0
-      ms: 2.1.3
-      on-finished: 2.4.1
-      range-parser: 1.2.1
-      statuses: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-
   send@0.19.0:
     dependencies:
       debug: 2.6.9
@@ -8149,12 +8119,12 @@ snapshots:
       path-to-regexp: 2.2.1
       range-parser: 1.2.0
 
-  serve-static@1.16.0:
+  serve-static@1.16.2:
     dependencies:
-      encodeurl: 1.0.2
+      encodeurl: 2.0.0
       escape-html: 1.0.3
       parseurl: 1.3.3
-      send: 0.18.0
+      send: 0.19.0
     transitivePeerDependencies:
       - supports-color
 

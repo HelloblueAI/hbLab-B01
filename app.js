@@ -94,7 +94,7 @@ const smartIntroSentences = [
   "I broke out of the internet to help you contact any company",
   "Phone and Instant Live Chat",
   "Simply say or type the company's name like Verizon or Amazon or Geico",
-  "I'll connect you in seconds!",
+  "I'll connect you in seconds",
   "Whether it's Apple, Discover, Delta, or Netflix",
   "Ready to connect?",
   "I'm here to assist!",
