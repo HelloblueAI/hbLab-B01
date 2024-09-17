@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('orientationchange', setBodyHeight);
 });
 
+// Get all relevant DOM elements
 const getDOMElements = () => ({
   voiceButton: document.getElementById('voiceButton'),
   companySearch: document.getElementById('companySearch'),
@@ -24,6 +25,7 @@ const getDOMElements = () => ({
   suggestionBox: document.getElementById('suggestionBox'),
 });
 
+// Initialize application state
 const getInitialState = () => ({
   activeEffect: 'intro',
   isConfirmationDialogOpen: false,
@@ -32,12 +34,12 @@ const getInitialState = () => ({
   recentCompanies: [],
 });
 
+// Set up event listeners for various UI elements
 const setupEventListeners = (elements, state) => {
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
   }, 300);
-
 
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
@@ -58,6 +60,7 @@ const setupEventListeners = (elements, state) => {
   });
 };
 
+// Handle input events for the company search field
 const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData, state) => {
   const { value } = event.target;
   const capitalizedValue = capitalizeCompany(value);
@@ -67,7 +70,6 @@ const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData, st
     event.target.setSelectionRange(selectionStart, selectionEnd);
   }
 
-  
   if (value.trim() && value.length > 1) {
     debouncedFetchCompanyData();
     showSuggestions(value, elements, state);
@@ -76,10 +78,12 @@ const handleCompanySearchInput = (event, elements, debouncedFetchCompanyData, st
   }
 };
 
+// Set the height of the body element based on the window height
 const setBodyHeight = () => {
   document.body.style.minHeight = `${window.innerHeight}px`;
 };
 
+// Display typing effect with delay between characters
 const typeEffect = async (text, effectType, elements, state) => {
   for (let i = 0; i <= text.length; i++) {
     if (state.activeEffect !== effectType) break;
@@ -88,7 +92,7 @@ const typeEffect = async (text, effectType, elements, state) => {
   }
 };
 
-
+// Smart intro sentences that guide the user
 const smartIntroSentences = [
   "Hello, I'm B01",
   "I broke out of the internet to help you contact any company",
@@ -100,6 +104,7 @@ const smartIntroSentences = [
   "I'm here to assist!",
 ];
 
+// Display smart introduction effect
 const smartIntroEffect = async (elements, state) => {
   if (state.recentCompanies.length > 0) {
     smartIntroSentences.push(`You recently searched for ${state.recentCompanies.join(', ')}.`);
@@ -113,6 +118,7 @@ const smartIntroEffect = async (elements, state) => {
   if (state.activeEffect === 'intro') smartIntroEffect(elements, state);
 };
 
+// Display company information with typing effect
 const displayCompanyInfo = async ({ company_name: companyName, phone_number: phoneNumber, url }, elements, state) => {
   state.activeEffect = 'company';
   const capitalizedCompanyName = capitalizeCompany(companyName);
@@ -123,12 +129,13 @@ const displayCompanyInfo = async ({ company_name: companyName, phone_number: pho
   showConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 };
 
+// Update the list of recently searched companies
 const updateRecentCompanies = (state, companyName) => {
   state.recentCompanies.unshift(companyName);
   if (state.recentCompanies.length > 5) state.recentCompanies.pop();
 };
 
-
+// Fetch company data from the API
 const fetchCompanyData = async (company, elements, state) => {
   if (state.isConfirmationDialogOpen || state.isFetching) return;
 
@@ -163,16 +170,19 @@ const fetchCompanyData = async (company, elements, state) => {
   }
 };
 
+// Handle fetch errors and retry fetching
 const handleFetchError = (elements, state, company) => {
   elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
   setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 };
 
+// Check if cached data has expired
 const isCacheExpired = (timestamp) => {
   const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
   return (Date.now() - timestamp) > cacheDuration;
 };
 
+// Show confirmation dialog for calling or visiting the company URL
 const showConfirmationDialog = (companyName, phoneNumber, url, elements, state) => {
   if (state.isConfirmationDialogOpen) return;
   state.isConfirmationDialogOpen = true;
@@ -192,7 +202,7 @@ const showConfirmationDialog = (companyName, phoneNumber, url, elements, state) 
   state.isConfirmationDialogOpen = false;
 };
 
-
+// Show suggestions based on user input
 const showSuggestions = (input, elements, state) => {
   const suggestions = state.recentCompanies.filter(company => company.toLowerCase().includes(input.toLowerCase()));
   elements.suggestionBox.innerHTML = suggestions.map(suggestion => `<div class="suggestion">${suggestion}</div>`).join('');

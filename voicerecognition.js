@@ -5,6 +5,8 @@ export default class VoiceRecognition {
     this.options = {
       interimResults: false,
       continuous: false,
+      language: 'en-US', // default language
+      confidenceThreshold: 0.5, // confidence threshold for recognition results
       ...options,
     };
     this.recognition = this.initSpeechRecognition();
@@ -20,12 +22,13 @@ export default class VoiceRecognition {
     }
 
     const recognition = new SpeechRecognition();
+    recognition.lang = this.options.language;
     recognition.continuous = this.options.continuous;
     recognition.interimResults = this.options.interimResults;
     recognition.onstart = this.handleStart.bind(this);
     recognition.onresult = this.handleResult.bind(this);
     recognition.onend = this.handleEnd.bind(this);
-    recognition.onerror = this.handleError.bind(this); // Handle errors from the recognition instance
+    recognition.onerror = this.handleError.bind(this);
 
     return recognition;
   }
@@ -42,13 +45,20 @@ export default class VoiceRecognition {
 
   handleResult(event) {
     const transcript = Array.from(event.results)
-      .map(result => result[0].transcript)
-      .join(' ')
-      .trim();
-    if (event.results[0].isFinal) {
+      .map(result => ({
+        transcript: result[0].transcript.trim(),
+        confidence: result[0].confidence,
+      }))
+      .filter(result => result.confidence >= this.options.confidenceThreshold)
+      .map(result => result.transcript)
+      .join(' ');
+
+    if (transcript && event.results[0].isFinal) {
       this.elements.companySearch.value = transcript;
       this.fetchCompanyData(transcript).catch(error => this.handleError(error));
       this.stopRecognition();
+    } else if (!transcript) {
+      this.updateFeedback("Unrecognized or low confidence speech, please try again.", false);
     }
   }
 
@@ -57,9 +67,26 @@ export default class VoiceRecognition {
     this.updateFeedback("", false);
   }
 
-  handleError(error) {
-    console.error("Speech Recognition Error:", error);
-    this.updateFeedback("An error occurred. Please try again.", false);
+  handleError(event) {
+    let message;
+    switch (event.error) {
+      case 'no-speech':
+        message = 'No speech detected. Please try again.';
+        break;
+      case 'audio-capture':
+        message = 'Microphone access is needed to use speech recognition.';
+        break;
+      case 'network':
+        message = 'Network error. Check your connection and try again.';
+        break;
+      case 'not-allowed':
+        message = 'Permission denied to use microphone.';
+        break;
+      default:
+        message = `An unknown error occurred: ${event.error}`;
+    }
+    console.error("Speech Recognition Error:", event.error);
+    this.updateFeedback(message, false);
   }
 
   toggleVoiceRecognition() {
@@ -75,7 +102,7 @@ export default class VoiceRecognition {
   }
 
   startRecognition() {
-    if (this.recognition) {
+    if (this.recognition && !this.isListening) {
       this.recognition.start();
     }
   }
@@ -123,5 +150,9 @@ export default class VoiceRecognition {
 
   delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  setLanguage(language) {
+    this.recognition.lang = language;
   }
 }
