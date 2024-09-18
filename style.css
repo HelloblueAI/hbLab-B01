@@ -186,7 +186,7 @@ header {
     height: 40px;
     border-radius: 50%;
     transition: background-color 0.3s;
-    z-index: 10;  /* Added z-index to ensure it stays on top */
+    z-index: 10;  
 }
 
 
