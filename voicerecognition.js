@@ -5,8 +5,8 @@ export default class VoiceRecognition {
     this.options = {
       interimResults: false,
       continuous: false,
-      language: 'en-US', // default language
-      confidenceThreshold: 0.5, // confidence threshold for recognition results
+      language: 'en-US',
+      confidenceThreshold: 0.5, // Minimum confidence level
       ...options,
     };
     this.recognition = this.initSpeechRecognition();
@@ -18,6 +18,7 @@ export default class VoiceRecognition {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
+      this.updateFeedback("Browser does not support Speech Recognition.", false);
       throw new Error("This browser does not support Speech Recognition.");
     }
 
@@ -74,13 +75,13 @@ export default class VoiceRecognition {
         message = 'No speech detected. Please try again.';
         break;
       case 'audio-capture':
-        message = 'Microphone access is needed to use speech recognition.';
+        message = 'Microphone access is needed to use speech recognition. Check your browser permissions.';
         break;
       case 'network':
         message = 'Network error. Check your connection and try again.';
         break;
       case 'not-allowed':
-        message = 'Permission denied to use microphone.';
+        message = 'Permission denied to use microphone. Please allow microphone access in your browser settings.';
         break;
       default:
         message = `An unknown error occurred: ${event.error}`;
@@ -116,6 +117,12 @@ export default class VoiceRecognition {
   updateFeedback(message, isActive) {
     this.elements.feedbackText.textContent = message;
     this.elements.voiceButton.classList.toggle('active', isActive);
+
+    if (message && !isActive) {
+      this.elements.feedbackText.style.color = 'red'; // Feedback color for errors or low confidence
+    } else {
+      this.elements.feedbackText.style.color = 'white';
+    }
   }
 
   debounce(func, wait) {
