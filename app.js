@@ -37,6 +37,7 @@ function initializeState() {
     isFetching: false,
     cache: new Map(),
     recentCompanies: [],
+    cacheDuration: 24 * 60 * 60 * 1000, // 24 hours, can be parameterized
   };
 }
 
@@ -150,7 +151,7 @@ async function fetchCompanyData(company, elements, state) {
   const cacheKey = `companyData-${company}`;
   const cachedData = state.cache.get(cacheKey);
   
-  if (cachedData && !isCacheExpired(cachedData.timestamp)) {
+  if (cachedData && !isCacheExpired(cachedData.timestamp, state.cacheDuration)) {
     await displayCompanyInfo(cachedData.data, elements, state);
     state.isFetching = false;
     return;
@@ -186,8 +187,7 @@ function handleFetchError(elements, state, company) {
   setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 }
 
-function isCacheExpired(timestamp) {
-  const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
+function isCacheExpired(timestamp, cacheDuration) {
   return (Date.now() - timestamp) > cacheDuration;
 }
 
