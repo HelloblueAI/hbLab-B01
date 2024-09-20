@@ -213,7 +213,6 @@ header {
 }
 
 @keyframes futuristicAnimation {
-
     0%,
     100% {
         transform: scale(1);
@@ -236,9 +235,15 @@ header {
     }
 }
 
+/* Apply animation to voiceButton when active */
+#voiceButton.active {
+    animation: futuristicAnimation 1.5s ease-in-out infinite;
+}
+
 #voiceButton:active {
     animation-play-state: running;
 }
+
 
 #feedbackText {
     margin-left: 2px;
@@ -391,7 +396,7 @@ header {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        bottom: 103px; 
+        bottom: 108px; 
         z-index: 1;
     }
 

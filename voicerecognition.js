@@ -6,7 +6,7 @@ export default class VoiceRecognition {
       interimResults: false,
       continuous: false,
       language: 'en-US',
-      confidenceThreshold: 0.5, // Minimum confidence level
+      confidenceThreshold: 0.7, 
       ...options,
     };
     this.recognition = this.initSpeechRecognition();
@@ -42,6 +42,7 @@ export default class VoiceRecognition {
   handleStart() {
     this.isListening = true;
     this.updateFeedback("Listening...", true);
+    this.animateVoiceButton(true); 
   }
 
   handleResult(event) {
@@ -56,7 +57,9 @@ export default class VoiceRecognition {
 
     if (transcript && event.results[0].isFinal) {
       this.elements.companySearch.value = transcript;
-      this.fetchCompanyData(transcript).catch(error => this.handleError(error));
+      this.fetchCompanyData(transcript)
+        .then(() => this.animateVoiceButton(false)) 
+        .catch(error => this.handleError(error));
       this.stopRecognition();
     } else if (!transcript) {
       this.updateFeedback("Unrecognized or low confidence speech, please try again.", false);
@@ -66,6 +69,7 @@ export default class VoiceRecognition {
   handleEnd() {
     this.isListening = false;
     this.updateFeedback("", false);
+    this.animateVoiceButton(false); 
   }
 
   handleError(event) {
@@ -161,5 +165,14 @@ export default class VoiceRecognition {
 
   setLanguage(language) {
     this.recognition.lang = language;
+  }
+
+
+  animateVoiceButton(isActive) {
+    if (isActive) {
+      this.elements.voiceButton.classList.add('voiceButton-animate', 'active');
+    } else {
+      this.elements.voiceButton.classList.remove('voiceButton-animate', 'active');
+    }
   }
 }
