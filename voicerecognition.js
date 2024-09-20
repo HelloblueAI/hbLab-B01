@@ -6,7 +6,7 @@ export default class VoiceRecognition {
       interimResults: false,
       continuous: false,
       language: 'en-US',
-      confidenceThreshold: 0.7, 
+      confidenceThreshold: 0.7,
       ...options,
     };
     this.recognition = this.initSpeechRecognition();
@@ -58,7 +58,7 @@ export default class VoiceRecognition {
     if (transcript && event.results[0].isFinal) {
       this.elements.companySearch.value = transcript;
       this.fetchCompanyData(transcript)
-        .then(() => this.animateVoiceButton(false)) 
+        .then(() => this.animateDetection())  
         .catch(error => this.handleError(error));
       this.stopRecognition();
     } else if (!transcript) {
@@ -123,7 +123,7 @@ export default class VoiceRecognition {
     this.elements.voiceButton.classList.toggle('active', isActive);
 
     if (message && !isActive) {
-      this.elements.feedbackText.style.color = 'red'; // Feedback color for errors or low confidence
+      this.elements.feedbackText.style.color = 'red'; 
     } else {
       this.elements.feedbackText.style.color = 'white';
     }
@@ -163,16 +163,23 @@ export default class VoiceRecognition {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  setLanguage(language) {
-    this.recognition.lang = language;
-  }
-
 
   animateVoiceButton(isActive) {
     if (isActive) {
-      this.elements.voiceButton.classList.add('voiceButton-animate', 'active');
+      this.elements.voiceButton.classList.add('active');
     } else {
-      this.elements.voiceButton.classList.remove('voiceButton-animate', 'active');
+      this.elements.voiceButton.classList.remove('active');
     }
+  }
+
+
+  animateDetection() {
+    const voiceButton = this.elements.voiceButton;
+    voiceButton.classList.add('detected'); 
+
+
+    setTimeout(() => {
+      voiceButton.classList.remove('detected');
+    }, 3000);
   }
 }
