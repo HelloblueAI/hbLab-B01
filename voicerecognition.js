@@ -1,7 +1,7 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = this.debounce(this.retryFetch(fetchCompanyData), 200); 
+    this.fetchCompanyData = this.throttle(this.retryFetch(fetchCompanyData), 500); 
     this.options = {
       interimResults: true, 
       continuous: true, 
@@ -47,22 +47,28 @@ export default class VoiceRecognition {
   }
 
   handleResult(event) {
-    const transcript = Array.from(event.results)
-      .map(result => ({
-        transcript: result[0].transcript.trim(),
-        confidence: result[0].confidence,
-      }))
-      .filter(result => result.confidence >= this.options.confidenceThreshold)
-      .map(result => result.transcript)
+    const interimTranscript = Array.from(event.results)
+      .filter(result => !result.isFinal)
+      .map(result => result[0].transcript.trim())
       .join(' ');
 
-    if (transcript && event.results[0].isFinal) {
-      this.elements.companySearch.value = transcript;
-      this.fetchCompanyData(transcript)
+    if (interimTranscript) {
+      this.elements.companySearch.value = interimTranscript; // Show partial results
+      this.fetchCompanyData(interimTranscript); // Optionally fetch data for interim results
+    }
+
+    const finalTranscript = Array.from(event.results)
+      .filter(result => result.isFinal)
+      .map(result => result[0].transcript.trim())
+      .join(' ');
+
+    if (finalTranscript) {
+      this.elements.companySearch.value = finalTranscript;
+      this.fetchCompanyData(finalTranscript)
         .then(() => this.animateDetection())
         .catch(error => this.handleError(error));
       this.stopRecognition();
-    } else if (!transcript) {
+    } else if (!finalTranscript) {
       this.updateFeedback("Low confidence, please try again.", false);
     }
   }
@@ -117,6 +123,17 @@ export default class VoiceRecognition {
     return (...args) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => func(...args), wait);
+    };
+  }
+
+  throttle(func, limit) {
+    let inThrottle;
+    return (...args) => {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
     };
   }
 
