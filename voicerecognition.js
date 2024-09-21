@@ -6,7 +6,7 @@ export default class VoiceRecognition {
       interimResults: false,
       continuous: false,
       language: 'en-US',
-      confidenceThreshold: 0.5,
+      confidenceThreshold: 0.7,
       ...options,
     };
     this.recognition = this.initSpeechRecognition();
