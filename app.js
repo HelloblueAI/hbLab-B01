@@ -12,8 +12,9 @@ function initApp() {
   adjustBodyHeight();
   triggerIntroEffect(elements, state);
 
+
   window.addEventListener('resize', debounce(adjustBodyHeight, 200));
-  window.addEventListener('orientationchange', adjustBodyHeight);
+  window.addEventListener('orientationchange', debounce(adjustBodyHeight, 200));
 }
 
 function getDOMElements() {
@@ -159,15 +160,16 @@ async function fetchCompanyData(company, elements, state) {
 
   try {
     const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
-    if (response.ok) {
-      const data = await response.json();
-      state.cache.set(cacheKey, { data, timestamp: Date.now() });
-      await displayCompanyInfo(data, elements, state);
-    } else {
+    if (!response.ok) {
       handleErrorStatus(response.status, elements);
+      return;
     }
+
+    const data = await response.json();
+    state.cache.set(cacheKey, { data, timestamp: Date.now() });
+    await displayCompanyInfo(data, elements, state);
+
   } catch (error) {
-    console.error('Fetch error:', error.message);
     handleFetchError(elements, state, company);
   } finally {
     state.isFetching = false;
@@ -195,18 +197,19 @@ function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, 
   if (state.isConfirmationDialogOpen) return;
 
   state.isConfirmationDialogOpen = true;
+  const messageContent = phoneNumber && phoneNumber !== 'NA'
+    ? `${companyName}: ${phoneNumber}. Would you like to dial this number?`
+    : `${companyName} does not have a phone number available.`;
+
   if (phoneNumber && phoneNumber !== 'NA') {
-    const messageContent = `${companyName}: ${phoneNumber}. Would you like to dial this number?`;
     if (confirm(messageContent)) {
       window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
-    } else {
-      triggerIntroEffect(elements, state);
     }
   } else {
-    displayNotification(`${companyName} does not have a phone number available.`);
-    triggerIntroEffect(elements, state);
+    displayNotification(messageContent);
   }
 
+  triggerIntroEffect(elements, state);
   state.isConfirmationDialogOpen = false;
 }
 
