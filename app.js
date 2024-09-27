@@ -12,7 +12,6 @@ function initApp() {
   adjustBodyHeight();
   triggerIntroEffect(elements, state);
 
-
   window.addEventListener('resize', debounce(adjustBodyHeight, 200));
   window.addEventListener('orientationchange', debounce(adjustBodyHeight, 200));
 }
@@ -106,7 +105,7 @@ const introSentences = [
   "I broke out of the internet to help you contact any company",
   "Phone and Instant Live Chat",
   "Simply say or type the company's name like Verizon or Amazon or Geico",
-  "I'll connect you in seconds",
+  "I'll connect you in seconds!",
   "Whether it's Apple, Discover, Delta, or Netflix",
   "Ready to connect?",
   "I'm here to assist!",
@@ -204,13 +203,27 @@ function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, 
   if (phoneNumber && phoneNumber !== 'NA') {
     if (confirm(messageContent)) {
       window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
+
+      // Display the "recently asked to call" notification
+      showPostCallNotification(companyName, elements, state);
     }
   } else {
     displayNotification(messageContent);
+    triggerIntroEffect(elements, state);
   }
 
-  triggerIntroEffect(elements, state);
   state.isConfirmationDialogOpen = false;
+}
+
+
+async function showPostCallNotification(companyName, elements, state) {
+  const message = `You recently asked to call: ${capitalizeCompany(companyName)}`;
+  state.activeEffect = 'postCall'; 
+  elements.typedOutput.textContent = ''; 
+  await typeTextEffect(message, 'postCall', elements, state);
+  
+  
+  await delay(15000); 
 }
 
 function displaySuggestions(input, elements, state) {
