@@ -1,0 +1,2 @@
+Testing GPG key verification
+Another test for GPG verification

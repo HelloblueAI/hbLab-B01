@@ -1,0 +1,91 @@
+--- 
+files: 
+  certificate: 
+    helloblue_ai_e0c49_de8b5_1726467983_71c21fc8e68233a37ea5690e8133afc8: 
+      created: '1694931983'
+      domains: 
+        - helloblue.ai
+        - mail.helloblue.ai
+        - www.helloblue.ai
+        - cpanel.helloblue.ai
+        - webmail.helloblue.ai
+        - webdisk.helloblue.ai
+        - cpcontacts.helloblue.ai
+        - cpcalendars.helloblue.ai
+        - autodiscover.helloblue.ai
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “helloblue.ai”
+      id: helloblue_ai_e0c49_de8b5_1726467983_71c21fc8e68233a37ea5690e8133afc8
+      is_self_signed: 1
+      issuer.commonName: helloblue.ai
+      issuer.organizationName: ~
+      key_algorithm: rsaEncryption
+      modulus: e0c495f193b4f913567e548b242db412e8bf530c9e8fefe947863d5b45ae9f7c8c8db67a2d763993ccfddd717c21b5105d8ffe727b6576fcc932a982945bec000036dd23a3429e8d03700b13d0821e5cde3d717a186f349ca87b1232c120297ab3620e70e09e1ef3dbb0d4bf42851c30f40c5b977ed6fb2d1b693e0a786f1f3fba86f44cf3d86704c0346f10d1c256c1327a8962c61c38a0ec3b2700826ef23348b7d3d6c97274034b1103c7d8b6d4b587d545486ddb5eca02d05919362be37c8623b7149b4835ce4a5dae41f3d079092a097d99114d917e12b3e8d7302ee9944e7148daaa6c36cd70a5f2843850114163bf8c52429a589a7b9da0a0b15de8b5
+      modulus_length: 2048
+      not_after: '1726467983'
+      not_before: '1694931983'
+      serial: 0240d454c1
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: helloblue.ai
+      validation_type: ~
+  csr: 
+    helloblue_ai_cf149_cab21_63b70b38264c624addd31139ea0f170f: 
+      commonName: helloblue.ai
+      created: '1694938096'
+      domains: 
+        - helloblue.ai
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: helloblue.ai
+      id: helloblue_ai_cf149_cab21_63b70b38264c624addd31139ea0f170f
+      key_algorithm: rsaEncryption
+      modulus: cf149fdaa7f2638b4003f2fb21934cdcb1ca65eab979b917be93846596fe2eb51fa5728321daff8bf7cde2551ef9bfc9da5aa7f6850b8d709f17486ddac2210ff652952ec21445b95be5a53e86d84d2277b0f59da976b072d3475d852bafdf14b51ff453859d7bdc11a4f81644c252b97df978a066c7fc45c1836cc0d44f84a85ceccd7df2c862ddfae0b6586510efbf1184dc9cdb135d765ef1f18c79d71aa46a2f49ad55ca33672c72905fa7bd23a848b02fab85296220ecf7e87c7f08c5b459399dd734850fc8a88ba9c49a6d6bb5e91e2895108406b49cb65eb7c8b1d9005a9160ecae5a70210e3ecf3fda45e0c893c418068135b438a4e12c0955acab21
+  key: 
+    cf149_cab21_250c54d021722b1c2105a28d4d371c1d: 
+      created: '1694938096'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: helloblue.ai
+      id: cf149_cab21_250c54d021722b1c2105a28d4d371c1d
+      key_algorithm: rsaEncryption
+      modulus: cf149fdaa7f2638b4003f2fb21934cdcb1ca65eab979b917be93846596fe2eb51fa5728321daff8bf7cde2551ef9bfc9da5aa7f6850b8d709f17486ddac2210ff652952ec21445b95be5a53e86d84d2277b0f59da976b072d3475d852bafdf14b51ff453859d7bdc11a4f81644c252b97df978a066c7fc45c1836cc0d44f84a85ceccd7df2c862ddfae0b6586510efbf1184dc9cdb135d765ef1f18c79d71aa46a2f49ad55ca33672c72905fa7bd23a848b02fab85296220ecf7e87c7f08c5b459399dd734850fc8a88ba9c49a6d6bb5e91e2895108406b49cb65eb7c8b1d9005a9160ecae5a70210e3ecf3fda45e0c893c418068135b438a4e12c0955acab21
+      modulus_length: 2048
+    e0c49_de8b5_9b26f73cdb51429bd6fd69ac8ed3b988: 
+      created: '1694931983'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “helloblue.ai”
+      id: e0c49_de8b5_9b26f73cdb51429bd6fd69ac8ed3b988
+      key_algorithm: rsaEncryption
+      modulus: e0c495f193b4f913567e548b242db412e8bf530c9e8fefe947863d5b45ae9f7c8c8db67a2d763993ccfddd717c21b5105d8ffe727b6576fcc932a982945bec000036dd23a3429e8d03700b13d0821e5cde3d717a186f349ca87b1232c120297ab3620e70e09e1ef3dbb0d4bf42851c30f40c5b977ed6fb2d1b693e0a786f1f3fba86f44cf3d86704c0346f10d1c256c1327a8962c61c38a0ec3b2700826ef23348b7d3d6c97274034b1103c7d8b6d4b587d545486ddb5eca02d05919362be37c8623b7149b4835ce4a5dae41f3d079092a097d99114d917e12b3e8d7302ee9944e7148daaa6c36cd70a5f2843850114163bf8c52429a589a7b9da0a0b15de8b5
+      modulus_length: 2048
+indexes: 
+  certificate: 
+    modulus: 
+      e0c495f193b4f913567e548b242db412e8bf530c9e8fefe947863d5b45ae9f7c8c8db67a2d763993ccfddd717c21b5105d8ffe727b6576fcc932a982945bec000036dd23a3429e8d03700b13d0821e5cde3d717a186f349ca87b1232c120297ab3620e70e09e1ef3dbb0d4bf42851c30f40c5b977ed6fb2d1b693e0a786f1f3fba86f44cf3d86704c0346f10d1c256c1327a8962c61c38a0ec3b2700826ef23348b7d3d6c97274034b1103c7d8b6d4b587d545486ddb5eca02d05919362be37c8623b7149b4835ce4a5dae41f3d079092a097d99114d917e12b3e8d7302ee9944e7148daaa6c36cd70a5f2843850114163bf8c52429a589a7b9da0a0b15de8b5: 
+        helloblue_ai_e0c49_de8b5_1726467983_71c21fc8e68233a37ea5690e8133afc8: ~
+    subject.commonName: 
+      helloblue.ai: 
+        helloblue_ai_e0c49_de8b5_1726467983_71c21fc8e68233a37ea5690e8133afc8: ~
+  csr: 
+    commonName: 
+      helloblue.ai: 
+        helloblue_ai_cf149_cab21_63b70b38264c624addd31139ea0f170f: ~
+    modulus: 
+      cf149fdaa7f2638b4003f2fb21934cdcb1ca65eab979b917be93846596fe2eb51fa5728321daff8bf7cde2551ef9bfc9da5aa7f6850b8d709f17486ddac2210ff652952ec21445b95be5a53e86d84d2277b0f59da976b072d3475d852bafdf14b51ff453859d7bdc11a4f81644c252b97df978a066c7fc45c1836cc0d44f84a85ceccd7df2c862ddfae0b6586510efbf1184dc9cdb135d765ef1f18c79d71aa46a2f49ad55ca33672c72905fa7bd23a848b02fab85296220ecf7e87c7f08c5b459399dd734850fc8a88ba9c49a6d6bb5e91e2895108406b49cb65eb7c8b1d9005a9160ecae5a70210e3ecf3fda45e0c893c418068135b438a4e12c0955acab21: 
+        helloblue_ai_cf149_cab21_63b70b38264c624addd31139ea0f170f: ~
+uniques: 
+  certificate: 
+    friendly_name: 
+      Cert for “helloblue.ai”: helloblue_ai_e0c49_de8b5_1726467983_71c21fc8e68233a37ea5690e8133afc8
+  csr: 
+    friendly_name: 
+      helloblue.ai: helloblue_ai_cf149_cab21_63b70b38264c624addd31139ea0f170f
+  key: 
+    friendly_name: 
+      Key for “helloblue.ai”: e0c49_de8b5_9b26f73cdb51429bd6fd69ac8ed3b988
+      helloblue.ai: cf149_cab21_250c54d021722b1c2105a28d4d371c1d
+    modulus:ecdsa_curve_name:ecdsa_public: 
+      cf149fdaa7f2638b4003f2fb21934cdcb1ca65eab979b917be93846596fe2eb51fa5728321daff8bf7cde2551ef9bfc9da5aa7f6850b8d709f17486ddac2210ff652952ec21445b95be5a53e86d84d2277b0f59da976b072d3475d852bafdf14b51ff453859d7bdc11a4f81644c252b97df978a066c7fc45c1836cc0d44f84a85ceccd7df2c862ddfae0b6586510efbf1184dc9cdb135d765ef1f18c79d71aa46a2f49ad55ca33672c72905fa7bd23a848b02fab85296220ecf7e87c7f08c5b459399dd734850fc8a88ba9c49a6d6bb5e91e2895108406b49cb65eb7c8b1d9005a9160ecae5a70210e3ecf3fda45e0c893c418068135b438a4e12c0955acab21: cf149_cab21_250c54d021722b1c2105a28d4d371c1d
+      e0c495f193b4f913567e548b242db412e8bf530c9e8fefe947863d5b45ae9f7c8c8db67a2d763993ccfddd717c21b5105d8ffe727b6576fcc932a982945bec000036dd23a3429e8d03700b13d0821e5cde3d717a186f349ca87b1232c120297ab3620e70e09e1ef3dbb0d4bf42851c30f40c5b977ed6fb2d1b693e0a786f1f3fba86f44cf3d86704c0346f10d1c256c1327a8962c61c38a0ec3b2700826ef23348b7d3d6c97274034b1103c7d8b6d4b587d545486ddb5eca02d05919362be37c8623b7149b4835ce4a5dae41f3d079092a097d99114d917e12b3e8d7302ee9944e7148daaa6c36cd70a5f2843850114163bf8c52429a589a7b9da0a0b15de8b5: e0c49_de8b5_9b26f73cdb51429bd6fd69ac8ed3b988
