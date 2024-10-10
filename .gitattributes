@@ -1,12 +1,8 @@
 node_modules/@next/swc-darwin-arm64/next-swc.darwin-arm64.node filter=lfs diff=lfs merge=lfs -text
 *.your_large_file_extension filter=lfs diff=lfs merge=lfs -text
 
-
 *.py linguist-language=Python
-
-
 *.js linguist-language=JavaScript
-
 *.jsx linguist-language=JavaScript
 *.ts linguist-language=TypeScript
 *.tsx linguist-language=TypeScript
@@ -14,12 +10,12 @@ node_modules/@next/swc-darwin-arm64/next-swc.darwin-arm64.node filter=lfs diff=l
 *.css linguist-language=CSS
 *.json linguist-language=JSON
 
-
+# Vendor directories
 node_modules/* linguist-vendored
 dist/* linguist-vendored
 coverage/* linguist-vendored
 
-
+# Large media files handled by LFS
 *.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.svg filter=lfs diff=lfs merge=lfs -text
