@@ -8,7 +8,7 @@ import { config } from './config.js';
 const capitalizeWords = (str) => {
   return str
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 };
 
@@ -63,7 +63,7 @@ export const isValidURL = (url) => {
  * @param {number} ms - The delay time in milliseconds.
  * @returns {Promise<void>} A promise that resolves after the delay.
  */
-export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Creates a debounced function that delays invoking the provided function

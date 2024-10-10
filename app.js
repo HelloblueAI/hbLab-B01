@@ -1,5 +1,11 @@
 import { config } from './config.js';
-import { capitalizeCompany, displayNotification, isValidURL, delay, debounce } from './utils.js';
+import {
+  capitalizeCompany,
+  displayNotification,
+  isValidURL,
+  delay,
+  debounce,
+} from './utils.js';
 import VoiceRecognition from './voiceRecognition.js';
 
 document.addEventListener('DOMContentLoaded', initApp);
@@ -44,7 +50,9 @@ function initializeState() {
 function setupEventListeners(elements, state) {
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
-    if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
+    if (value) {
+      fetchCompanyData(capitalizeCompany(value), elements, state);
+    }
   }, 300);
 
   elements.companySearch.addEventListener('input', (event) => {
@@ -55,18 +63,29 @@ function setupEventListeners(elements, state) {
     if (event.key === 'Enter') {
       event.preventDefault();
       const value = elements.companySearch.value.trim();
-      if (value) fetchCompanyData(capitalizeCompany(value), elements, state);
+      if (value) {
+        fetchCompanyData(capitalizeCompany(value), elements, state);
+      }
     }
   });
 
-  new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state), {
-    interimResults: true,
-    continuous: true,
-    autoRestart: true,
-  });
+  new VoiceRecognition(
+    elements,
+    (company) => fetchCompanyData(company, elements, state),
+    {
+      interimResults: true,
+      continuous: true,
+      autoRestart: true,
+    },
+  );
 }
 
-function handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state) {
+function handleCompanySearchInput(
+  event,
+  elements,
+  debouncedFetchCompanyData,
+  state,
+) {
   const { value } = event.target;
   const capitalizedValue = capitalizeCompany(value);
 
@@ -94,7 +113,9 @@ function adjustBodyHeight() {
 
 async function typeTextEffect(text, effectType, elements, state) {
   for (let i = 0; i <= text.length; i++) {
-    if (state.activeEffect !== effectType) break;
+    if (state.activeEffect !== effectType) {
+      break;
+    }
     elements.typedOutput.textContent = text.substring(0, i);
     await delay(text[i - 1] === '.' ? 100 : 30);
   }
@@ -113,7 +134,9 @@ const introSentences = [
 
 async function triggerIntroEffect(elements, state) {
   if (state.recentCompanies.length > 0) {
-    introSentences.push(`You recently searched for ${state.recentCompanies.join(', ')}.`);
+    introSentences.push(
+      `You recently searched for ${state.recentCompanies.join(', ')}.`,
+    );
   }
 
   state.activeEffect = 'intro';
@@ -121,44 +144,65 @@ async function triggerIntroEffect(elements, state) {
     await typeTextEffect(sentence, 'intro', elements, state);
     await delay(1000);
   }
-  if (state.activeEffect === 'intro') triggerIntroEffect(elements, state);
+  if (state.activeEffect === 'intro') {
+    triggerIntroEffect(elements, state);
+  }
 }
 
-async function displayCompanyInfo({ company_name: companyName, phone_number: phoneNumber, url }, elements, state) {
+async function displayCompanyInfo(
+  { company_name: companyName, phone_number: phoneNumber, url },
+  elements,
+  state,
+) {
   state.activeEffect = 'company';
   const capitalizedCompanyName = capitalizeCompany(companyName);
   const message = `You asked to call: ${capitalizedCompanyName}`;
-  
+
   elements.typedOutput.textContent = '';
   await typeTextEffect(message, 'company', elements, state);
 
   updateRecentCompanies(state, capitalizedCompanyName);
-  showCompanyConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
+  showCompanyConfirmationDialog(
+    capitalizedCompanyName,
+    phoneNumber,
+    url,
+    elements,
+    state,
+  );
 }
 
 function updateRecentCompanies(state, companyName) {
   state.recentCompanies.unshift(companyName);
-  if (state.recentCompanies.length > 5) state.recentCompanies.pop();
+  if (state.recentCompanies.length > 5) {
+    state.recentCompanies.pop();
+  }
 }
 
 async function fetchCompanyData(company, elements, state) {
-  if (state.isConfirmationDialogOpen || state.isFetching) return;
+  if (state.isConfirmationDialogOpen || state.isFetching) {
+    return;
+  }
 
   state.isFetching = true;
   elements.feedbackText.textContent = '';
   elements.voiceButton.classList.remove('voiceButton-listening');
-  
+
   const cacheKey = `companyData-${company}`;
   const cachedData = state.cache.get(cacheKey);
-  
-  if (cachedData && !isCacheExpired(cachedData.timestamp, state.cacheDuration)) {
+
+  if (
+    cachedData &&
+    !isCacheExpired(cachedData.timestamp, state.cacheDuration)
+  ) {
     await displayCompanyInfo(cachedData.data, elements, state);
     state.isFetching = false;
     return;
   }
 
   try {
-    const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`);
+    const response = await fetch(
+      `${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`,
+    );
     if (!response.ok) {
       handleErrorStatus(response.status, elements);
       return;
@@ -167,7 +211,6 @@ async function fetchCompanyData(company, elements, state) {
     const data = await response.json();
     state.cache.set(cacheKey, { data, timestamp: Date.now() });
     await displayCompanyInfo(data, elements, state);
-
   } catch (error) {
     handleFetchError(elements, state, company);
   } finally {
@@ -177,32 +220,45 @@ async function fetchCompanyData(company, elements, state) {
 
 function handleErrorStatus(status, elements) {
   if (status === 404) {
-    elements.feedbackText.textContent = 'Company not found. Please try another one.';
+    elements.feedbackText.textContent =
+      'Company not found. Please try another one.';
   } else {
     throw new Error(`Unexpected HTTP status: ${status}`);
   }
 }
 
 function handleFetchError(elements, state, company) {
-  elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
+  elements.feedbackText.textContent =
+    'Failed to fetch company data. Retrying...';
   setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 }
 
 function isCacheExpired(timestamp, cacheDuration) {
-  return (Date.now() - timestamp) > cacheDuration;
+  return Date.now() - timestamp > cacheDuration;
 }
 
-function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, state) {
-  if (state.isConfirmationDialogOpen) return;
+function showCompanyConfirmationDialog(
+  companyName,
+  phoneNumber,
+  url,
+  elements,
+  state,
+) {
+  if (state.isConfirmationDialogOpen) {
+    return;
+  }
 
   state.isConfirmationDialogOpen = true;
-  const messageContent = phoneNumber && phoneNumber !== 'NA'
-    ? `${companyName}: ${phoneNumber}. Would you like to dial this number?`
-    : `${companyName} does not have a phone number available.`;
+  const messageContent =
+    phoneNumber && phoneNumber !== 'NA'
+      ? `${companyName}: ${phoneNumber}. Would you like to dial this number?`
+      : `${companyName} does not have a phone number available.`;
 
   if (phoneNumber && phoneNumber !== 'NA') {
     if (confirm(messageContent)) {
-      window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
+      window.location.href = isValidURL(url)
+        ? url
+        : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
 
       // Display the "recently asked to call" notification
       showPostCallNotification(companyName, elements, state);
@@ -215,22 +271,24 @@ function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, 
   state.isConfirmationDialogOpen = false;
 }
 
-
 async function showPostCallNotification(companyName, elements, state) {
   const message = `You recently asked to call: ${capitalizeCompany(companyName)}`;
-  state.activeEffect = 'postCall'; 
-  elements.typedOutput.textContent = ''; 
+  state.activeEffect = 'postCall';
+  elements.typedOutput.textContent = '';
   await typeTextEffect(message, 'postCall', elements, state);
-  
-  
-  await delay(15000); 
+
+  await delay(15000);
 }
 
 function displaySuggestions(input, elements, state) {
-  const suggestions = state.recentCompanies.filter(company => company.toLowerCase().includes(input.toLowerCase()));
-  elements.suggestionBox.innerHTML = suggestions.map(suggestion => `<div class="suggestion">${suggestion}</div>`).join('');
-  
-  elements.suggestionBox.querySelectorAll('.suggestion').forEach(item => {
+  const suggestions = state.recentCompanies.filter((company) =>
+    company.toLowerCase().includes(input.toLowerCase()),
+  );
+  elements.suggestionBox.innerHTML = suggestions
+    .map((suggestion) => `<div class="suggestion">${suggestion}</div>`)
+    .join('');
+
+  elements.suggestionBox.querySelectorAll('.suggestion').forEach((item) => {
     item.addEventListener('click', () => {
       elements.companySearch.value = item.textContent;
       fetchCompanyData(capitalizeCompany(item.textContent), elements, state);
