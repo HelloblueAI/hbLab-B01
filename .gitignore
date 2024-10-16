@@ -72,4 +72,7 @@ dist/
 
 # Copilot files
 copilot.md
-Copilot.mdnew_venv/
+Copilot.md
+
+# Python virtual environment
+venv/
