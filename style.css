@@ -419,7 +419,7 @@ header {
 
     .badges-container {
         position: absolute;
-        right: 60px;
+        right: 64px;
         background-color: transparent;
         display: flex;
         flex-direction: row-reverse;
