@@ -44,9 +44,9 @@ nav a:hover {
 .content {
   padding: 12px;
   background-color: #fff;
-  margin: 0px auto;
+  margin: 0 auto;
   max-width: 800px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
 }
 
 h1,
