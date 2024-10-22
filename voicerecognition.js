@@ -8,7 +8,7 @@ export default class VoiceRecognition {
     this.options = {
       interimResults: true,
       continuous: true,
-      language: 'en-US',
+      language: "en-US",
       confidenceThreshold: 0.6,
       ...options,
     };
@@ -43,10 +43,10 @@ export default class VoiceRecognition {
   }
 
   addEventListeners() {
-    this.elements.voiceButton.addEventListener('click', () =>
+    this.elements.voiceButton.addEventListener("click", () =>
       this.toggleVoiceRecognition(),
     );
-    document.addEventListener('keydown', (event) => this.handleKeydown(event));
+    document.addEventListener("keydown", (event) => this.handleKeydown(event));
   }
 
   handleStart() {
@@ -59,7 +59,7 @@ export default class VoiceRecognition {
     const interimTranscript = Array.from(event.results)
       .filter((result) => !result.isFinal)
       .map((result) => result[0].transcript.trim())
-      .join(' ');
+      .join(" ");
 
     if (interimTranscript) {
       this.elements.companySearch.value = interimTranscript; // Show partial results
@@ -69,7 +69,7 @@ export default class VoiceRecognition {
     const finalTranscript = Array.from(event.results)
       .filter((result) => result.isFinal)
       .map((result) => result[0].transcript.trim())
-      .join(' ');
+      .join(" ");
 
     if (finalTranscript) {
       this.elements.companySearch.value = finalTranscript;
@@ -90,10 +90,10 @@ export default class VoiceRecognition {
 
   handleError(event) {
     const messages = {
-      'no-speech': 'No speech detected. Please try again.',
-      'audio-capture': 'Microphone needed. Check browser permissions.',
-      network: 'Network error. Try again later.',
-      'not-allowed': 'Microphone access denied. Enable it in browser settings.',
+      "no-speech": "No speech detected. Please try again.",
+      "audio-capture": "Microphone needed. Check browser permissions.",
+      network: "Network error. Try again later.",
+      "not-allowed": "Microphone access denied. Enable it in browser settings.",
     };
     const message = messages[event.error] || `Error: ${event.error}`;
     this.updateFeedback(message, false);
@@ -104,7 +104,7 @@ export default class VoiceRecognition {
   }
 
   handleKeydown(event) {
-    if (event.altKey && event.key === 'v') {
+    if (event.altKey && event.key === "v") {
       this.toggleVoiceRecognition();
     }
   }
@@ -123,8 +123,8 @@ export default class VoiceRecognition {
 
   updateFeedback(message, isActive) {
     this.elements.feedbackText.textContent = message;
-    this.elements.voiceButton.classList.toggle('active', isActive);
-    this.elements.feedbackText.style.color = isActive ? 'green' : 'red';
+    this.elements.voiceButton.classList.toggle("active", isActive);
+    this.elements.feedbackText.style.color = isActive ? "green" : "red";
   }
 
   debounce(func, wait) {
@@ -165,7 +165,7 @@ export default class VoiceRecognition {
 
   withTimeout(promise, timeout = 3000) {
     return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error('Timeout')), timeout);
+      const timer = setTimeout(() => reject(new Error("Timeout")), timeout);
       promise
         .then(resolve)
         .catch(reject)
@@ -178,13 +178,13 @@ export default class VoiceRecognition {
   }
 
   animateVoiceButton(isActive) {
-    this.elements.voiceButton.classList.toggle('active', isActive);
+    this.elements.voiceButton.classList.toggle("active", isActive);
   }
 
   animateDetection() {
-    this.elements.voiceButton.classList.add('detected');
+    this.elements.voiceButton.classList.add("detected");
     setTimeout(
-      () => this.elements.voiceButton.classList.remove('detected'),
+      () => this.elements.voiceButton.classList.remove("detected"),
       1000,
     );
   }

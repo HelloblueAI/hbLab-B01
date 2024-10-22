@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { useState } from 'react';
+import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useState } from "react";
 
 export default function Navigation() {
   const { user, isLoading } = useUser();
@@ -24,7 +24,7 @@ export default function Navigation() {
           <span className="navbar-toggle-icon"></span>
         </button>
       </div>
-      <ul className={`navbar-menu ${isMenuOpen ? 'is-active' : ''}`}>
+      <ul className={`navbar-menu ${isMenuOpen ? "is-active" : ""}`}>
         <li className="navbar-item">
           <Link href="/">
             <a className="navbar-link">Home</a>
@@ -45,9 +45,7 @@ export default function Navigation() {
       <div className="navbar-end">
         {user ? (
           <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">
-              {user.name}
-            </a>
+            <a className="navbar-link">{user.name}</a>
             <div className="navbar-dropdown">
               <Link href="/profile">
                 <a className="navbar-item">Profile</a>
