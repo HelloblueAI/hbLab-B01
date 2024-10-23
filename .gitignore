@@ -76,3 +76,4 @@ Copilot.md
 
 # Python virtual environment
 venv/
+.aider*
