@@ -360,7 +360,7 @@ header {
   }
 
   .typing-effect {
-    font-size: 25px;
+    font-size: 24px;
     margin-top: 99px;
     position: sticky;
     z-index: 200;
@@ -368,10 +368,10 @@ header {
   }
 
   .sub-text {
-    font-size: 22px;
+    font-size: 21px;
     position: sticky;
     width: 82%;
-    margin-top: -71px;
+    margin-top: -102px;
     margin-left: -29px;
   }
 
@@ -491,8 +491,8 @@ nav {
 /* mini phones */
 @media (width <= 400px) {
   .badges-container {
-    bottom: 65px; 
-    right: 49px;  
+    bottom: 83px; 
+    right: 45px;  
   }
 }
 
