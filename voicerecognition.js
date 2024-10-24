@@ -62,8 +62,8 @@ export default class VoiceRecognition {
       .join(" ");
 
     if (interimTranscript) {
-      this.elements.companySearch.value = interimTranscript; // Show partial results
-      this.fetchCompanyData(interimTranscript); // Optionally fetch data for interim results
+      this.elements.companySearch.value = interimTranscript; 
+      this.fetchCompanyData(interimTranscript); 
     }
 
     const finalTranscript = Array.from(event.results)
