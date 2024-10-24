@@ -429,9 +429,7 @@ header {
     z-index: 1;
   }
 
-  .badges-container a {
-    margin-right: -13px;
-  }
+
 
   .badges-container .app-store-badge img {
     width: 131px;
@@ -493,7 +491,7 @@ nav {
 /* mini phones */
 @media (width <= 400px) {
   .badges-container {
-    bottom: 67px; 
+    bottom: 65px; 
     right: 49px;  
   }
 }

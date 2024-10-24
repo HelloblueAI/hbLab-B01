@@ -12,14 +12,15 @@ document.addEventListener("DOMContentLoaded", initApp);
 
 function initApp() {
   const elements = getDOMElements();
-  const state = initializeState();
+  const state = new StateManager();
 
   setupEventListeners(elements, state);
   adjustBodyHeight();
   triggerIntroEffect(elements, state);
 
-  window.addEventListener("resize", debounce(adjustBodyHeight, 200));
-  window.addEventListener("orientationchange", debounce(adjustBodyHeight, 200));
+  const handleResize = debounce(adjustBodyHeight, 200);
+  window.addEventListener("resize", handleResize, { passive: true });
+  window.addEventListener("orientationchange", handleResize, { passive: true });
 }
 
 function getDOMElements() {
@@ -36,15 +37,35 @@ function getDOMElements() {
   };
 }
 
-function initializeState() {
-  return {
-    activeEffect: "intro",
-    isConfirmationDialogOpen: false,
-    isFetching: false,
-    cache: new Map(),
-    recentCompanies: [],
-    cacheDuration: 24 * 60 * 60 * 1000, // 24 hours, can be parameterized
-  };
+class StateManager {
+  constructor() {
+    this.activeEffect = "intro";
+    this.isConfirmationDialogOpen = false;
+    this.isFetching = false;
+    this.cache = new Map();
+    this.recentCompanies = [];
+    this.cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
+  }
+
+  updateRecentCompanies(companyName) {
+    this.recentCompanies.unshift(companyName);
+    if (this.recentCompanies.length > 5) {
+      this.recentCompanies.pop();
+    }
+  }
+
+  isCacheExpired(timestamp) {
+    return Date.now() - timestamp > this.cacheDuration;
+  }
+
+  clearExpiredCache() {
+    const now = Date.now();
+    for (const [key, value] of this.cache.entries()) {
+      if (this.isCacheExpired(value.timestamp)) {
+        this.cache.delete(key);
+      }
+    }
+  }
 }
 
 function setupEventListeners(elements, state) {
@@ -161,7 +182,7 @@ async function displayCompanyInfo(
   elements.typedOutput.textContent = "";
   await typeTextEffect(message, "company", elements, state);
 
-  updateRecentCompanies(state, capitalizedCompanyName);
+  state.updateRecentCompanies(capitalizedCompanyName);
   showCompanyConfirmationDialog(
     capitalizedCompanyName,
     phoneNumber,
@@ -171,12 +192,7 @@ async function displayCompanyInfo(
   );
 }
 
-function updateRecentCompanies(state, companyName) {
-  state.recentCompanies.unshift(companyName);
-  if (state.recentCompanies.length > 5) {
-    state.recentCompanies.pop();
-  }
-}
+
 
 async function fetchCompanyData(company, elements, state) {
   if (state.isConfirmationDialogOpen || state.isFetching) {
@@ -190,19 +206,22 @@ async function fetchCompanyData(company, elements, state) {
   const cacheKey = `companyData-${company}`;
   const cachedData = state.cache.get(cacheKey);
 
-  if (
-    cachedData &&
-    !isCacheExpired(cachedData.timestamp, state.cacheDuration)
-  ) {
+  if (cachedData && !state.isCacheExpired(cachedData.timestamp)) {
     await displayCompanyInfo(cachedData.data, elements, state);
     state.isFetching = false;
     return;
   }
 
+  const controller = new AbortController(); // AbortController for cancelling requests
+  const timeout = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+
   try {
     const response = await fetch(
       `${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`,
+      { signal: controller.signal },
     );
+    clearTimeout(timeout);
+
     if (!response.ok) {
       handleErrorStatus(response.status, elements);
       return;
@@ -212,7 +231,11 @@ async function fetchCompanyData(company, elements, state) {
     state.cache.set(cacheKey, { data, timestamp: Date.now() });
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
-    handleFetchError(elements, state, company);
+    if (error.name === "AbortError") {
+      elements.feedbackText.textContent = "Request timed out. Please try again.";
+    } else {
+      handleFetchError(elements, state, company);
+    }
   } finally {
     state.isFetching = false;
   }
@@ -233,9 +256,7 @@ function handleFetchError(elements, state, company) {
   setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 }
 
-function isCacheExpired(timestamp, cacheDuration) {
-  return Date.now() - timestamp > cacheDuration;
-}
+
 
 function showCompanyConfirmationDialog(
   companyName,
@@ -260,8 +281,7 @@ function showCompanyConfirmationDialog(
         ? url
         : `tel:${phoneNumber.replace(/[^0-9]/g, "")}`;
 
-      // Display the "recently asked to call" notification
-      showPostCallNotification(companyName, elements, state);
+      showPostCallNotification(companyName, elements, state); // Display recent call notification
     }
   } else {
     displayNotification(messageContent);
