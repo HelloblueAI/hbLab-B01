@@ -89,8 +89,8 @@ importers:
         specifier: ^4.1.3
         version: 4.1.3
       concurrently:
-        specifier: ^9.0.1
-        version: 9.0.1
+        specifier: ^9.1.0
+        version: 9.1.0
       cssnano:
         specifier: ^7.0.6
         version: 7.0.6(postcss@8.4.47)
@@ -113,8 +113,8 @@ importers:
         specifier: ^15.2.10
         version: 15.2.10
       npm-check-updates:
-        specifier: ^17.1.9
-        version: 17.1.9
+        specifier: ^17.1.10
+        version: 17.1.10
       plugin-error:
         specifier: ^2.0.1
         version: 2.0.1
@@ -1083,8 +1083,8 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  concurrently@9.0.1:
-    resolution: {integrity: sha512-wYKvCd/f54sTXJMSfV6Ln/B8UrfLBKOYa+lzc6CHay3Qek+LorVSBdMVfyewFhRbH0Rbabsk4D+3PL/VjQ5gzg==}
+  concurrently@9.1.0:
+    resolution: {integrity: sha512-VxkzwMAn4LP7WyMnJNbHN5mKV9L2IbyDjpzemKr99sXNR3GqRNMMHdm7prV1ws9wg7ETj6WUkNOigZVsptwbgg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -2802,8 +2802,8 @@ packages:
     resolution: {integrity: sha512-qNIeNeH6v6KbriliCoOEmKhelv+66P2yCKEQta3MYcwN98S3NrVMgYEh9hWxJRPqPna3d7r0KElZQKQkAm0/jA==}
     engines: {node: '>= 0.10'}
 
-  npm-check-updates@17.1.9:
-    resolution: {integrity: sha512-Gfv5S8NNJKTilM1gesFNYka6bUaBs5LnVyPjApXPQphHijrlLFDMw1uSmwYMZbvJSkLZSOx03e8CHcG0Td5SMA==}
+  npm-check-updates@17.1.10:
+    resolution: {integrity: sha512-GnN6KbUzC8BpwsRYJntuumgCiagZ0+xxorvUJM9m06d7AlyK9lm3iFsAsnXF3VAZZzpD5QjZvWBwNze61Vywkw==}
     engines: {node: ^18.18.0 || >=20.0.0, npm: '>=8.12.1'}
     hasBin: true
 
@@ -5430,7 +5430,7 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  concurrently@9.0.1:
+  concurrently@9.1.0:
     dependencies:
       chalk: 4.1.2
       lodash: 4.17.21
@@ -7360,7 +7360,7 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  npm-check-updates@17.1.9: {}
+  npm-check-updates@17.1.10: {}
 
   npm-run-path@4.0.1:
     dependencies:
