@@ -25,7 +25,7 @@ We use a speech-to-text API to convert spoken words into text. This can be integ
 
 ### 2. Command Parsing
 
-After converting speech to text, the system employs natural language processing (NLP) techniques to parse the text and determine the user's intent, categorizing it as either a search query or a call request.
+After converting speech to text, the system employs Natural Language Processing (NLP) techniques to parse the text and determine the user's intent, categorizing it as either a search query or a call request.
 
 ### 3. Handling Searches and Calls
 
