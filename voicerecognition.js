@@ -7,10 +7,9 @@ export default class VoiceRecognition {
     );
     this.options = {
       interimResults: true,
-      continuous: true,
+      continuous: false, 
       language: "en-US",
       confidenceThreshold: 0.6,
-      autoRestart: true,
       ...options,
     };
     this.isListening = false;
@@ -32,7 +31,7 @@ export default class VoiceRecognition {
 
     const recognition = new SpeechRecognition();
     recognition.lang = this.options.language;
-    recognition.continuous = this.options.continuous;
+    recognition.continuous = this.options.continuous; 
     recognition.interimResults = this.options.interimResults;
 
     recognition.onstart = this.onRecognitionStart.bind(this);
@@ -56,41 +55,36 @@ export default class VoiceRecognition {
     });
   }
 
-  
   startRecognition() {
     if (!this.isListening) {
       this.recognition.start();
     }
   }
-
   
   stopRecognition() {
     if (this.isListening) {
       this.recognition.stop();
     }
   }
-
   
   toggleVoiceRecognition() {
     this.isListening ? this.stopRecognition() : this.startRecognition();
   }
 
-  
   onRecognitionStart() {
     this.isListening = true;
     this.updateFeedback("Listening... Speak now.", true);
     this.toggleButtonAnimation(true);
   }
-
   
   onRecognitionResult(event) {
-    const interimTranscript = Array.from(event.results)
-      .filter((result) => !result.isFinal)
+    const finalTranscript = Array.from(event.results)
+      .filter((result) => result.isFinal)
       .map((result) => result[0].transcript.trim())
       .join(" ");
 
-    const finalTranscript = Array.from(event.results)
-      .filter((result) => result.isFinal)
+    const interimTranscript = Array.from(event.results)
+      .filter((result) => !result.isFinal)
       .map((result) => result[0].transcript.trim())
       .join(" ");
 
@@ -103,7 +97,6 @@ export default class VoiceRecognition {
     }
   }
 
-  
   async handleFinalTranscript(transcript) {
     this.updateSearchInput(transcript);
 
@@ -113,29 +106,23 @@ export default class VoiceRecognition {
     } catch (error) {
       this.updateFeedback(`Error: ${error.message}`, false);
     } finally {
+      
       this.stopRecognition();
     }
   }
 
-  
   updateSearchInput(transcript) {
     if (this.elements.companySearch) {
       this.elements.companySearch.value = transcript;
     }
   }
 
-  
   onRecognitionEnd() {
     this.isListening = false;
     this.updateFeedback("Click to start speaking.", false);
     this.toggleButtonAnimation(false);
-
-    if (this.options.autoRestart) {
-      setTimeout(() => this.startRecognition(), 1000);
-    }
   }
 
-  
   onRecognitionError(event) {
     const errorMessages = {
       "no-speech": "No speech detected. Please try again.",
@@ -146,6 +133,7 @@ export default class VoiceRecognition {
 
     const message = errorMessages[event.error] || `Error: ${event.error}`;
     this.updateFeedback(message, false);
+    this.stopRecognition();
   }
 
   
@@ -168,7 +156,6 @@ export default class VoiceRecognition {
     }, 1000);
   }
 
-  
   retryFetch(fetchFunction, maxRetries) {
     return async (data) => {
       let attempt = 0;
@@ -186,7 +173,6 @@ export default class VoiceRecognition {
     };
   }
 
-  // Utility: Throttle function to limit API calls
   throttle(func, limit) {
     let inThrottle;
     return (...args) => {
@@ -198,7 +184,6 @@ export default class VoiceRecognition {
     };
   }
 
-  
   delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
