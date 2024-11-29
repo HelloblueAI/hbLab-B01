@@ -2,7 +2,7 @@ export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
     this.fetchCompanyData = this.throttle(
-      this.retryFetch(fetchCompanyData),
+      this.retryFetch(fetchCompanyData, options.maxRetries || 3),
       500,
     );
     this.options = {
@@ -10,131 +10,183 @@ export default class VoiceRecognition {
       continuous: true,
       language: "en-US",
       confidenceThreshold: 0.6,
+      autoRestart: true,
       ...options,
     };
-    this.recognition = this.initSpeechRecognition();
     this.isListening = false;
-    this.addEventListeners();
+
+    this.recognition = this.initializeRecognition();
+    this.setupEventListeners();
   }
 
-  initSpeechRecognition() {
+  
+  initializeRecognition() {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      this.updateFeedback(
-        "Browser does not support Speech Recognition.",
-        false,
-      );
-      throw new Error("This browser does not support Speech Recognition.");
+      this.elements.feedbackText.textContent =
+        "Speech Recognition not supported in this browser.";
+      throw new Error("Speech Recognition API is not available.");
     }
 
     const recognition = new SpeechRecognition();
     recognition.lang = this.options.language;
     recognition.continuous = this.options.continuous;
     recognition.interimResults = this.options.interimResults;
-    recognition.maxAlternatives = 1;
-    recognition.onstart = this.handleStart.bind(this);
-    recognition.onresult = this.handleResult.bind(this);
-    recognition.onend = this.handleEnd.bind(this);
-    recognition.onerror = this.handleError.bind(this);
+
+    recognition.onstart = this.onRecognitionStart.bind(this);
+    recognition.onresult = this.onRecognitionResult.bind(this);
+    recognition.onend = this.onRecognitionEnd.bind(this);
+    recognition.onerror = this.onRecognitionError.bind(this);
 
     return recognition;
   }
 
-  addEventListeners() {
+  
+  setupEventListeners() {
     this.elements.voiceButton.addEventListener("click", () =>
       this.toggleVoiceRecognition(),
     );
-    document.addEventListener("keydown", (event) => this.handleKeydown(event));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.altKey && event.key === "v") {
+        this.toggleVoiceRecognition();
+      }
+    });
   }
 
-  handleStart() {
-    this.isListening = true;
-    this.updateFeedback("Listening...", true);
-    this.animateVoiceButton(true);
-  }
-
-  handleResult(event) {
-    const interimTranscript = Array.from(event.results)
-      .filter((result) => !result.isFinal)
-      .map((result) => result[0].transcript.trim())
-      .join(" ");
-
-    if (interimTranscript) {
-      this.elements.companySearch.value = interimTranscript; 
-      this.fetchCompanyData(interimTranscript); 
-    }
-
-    const finalTranscript = Array.from(event.results)
-      .filter((result) => result.isFinal)
-      .map((result) => result[0].transcript.trim())
-      .join(" ");
-
-    if (finalTranscript) {
-      this.elements.companySearch.value = finalTranscript;
-      this.fetchCompanyData(finalTranscript)
-        .then(() => this.animateDetection())
-        .catch((error) => this.handleError(error));
-      this.stopRecognition();
-    } else if (!finalTranscript) {
-      this.updateFeedback("Low confidence, please try again.", false);
-    }
-  }
-
-  handleEnd() {
-    this.isListening = false;
-    this.updateFeedback("Click to speak", false);
-    this.animateVoiceButton(false);
-  }
-
-  handleError(event) {
-    const messages = {
-      "no-speech": "No speech detected. Please try again.",
-      "audio-capture": "Microphone needed. Check browser permissions.",
-      network: "Network error. Try again later.",
-      "not-allowed": "Microphone access denied. Enable it in browser settings.",
-    };
-    const message = messages[event.error] || `Error: ${event.error}`;
-    this.updateFeedback(message, false);
-  }
-
-  toggleVoiceRecognition() {
-    this.isListening ? this.stopRecognition() : this.startRecognition();
-  }
-
-  handleKeydown(event) {
-    if (event.altKey && event.key === "v") {
-      this.toggleVoiceRecognition();
-    }
-  }
-
+  
   startRecognition() {
     if (!this.isListening) {
       this.recognition.start();
     }
   }
 
+  
   stopRecognition() {
     if (this.isListening) {
       this.recognition.stop();
     }
   }
 
-  updateFeedback(message, isActive) {
-    this.elements.feedbackText.textContent = message;
-    this.elements.voiceButton.classList.toggle("active", isActive);
-    this.elements.feedbackText.style.color = isActive ? "green" : "red";
+  
+  toggleVoiceRecognition() {
+    this.isListening ? this.stopRecognition() : this.startRecognition();
   }
 
-  debounce(func, wait) {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
+  
+  onRecognitionStart() {
+    this.isListening = true;
+    this.updateFeedback("Listening... Speak now.", true);
+    this.toggleButtonAnimation(true);
+  }
+
+  
+  onRecognitionResult(event) {
+    const interimTranscript = Array.from(event.results)
+      .filter((result) => !result.isFinal)
+      .map((result) => result[0].transcript.trim())
+      .join(" ");
+
+    const finalTranscript = Array.from(event.results)
+      .filter((result) => result.isFinal)
+      .map((result) => result[0].transcript.trim())
+      .join(" ");
+
+    if (interimTranscript) {
+      this.updateSearchInput(interimTranscript);
+    }
+
+    if (finalTranscript) {
+      this.handleFinalTranscript(finalTranscript);
+    }
+  }
+
+  
+  async handleFinalTranscript(transcript) {
+    this.updateSearchInput(transcript);
+
+    try {
+      await this.fetchCompanyData(transcript);
+      this.animateSuccess();
+    } catch (error) {
+      this.updateFeedback(`Error: ${error.message}`, false);
+    } finally {
+      this.stopRecognition();
+    }
+  }
+
+  
+  updateSearchInput(transcript) {
+    if (this.elements.companySearch) {
+      this.elements.companySearch.value = transcript;
+    }
+  }
+
+  
+  onRecognitionEnd() {
+    this.isListening = false;
+    this.updateFeedback("Click to start speaking.", false);
+    this.toggleButtonAnimation(false);
+
+    if (this.options.autoRestart) {
+      setTimeout(() => this.startRecognition(), 1000);
+    }
+  }
+
+  
+  onRecognitionError(event) {
+    const errorMessages = {
+      "no-speech": "No speech detected. Please try again.",
+      "audio-capture": "Microphone is unavailable. Check permissions.",
+      network: "Network error occurred. Please check your connection.",
+      "not-allowed": "Microphone access denied. Enable it in browser settings.",
+    };
+
+    const message = errorMessages[event.error] || `Error: ${event.error}`;
+    this.updateFeedback(message, false);
+  }
+
+  
+  updateFeedback(message, isActive) {
+    this.elements.feedbackText.textContent = message;
+    this.elements.feedbackText.style.color = isActive ? "green" : "red";
+    this.elements.voiceButton.classList.toggle("active", isActive);
+  }
+
+  
+  toggleButtonAnimation(isActive) {
+    this.elements.voiceButton.classList.toggle("listening", isActive);
+  }
+
+  
+  animateSuccess() {
+    this.elements.voiceButton.classList.add("detected");
+    setTimeout(() => {
+      this.elements.voiceButton.classList.remove("detected");
+    }, 1000);
+  }
+
+  
+  retryFetch(fetchFunction, maxRetries) {
+    return async (data) => {
+      let attempt = 0;
+      while (attempt < maxRetries) {
+        try {
+          return await fetchFunction(data);
+        } catch (error) {
+          attempt++;
+          if (attempt >= maxRetries) {
+            throw new Error("Maximum retry attempts reached.");
+          }
+          await this.delay(500 * attempt);
+        }
+      }
     };
   }
 
+  // Utility: Throttle function to limit API calls
   throttle(func, limit) {
     let inThrottle;
     return (...args) => {
@@ -146,46 +198,8 @@ export default class VoiceRecognition {
     };
   }
 
-  retryFetch(fetchCompanyData, retries = 2, delay = 500) {
-    return async (...args) => {
-      for (let i = 0; i < retries; i++) {
-        try {
-          await this.withTimeout(fetchCompanyData(...args));
-          return;
-        } catch (error) {
-          console.warn(`Retry ${i + 1}/${retries} failed: ${error.message}`);
-          if (i === retries - 1) {
-            throw error;
-          }
-          await this.delay(delay);
-        }
-      }
-    };
-  }
-
-  withTimeout(promise, timeout = 3000) {
-    return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error("Timeout")), timeout);
-      promise
-        .then(resolve)
-        .catch(reject)
-        .finally(() => clearTimeout(timer));
-    });
-  }
-
+  
   delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  animateVoiceButton(isActive) {
-    this.elements.voiceButton.classList.toggle("active", isActive);
-  }
-
-  animateDetection() {
-    this.elements.voiceButton.classList.add("detected");
-    setTimeout(
-      () => this.elements.voiceButton.classList.remove("detected"),
-      1000,
-    );
   }
 }
