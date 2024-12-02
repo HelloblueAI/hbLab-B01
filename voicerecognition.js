@@ -18,7 +18,6 @@ export default class VoiceRecognition {
     this.setupEventListeners();
   }
 
-  
   initializeRecognition() {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -42,7 +41,6 @@ export default class VoiceRecognition {
     return recognition;
   }
 
-  
   setupEventListeners() {
     this.elements.voiceButton.addEventListener("click", () =>
       this.toggleVoiceRecognition(),
@@ -140,53 +138,52 @@ export default class VoiceRecognition {
   updateFeedback(message, isActive) {
     const feedbackElement = this.elements.feedbackText;
     const voiceButton = this.elements.voiceButton;
-  
+
     feedbackElement.textContent = message;
-  
+
     if (isActive) {
-      
-      feedbackElement.style.color = "#fff";
-      feedbackElement.style.background =
-        "linear-gradient(90deg, #0078ff, #00d4ff)";
-      feedbackElement.style.boxShadow = "0 4px 20px rgba(0, 120, 255, 0.6)";
-      feedbackElement.style.borderRadius = "14px";
-      feedbackElement.style.padding = "14px 22px";
-      feedbackElement.style.fontWeight = "bold";
-      feedbackElement.style.fontSize = "1.1rem";
-      feedbackElement.style.letterSpacing = "1px";
-      feedbackElement.style.transition = "all 0.4s ease-in-out";
-  
-      voiceButton.classList.add("active");
-      voiceButton.style.background =
-        "linear-gradient(45deg, darkblue, #187cff)"; // Matches background color
-      voiceButton.style.boxShadow =
-        "0 0 35px rgba(0, 120, 255, 0.8), 0 0 50px rgba(0, 212, 255, 0.7)";
-      voiceButton.style.transform = "scale(1.2)";
-      voiceButton.style.transition = "all 0.4s ease-in-out";
+        
+        feedbackElement.style.color = "#fff";
+        feedbackElement.style.background =
+            "linear-gradient(90deg, #0078ff, #00d4ff)";
+        feedbackElement.style.boxShadow = "0 4px 20px rgba(0, 120, 255, 0.6)";
+        feedbackElement.style.borderRadius = "14px";
+        feedbackElement.style.padding = "14px 22px";
+        feedbackElement.style.fontWeight = "bold";
+        feedbackElement.style.fontSize = "1.1rem";
+        feedbackElement.style.letterSpacing = "1px";
+        feedbackElement.style.transition = "all 0.4s ease-in-out";
+
+        voiceButton.classList.add("active");
+        voiceButton.style.background =
+            "linear-gradient(45deg, #0050cc, #1890ff)"; 
+        voiceButton.style.boxShadow =
+            "0 0 25px rgba(0, 80, 204, 0.8), 0 0 40px rgba(24, 144, 255, 0.7)";
+        voiceButton.style.transform = "scale(1.2)";
+        voiceButton.style.transition = "all 0.4s ease-in-out";
     } else {
-      
-      feedbackElement.style.color = "#fff";
-      feedbackElement.style.background =
-        "linear-gradient(90deg, #005bea, #00c6fb)";
-      feedbackElement.style.boxShadow = "0 4px 25px rgba(0, 94, 234, 0.7)";
-      feedbackElement.style.borderRadius = "14px";
-      feedbackElement.style.padding = "12px 20px";
-      feedbackElement.style.fontWeight = "normal";
-      feedbackElement.style.fontSize = "1rem";
-      feedbackElement.style.letterSpacing = "0.5px";
-      feedbackElement.style.transition = "all 0.4s ease-in-out";
-  
-      voiceButton.classList.remove("active");
-      voiceButton.style.background =
-        "radial-gradient(circle, rgba(0, 91, 234, 1) 0%, rgba(0, 198, 251, 1) 100%)";
-      voiceButton.style.boxShadow =
-        "0 0 40px rgba(0, 91, 234, 0.8), 0 0 60px rgba(0, 198, 251, 0.7)";
-      voiceButton.style.transform = "scale(1.1)";
-      voiceButton.style.transition = "all 0.4s ease-in-out";
+        
+        feedbackElement.style.color = "#fff";
+        feedbackElement.style.background =
+            "linear-gradient(90deg, #005bea, #00c6fb)";
+        feedbackElement.style.boxShadow = "0 4px 25px rgba(0, 94, 234, 0.7)";
+        feedbackElement.style.borderRadius = "14px";
+        feedbackElement.style.padding = "12px 20px";
+        feedbackElement.style.fontWeight = "normal";
+        feedbackElement.style.fontSize = "1rem";
+        feedbackElement.style.letterSpacing = "0.5px";
+        feedbackElement.style.transition = "all 0.4s ease-in-out";
+
+        voiceButton.classList.remove("active");
+        voiceButton.style.background =
+            "radial-gradient(circle, rgba(0, 91, 234, 1) 0%, rgba(0, 198, 251, 1) 100%)";
+        voiceButton.style.boxShadow =
+            "0 0 40px rgba(0, 91, 234, 0.8), 0 0 60px rgba(0, 198, 251, 0.7)";
+        voiceButton.style.transform = "scale(1.1)";
+        voiceButton.style.transition = "all 0.4s ease-in-out";
     }
-  }
-  
-  
+}
+
   toggleButtonAnimation(isActive) {
     this.elements.voiceButton.classList.toggle("listening", isActive);
   }
