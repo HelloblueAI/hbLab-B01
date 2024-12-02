@@ -141,7 +141,6 @@ export default class VoiceRecognition {
     const feedbackElement = this.elements.feedbackText;
     const voiceButton = this.elements.voiceButton;
   
-    
     feedbackElement.textContent = message;
   
     if (isActive) {
@@ -159,7 +158,7 @@ export default class VoiceRecognition {
   
       voiceButton.classList.add("active");
       voiceButton.style.background =
-        "radial-gradient(circle, rgba(0, 120, 255, 1) 0%, rgba(0, 212, 255, 1) 100%)";
+        "linear-gradient(45deg, darkblue, #187cff)"; // Matches background color
       voiceButton.style.boxShadow =
         "0 0 35px rgba(0, 120, 255, 0.8), 0 0 50px rgba(0, 212, 255, 0.7)";
       voiceButton.style.transform = "scale(1.2)";
@@ -186,6 +185,7 @@ export default class VoiceRecognition {
       voiceButton.style.transition = "all 0.4s ease-in-out";
     }
   }
+  
   
   toggleButtonAnimation(isActive) {
     this.elements.voiceButton.classList.toggle("listening", isActive);
