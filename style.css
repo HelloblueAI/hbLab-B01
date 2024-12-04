@@ -252,8 +252,8 @@ header {
 
   100% {
     transform: scale(1);
-    box-shadow: 0 0 5px 5px rgba(52, 130, 255, 0.7);
-    background-color: rgb(65, 133, 249);
+    box-shadow: 0 0 5px 5px rgba(71, 141, 255, 0.7);
+    background-color: rgb(178, 206, 255);
   }
 }
 
