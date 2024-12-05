@@ -1,22 +1,25 @@
 {
   "name": "helloblue-ai",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A project to facilitate connecting users to company customer services quickly and efficiently.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --passWithNoTests",
     "check-updates": "ncu",
     "lint:css": "stylelint '**/*.css'",
-    "format": "prettier --write '**/*.{html,js,css}'",
     "lint:js": "eslint '**/*.js'",
+    "format": "prettier --write '**/*.{html,js,css}'",
     "build:css": "postcss style.css -o style.min.css",
-    "build": "npm run build:css",
+    "build": "npm run build:css && npm run test",
     "start": "npx lite-server --verbose",
     "serve": "serve -s .",
     "prepare": "husky install",
     "dev": "concurrently \"npm run start\" \"npm run watch:css\"",
     "watch:css": "postcss style.css -o style.min.css --watch",
-    "check-all": "npm install && npm run lint:js && npm run lint:css && npm run build && npm audit"
+    "check-all": "npm install && npm run lint:js && npm run lint:css && npm run build && npm audit",
+    "audit": "npm audit",
+    "fix": "npm audit fix",
+    "precommit": "lint-staged"
   },
   "author": "Pejman Haghighatnia",
   "license": "Apache-2.0",
@@ -33,6 +36,7 @@
     "fancy-log": "^2.0.0",
     "http-server": "^14.1.1",
     "husky": "^9.1.7",
+    "jest": "^29.7.0",
     "lint-staged": "^15.2.10",
     "npm-check-updates": "^17.1.11",
     "plugin-error": "^2.0.1",
@@ -71,6 +75,18 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,css,html}": "prettier --write"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/_site/"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ]
   },
   "keywords": [
     "customer service",

@@ -45,7 +45,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 
 - **Python**: Utilized for backend machine learning operations, enhancing the intelligent processing capabilities of our application.
 - **JavaScript**: Powers the core functionalities, including voice recognition and data fetching.
-- **HTML5 and CSS3**: For structuring and designing the front-end.
+
 - **JAX**: For high-performance numerical and scientific computation. Used primarily in the backend for accelerating machine learning models and simulations.
 - **Netlify Identity Widget**: For user authentication and secure access.
 - **Fuse.js**: Implements fuzzy search capabilities to enhance the search functionality.
