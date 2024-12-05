@@ -1,10 +1,10 @@
-# Ensure desired languages are prioritized
+# Assign languages to specific file extensions
 *.py linguist-language=Python
 *.java linguist-language=Java
 *.go linguist-language=Go
 *.rs linguist-language=Rust
 
-# Mark unrelated languages as vendored
+# Mark unrelated file types as vendored (excluded from stats)
 *.js linguist-vendored
 *.jsx linguist-vendored
 *.ts linguist-vendored
