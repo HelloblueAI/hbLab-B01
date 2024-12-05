@@ -2,85 +2,67 @@
 node_modules/
 bower_components/
 
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-
-# Runtime data
-pids/
-*.pid
-*.seed
-*.pid.lock
-
-# Generated libraries and builds
-lib-cov/
+# Build and output directories
 build/
 dist/
 out/
 .cache/
 
-# Coverage directories and test outputs
-coverage/
-.nyc_output/
-jest-html-reporters-*/ # Jest reports
+# Python virtual environments
+venv/
+new_venv/
 
-# Lock files (uncomment if needed)
-# package-lock.json
-# yarn.lock
+# SSL and sensitive files
+ssl/
+*.crt
+*.csr
+*.key
+*.db
+*.db.cache
 
-# dotenv environment variables
+# Logs and runtime data
+logs/
+*.log
+*.pid
+*.pid.lock
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Dotenv files
 .env
-.env.*.local
+.env.*
 
 # System files
 .DS_Store
 Thumbs.db
 Icon?
 
-# Editor directories and settings
+# Editor and IDE settings
 .vscode/
 .idea/
 *.sublime-workspace
 
-# Compiled files and TypeScript outputs
-*.tsbuildinfo
+# Test and coverage
+.nyc_output/
+coverage/
+*.html.report
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release/
-
-# Next.js, Nuxt.js, and Gatsby files
-.next/
-.nuxt/
-public/
-out/
-
-# VuePress build output
-.vuepress/dist/
-
-# Serverless directories
-.serverless/
-
-# Python virtual environments and bytecode
-venv/
+# Flask instance and cache
+instance/
 *.pyc
-*.pyo
-*.pyd
 __pycache__/
 
-# Aider temporary files
-.aider*
-
-# Other backups and temporary files
+# Other temporary files
+*.tmp
 *.bak
 *.swp
-*.tmp
 *.temp
+.aider*
 
-# Copilot files
-copilot.md
-Copilot.md
-
-
+# Specific directories/files to ignore
+_site/
+test.txt
+test_flask.py
