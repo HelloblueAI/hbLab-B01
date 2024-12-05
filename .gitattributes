@@ -2,17 +2,19 @@
 node_modules/@next/swc-darwin-arm64/next-swc.darwin-arm64.node filter=lfs diff=lfs merge=lfs -text
 *.your_large_file_extension filter=lfs diff=lfs merge=lfs -text
 
-# Linguist language definitions
+# Force GitHub Linguist to prioritize Python, Java, and Go
 *.py linguist-language=Python
 *.java linguist-language=Java
 *.go linguist-language=Go
+
+# Mark other languages as needed
 *.js linguist-language=JavaScript
 *.jsx linguist-language=JavaScript
 *.ts linguist-language=TypeScript
 *.tsx linguist-language=TypeScript
-*.html linguist-language=HTML
-*.css linguist-language=CSS
-*.json linguist-language=JSON
+*.html linguist-vendored
+*.css linguist-vendored
+*.json linguist-vendored
 
 # Vendor directories
 node_modules/* linguist-vendored
