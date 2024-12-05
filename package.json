@@ -1,6 +1,6 @@
 {
   "name": "helloblue-ai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A project to facilitate connecting users to company customer services quickly and efficiently.",
   "main": "app.js",
   "scripts": {
@@ -8,18 +8,20 @@
     "check-updates": "ncu",
     "lint:css": "stylelint '**/*.css'",
     "lint:js": "eslint '**/*.js'",
-    "format": "prettier --write '**/*.{html,js,css}'",
+    "format": "prettier --write '**/*.{html,js,css,json,md}'",
     "build:css": "postcss style.css -o style.min.css",
     "build": "npm run build:css && npm run test",
-    "start": "npx lite-server --verbose",
+    "start": "lite-server --baseDir=.",
     "serve": "serve -s .",
     "prepare": "husky install",
     "dev": "concurrently \"npm run start\" \"npm run watch:css\"",
     "watch:css": "postcss style.css -o style.min.css --watch",
     "check-all": "npm install && npm run lint:js && npm run lint:css && npm run build && npm audit",
     "audit": "npm audit",
-    "fix": "npm audit fix",
-    "precommit": "lint-staged"
+    "fix": "npm audit fix --force",
+    "precommit": "lint-staged",
+    "clean": "rimraf ./node_modules ./package-lock.json",
+    "start:prod": "node app.js"
   },
   "author": "Pejman Haghighatnia",
   "license": "Apache-2.0",
@@ -43,6 +45,7 @@
     "postcss": "^8.4.49",
     "postcss-cli": "^11.0.0",
     "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
     "serve": "^14.2.4",
     "stylelint": "^16.11.0",
     "stylelint-config-standard": "^36.0.1",
@@ -58,13 +61,14 @@
     "express-openid-connect": "^2.17.1",
     "fuse.js": "^7.0.0",
     "glob": "^11.0.0",
+    "got": "^11.8.6",
     "gotrue-js": "^0.9.29",
     "handlebars": "^4.7.8",
+    "joi": "^17.13.3",
     "lodash": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "micromatch": "^4.0.8",
     "path-to-regexp": "^8.2.0",
-    "rimraf": "^6.0.1",
     "send": "^1.1.0",
     "serve-static": "^1.16.2",
     "set-value": "^4.1.0",
@@ -74,27 +78,21 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
-    "*.{js,css,html}": "prettier --write"
+    "*.{js,css,html,json,md}": "prettier --write"
   },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/_site/"
-    ],
-    "collectCoverage": true,
-    "coverageDirectory": "./coverage",
-    "testMatch": [
-      "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).[tj]s?(x)"
-    ]
+"jest": {
+  "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+  "collectCoverage": true,
+  "coverageDirectory": "./coverage",
+  "testMatch": [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[tj]s?(x)"
+  ]
+},
+  "engines": {
+    "node": ">=18.20.0",
+    "npm": ">=8.0.0"
   },
-  "keywords": [
-    "customer service",
-    "voice AI",
-    "company search",
-    "automation",
-    "web app"
-  ],
   "pnpm": {
     "overrides": {
       "set-value": ">=2.0.1",
