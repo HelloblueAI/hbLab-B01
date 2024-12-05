@@ -259,7 +259,7 @@ header {
   75% {
     transform: scale(1.15);
     box-shadow: 0 0 15px 8px rgba(183, 205, 255, 0.6), 0 0 25px 10px rgba(35, 116, 237, 0.3);
-    background-color: rgb(183, 205, 255);
+    background-color: rgb(87, 134, 244);
   }
 
   100% {
