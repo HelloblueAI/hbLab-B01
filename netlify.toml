@@ -1,6 +1,11 @@
 [build]
+  # Clear npm cache, install dependencies, and build the project
+  command = "npm cache clean --force && npm install && npm run build"
+  publish = "dist"
   functions = "functions"
-  node_version = "20"
+
+  # Set environment variables for Node.js version and deployment
+  environment = { NODE_VERSION = "20", NPM_VERSION = "10.8.2" }
 
 [[redirects]]
   from = "/redirect.php"

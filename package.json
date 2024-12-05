@@ -58,10 +58,10 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
-    "express-openid-connect": "^2.17.1",
+    "express-openid-connect": "^0.5.0",
     "fuse.js": "^7.0.0",
     "glob": "^11.0.0",
-    "got": "^11.8.6",
+    "got": "^14.4.5",
     "gotrue-js": "^0.9.29",
     "handlebars": "^4.7.8",
     "joi": "^17.13.3",
@@ -80,15 +80,18 @@
     "*.js": "eslint --cache --fix",
     "*.{js,css,html,json,md}": "prettier --write"
   },
-"jest": {
-  "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
-  "collectCoverage": true,
-  "coverageDirectory": "./coverage",
-  "testMatch": [
-    "**/__tests__/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[tj]s?(x)"
-  ]
-},
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ]
+  },
   "engines": {
     "node": ">=18.20.0",
     "npm": ">=8.0.0"
