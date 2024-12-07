@@ -18,7 +18,7 @@ The Enhanced Voice AI Assistant in our application allows users to initiate sear
 
 - **Voice Recognition**: Users can activate searches and initiate calls simultaneously with voice commands. This dual-functionality not only minimizes the need for manual input but also makes the app more accessible and convenient for multitasking.
 
-
+```javascript
 > helloblue-ai@1.0.3 test 
 > jest --passWithNoTests
 
@@ -45,7 +45,7 @@ Tests:       8 passed, 8 total
 Snapshots:   0 total
 Time:        0.158 s, estimated 1 s
 Ran all test suites.
-
+```
 
 
 ## Technical Implementation
