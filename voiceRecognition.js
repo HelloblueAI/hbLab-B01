@@ -1,20 +1,27 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = this.throttle(
-      this.retryFetch(fetchCompanyData, options.maxRetries || 3),
-      200, 
-    );
+
     this.options = {
       interimResults: true,
-      continuous: false,
+      continuous: true,
       language: "en-US",
       confidenceThreshold: 0.6,
+      maxRetries: 3,
+      autoRestart: false,
+      throttleDelay: 200,
       ...options,
     };
+
+    this.fetchCompanyData = this.throttle(
+      this.retryFetch(fetchCompanyData, this.options.maxRetries),
+      this.options.throttleDelay
+    );
+
     this.isListening = false;
 
     this.recognition = this.initializeRecognition();
+
     this.setupEventListeners();
   }
 
@@ -23,8 +30,7 @@ export default class VoiceRecognition {
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      this.elements.feedbackText.textContent =
-        "Speech Recognition not supported in this browser.";
+      this.updateFeedback("Speech Recognition not supported in this browser.", false);
       throw new Error("Speech Recognition API is not available.");
     }
 
@@ -33,24 +39,28 @@ export default class VoiceRecognition {
     recognition.continuous = this.options.continuous;
     recognition.interimResults = this.options.interimResults;
 
-    recognition.onstart = this.onRecognitionStart.bind(this);
-    recognition.onresult = this.onRecognitionResult.bind(this);
-    recognition.onend = this.onRecognitionEnd.bind(this);
-    recognition.onerror = this.onRecognitionError.bind(this);
+    recognition.onstart = () => this.onRecognitionStart();
+    recognition.onresult = (event) => this.onRecognitionResult(event);
+    recognition.onend = () => this.onRecognitionEnd();
+    recognition.onerror = (event) => this.onRecognitionError(event);
 
     return recognition;
   }
 
   setupEventListeners() {
-    this.elements.voiceButton.addEventListener("click", () =>
-      this.toggleVoiceRecognition(),
-    );
+    const { voiceButton } = this.elements;
+
+    voiceButton.addEventListener("click", () => this.toggleVoiceRecognition());
 
     document.addEventListener("keydown", (event) => {
       if (event.altKey && event.key === "v") {
         this.toggleVoiceRecognition();
       }
     });
+  }
+
+  toggleVoiceRecognition() {
+    this.isListening ? this.stopRecognition() : this.startRecognition();
   }
 
   startRecognition() {
@@ -65,9 +75,7 @@ export default class VoiceRecognition {
     }
   }
 
-  toggleVoiceRecognition() {
-    this.isListening ? this.stopRecognition() : this.startRecognition();
-  }
+
 
   onRecognitionStart() {
     this.isListening = true;
@@ -76,14 +84,14 @@ export default class VoiceRecognition {
   }
 
   onRecognitionResult(event) {
-    const finalTranscript = Array.from(event.results)
-      .filter((result) => result.isFinal)
-      .map((result) => result[0].transcript.trim())
+    const results = Array.from(event.results);
+    const finalTranscript = results
+      .filter((res) => res.isFinal)
+      .map((res) => res[0].transcript.trim())
       .join(" ");
-
-    const interimTranscript = Array.from(event.results)
-      .filter((result) => !result.isFinal)
-      .map((result) => result[0].transcript.trim())
+    const interimTranscript = results
+      .filter((res) => !res.isFinal)
+      .map((res) => res[0].transcript.trim())
       .join(" ");
 
     if (interimTranscript) {
@@ -97,20 +105,23 @@ export default class VoiceRecognition {
 
   async handleFinalTranscript(transcript) {
     this.updateSearchInput(transcript);
-
+    
     try {
       await this.fetchCompanyData(transcript);
       this.animateSuccess();
     } catch (error) {
       this.updateFeedback(`Error: ${error.message}`, false);
     } finally {
-      this.stopRecognition();
+      if (!this.options.autoRestart) {
+        this.stopRecognition();
+      }
     }
   }
 
   updateSearchInput(transcript) {
-    if (this.elements.companySearch) {
-      this.elements.companySearch.value = transcript;
+    const { companySearch } = this.elements;
+    if (companySearch) {
+      companySearch.value = transcript;
     }
   }
 
@@ -118,6 +129,10 @@ export default class VoiceRecognition {
     this.isListening = false;
     this.updateFeedback("Click to start speaking.", false);
     this.toggleButtonAnimation(false);
+
+    if (this.options.autoRestart) {
+      setTimeout(() => this.startRecognition(), 1000);
+    }
   }
 
   onRecognitionError(event) {
@@ -130,25 +145,21 @@ export default class VoiceRecognition {
 
     const message = errorMessages[event.error] || `Error: ${event.error}`;
     this.updateFeedback(message, false);
-    this.stopRecognition();
+
+    if (!this.options.autoRestart) {
+      this.stopRecognition();
+    }
   }
 
   updateFeedback(message, isActive) {
-    const feedbackElement = this.elements.feedbackText;
-    const voiceButton = this.elements.voiceButton;
-
-    feedbackElement.textContent = message;
+    const { feedbackText, voiceButton } = this.elements;
+    feedbackText.textContent = message;
 
     if (isActive) {
-      feedbackElement.style.color = "#fff";
-      feedbackElement.style.background =
-        "linear-gradient(90deg, #0078ff, #00d4ff)";
-      feedbackElement.style.boxShadow = "0 4px 20px rgba(0, 120, 255, 0.6)";
+      feedbackText.classList.add("active-feedback");
       voiceButton.classList.add("active");
     } else {
-      feedbackElement.style.background =
-        "linear-gradient(90deg, #005bea, #00c6fb)";
-      feedbackElement.style.boxShadow = "0 4px 25px rgba(0, 94, 234, 0.7)";
+      feedbackText.classList.remove("active-feedback");
       voiceButton.classList.remove("active");
     }
   }
@@ -158,10 +169,9 @@ export default class VoiceRecognition {
   }
 
   animateSuccess() {
-    this.elements.voiceButton.classList.add("detected");
-    setTimeout(() => {
-      this.elements.voiceButton.classList.remove("detected");
-    }, 1000);
+    const { voiceButton } = this.elements;
+    voiceButton.classList.add("success");
+    setTimeout(() => voiceButton.classList.remove("success"), 1000);
   }
 
   retryFetch(fetchFunction, maxRetries) {
@@ -175,19 +185,20 @@ export default class VoiceRecognition {
           if (attempt >= maxRetries) {
             throw new Error("Maximum retry attempts reached.");
           }
-          await this.delay(300 * attempt); 
+          await this.delay(300 * attempt);
         }
       }
     };
   }
 
-  throttle(func, limit) {
-    let inThrottle;
+  throttle(func, delay) {
+    let timeoutId;
     return (...args) => {
-      if (!inThrottle) {
+      if (!timeoutId) {
         func(...args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
+        timeoutId = setTimeout(() => {
+          timeoutId = null;
+        }, delay);
       }
     };
   }
