@@ -67,6 +67,7 @@
     "handlebars": "^4.7.8",
     "joi": "^17.13.3",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "micromatch": "^4.0.8",
     "path-to-regexp": "^8.2.0",
