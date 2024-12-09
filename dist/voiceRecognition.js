@@ -3,7 +3,7 @@ export default class VoiceRecognition {
     this.elements = elements;
     this.fetchCompanyData = this.throttle(
       this.retryFetch(fetchCompanyData, options.maxRetries || 3),
-      200, 
+      200,
     );
     this.options = {
       interimResults: true,
@@ -175,7 +175,7 @@ export default class VoiceRecognition {
           if (attempt >= maxRetries) {
             throw new Error("Maximum retry attempts reached.");
           }
-          await this.delay(300 * attempt); 
+          await this.delay(300 * attempt);
         }
       }
     };

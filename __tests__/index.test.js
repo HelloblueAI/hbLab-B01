@@ -46,4 +46,3 @@ describe('Calculator Class', () => {
     expect(calculator.reset()).toBe(0);
   });
 });
-

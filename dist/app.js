@@ -192,8 +192,6 @@ async function displayCompanyInfo(
   );
 }
 
-
-
 async function fetchCompanyData(company, elements, state) {
   if (state.isConfirmationDialogOpen || state.isFetching) {
     return;
@@ -232,7 +230,8 @@ async function fetchCompanyData(company, elements, state) {
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
     if (error.name === "AbortError") {
-      elements.feedbackText.textContent = "Request timed out. Please try again.";
+      elements.feedbackText.textContent =
+        "Request timed out. Please try again.";
     } else {
       handleFetchError(elements, state, company);
     }
@@ -255,8 +254,6 @@ function handleFetchError(elements, state, company) {
     "Failed to fetch company data. Retrying...";
   setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 }
-
-
 
 function showCompanyConfirmationDialog(
   companyName,

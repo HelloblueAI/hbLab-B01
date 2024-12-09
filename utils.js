@@ -1,4 +1,4 @@
-import { config } from "./config.js";
+import { config } from './config.js';
 
 /**
  * Capitalizes the first letter of each word in a string.
@@ -7,9 +7,9 @@ import { config } from "./config.js";
  */
 const capitalizeWords = (str) => {
   return str
-    .split(" ")
+    .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
+    .join(' ');
 };
 
 /**
@@ -30,8 +30,8 @@ export const capitalizeCompany = (company) => {
  * @param {string} message - The message to display.
  * @param {string} [type='info'] - The type of notification (e.g., 'info', 'error', 'success').
  */
-export const displayNotification = (message, type = "info") => {
-  const notificationContainer = document.createElement("div");
+export const displayNotification = (message, type = 'info') => {
+  const notificationContainer = document.createElement('div');
   notificationContainer.className = `notification ${type}`;
   notificationContainer.textContent = message;
 
