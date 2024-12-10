@@ -1,33 +1,30 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = this.throttle(
+    this.fetchCompanyData = this.debounce(
       this.retryFetch(fetchCompanyData, options.maxRetries || 3),
-      200,
+      300,
     );
     this.options = {
       interimResults: true,
       continuous: false,
       language: 'en-US',
       confidenceThreshold: 0.6,
-
       ...options,
     };
 
     this.isListening = false;
-
     this.recognition = this.initializeRecognition();
 
     this.setupEventListeners();
   }
 
   initializeRecognition() {
-    const SpeechRecognition =
+    const SpeechRecognition = 
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      this.elements.feedbackText.textContent =
-        'Speech Recognition not supported in this browser.';
+      this.showFeedback('Speech Recognition not supported in this browser.', false);
       throw new Error('Speech Recognition API is not available.');
     }
 
@@ -45,7 +42,7 @@ export default class VoiceRecognition {
   }
 
   setupEventListeners() {
-    this.elements.voiceButton.addEventListener('click', () =>
+    this.elements.voiceButton.addEventListener('click', () => 
       this.toggleVoiceRecognition(),
     );
 
@@ -74,19 +71,19 @@ export default class VoiceRecognition {
 
   onRecognitionStart() {
     this.isListening = true;
-    this.updateFeedback('Listening... Speak now.', true);
-    this.toggleButtonAnimation(true);
+    this.showFeedback('Listening... Speak now.', true);
+    this.toggleButtonState(true);
   }
 
   onRecognitionResult(event) {
     const finalTranscript = Array.from(event.results)
-      .filter((result) => result.isFinal)
-      .map((result) => result[0].transcript.trim())
+      .filter(result => result.isFinal)
+      .map(result => result[0].transcript.trim())
       .join(' ');
 
     const interimTranscript = Array.from(event.results)
-      .filter((result) => !result.isFinal)
-      .map((result) => result[0].transcript.trim())
+      .filter(result => !result.isFinal)
+      .map(result => result[0].transcript.trim())
       .join(' ');
 
     if (interimTranscript) {
@@ -95,7 +92,6 @@ export default class VoiceRecognition {
 
     if (finalTranscript) {
       this.handleFinalTranscript(finalTranscript);
-      this.animateMicGlow(); // Trigger the mic button glow
     }
   }
 
@@ -106,7 +102,7 @@ export default class VoiceRecognition {
       await this.fetchCompanyData(transcript);
       this.animateSuccess();
     } catch (error) {
-      this.updateFeedback(`Error: ${error.message}`, false);
+      this.showFeedback(`Error: ${error.message}`, false);
     } finally {
       this.stopRecognition();
     }
@@ -120,59 +116,43 @@ export default class VoiceRecognition {
 
   onRecognitionEnd() {
     this.isListening = false;
-    this.updateFeedback('Click to start speaking.', false);
-    this.toggleButtonAnimation(false);
+    this.showFeedback('Click to start speaking.', false);
+    this.toggleButtonState(false);
   }
 
   onRecognitionError(event) {
     const errorMessages = {
       'no-speech': 'No speech detected. Please try again.',
-      'audio-capture': 'Microphone is unavailable. Check permissions.',
-      network: 'Network error occurred. Please check your connection.',
-      'not-allowed': 'Microphone access denied. Enable it in browser settings.',
+      'audio-capture': 'Microphone unavailable. Check permissions.',
+      network: 'Network error. Check your connection.',
+      'not-allowed': 'Microphone access denied. Update browser settings.',
     };
 
-    const message = errorMessages[event.error] || `Error: ${event.error}`;
-    this.updateFeedback(message, false);
-
+    this.showFeedback(errorMessages[event.error] || `Error: ${event.error}`, false);
     this.stopRecognition();
   }
 
-  updateFeedback(message, isActive) {
-    const feedbackElement = this.elements.feedbackText;
-    const voiceButton = this.elements.voiceButton;
-
-    feedbackElement.textContent = message;
+  showFeedback(message, isActive) {
+    const { feedbackText, voiceButton } = this.elements;
+    feedbackText.textContent = message;
 
     if (isActive) {
-      feedbackElement.style.color = '#fff';
-      feedbackElement.style.background =
-        'linear-gradient(90deg, #0078ff, #00d4ff)';
-      feedbackElement.style.boxShadow = '0 4px 20px rgba(0, 120, 255, 0.6)';
+      feedbackText.classList.add('active');
       voiceButton.classList.add('active');
     } else {
-      feedbackElement.style.background =
-        'linear-gradient(90deg, #005bea, #00c6fb)';
-      feedbackElement.style.boxShadow = '0 4px 25px rgba(0, 94, 234, 0.7)';
+      feedbackText.classList.remove('active');
       voiceButton.classList.remove('active');
     }
   }
 
-  toggleButtonAnimation(isActive) {
+  toggleButtonState(isActive) {
     this.elements.voiceButton.classList.toggle('listening', isActive);
   }
 
-  animateMicGlow() {
-    const { voiceButton } = this.elements;
-    voiceButton.classList.add('glow');
-    setTimeout(() => voiceButton.classList.remove('glow'), 2000);
-  }
-
   animateSuccess() {
-    this.elements.voiceButton.classList.add('detected');
-    setTimeout(() => {
-      this.elements.voiceButton.classList.remove('detected');
-    }, 1000);
+    const { voiceButton } = this.elements;
+    voiceButton.classList.add('success');
+    setTimeout(() => voiceButton.classList.remove('success'), 1000);
   }
 
   retryFetch(fetchFunction, maxRetries) {
@@ -192,18 +172,15 @@ export default class VoiceRecognition {
     };
   }
 
-  throttle(func, limit) {
-    let inThrottle;
+  debounce(func, wait) {
+    let timeout;
     return (...args) => {
-      if (!inThrottle) {
-        func(...args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
     };
   }
 
   delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
