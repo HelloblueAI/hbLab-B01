@@ -76,24 +76,25 @@ export default class VoiceRecognition {
   }
 
   onRecognitionResult(event) {
-    const finalTranscript = Array.from(event.results)
-      .filter(result => result.isFinal)
-      .map(result => result[0].transcript.trim())
-      .join(' ');
-
+    const filteredResults = Array.from(event.results)
+      .filter(result => result.isFinal && result[0].confidence >= this.options.confidenceThreshold);
+    
+    const finalTranscript = filteredResults.map(result => result[0].transcript.trim()).join(' ');
+  
     const interimTranscript = Array.from(event.results)
       .filter(result => !result.isFinal)
       .map(result => result[0].transcript.trim())
       .join(' ');
-
+  
     if (interimTranscript) {
       this.updateSearchInput(interimTranscript);
     }
-
+  
     if (finalTranscript) {
       this.handleFinalTranscript(finalTranscript);
     }
   }
+  
 
   async handleFinalTranscript(transcript) {
     this.updateSearchInput(transcript);

@@ -60,12 +60,11 @@ class StateManager {
 
   clearExpiredCache() {
     const now = Date.now();
-    for (const [key, value] of this.cache.entries()) {
-      if (value.timestamp < now) {
-        this.cache.delete(key);
-      }
-    }
+    this.cache.forEach((value, key) => {
+      if (value.timestamp < now) this.cache.delete(key);
+    });
   }
+  
 }
 
 function setupEventListeners(elements, state) {
