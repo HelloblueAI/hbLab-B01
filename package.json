@@ -10,6 +10,7 @@
     "lint:js": "eslint '**/*.js'",
     "format": "prettier --write '**/*.{html,js,css,json,md}'",
     "build:css": "postcss style.css -o dist/style.min.css",
+    "copy-css": "cp terms-style.css dist/",
     "build": "mkdir -p dist && cp index.html dist && pnpm install --frozen-lockfile && pnpm run build:css && pnpm run test",
     "start": "lite-server --baseDir=.",
     "serve": "serve -s dist",
