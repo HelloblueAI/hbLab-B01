@@ -4,8 +4,7 @@ bower_components/
 
 # Build and output directories
 build/
-# Keep dist for deployment
-!dist/
+dist/ # Exclude dist from tracking (remove if you want to track dist)
 out/
 .cache/
 
@@ -28,14 +27,15 @@ logs/
 *.pid.lock
 
 # Lock files
+pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
-# Dotenv files
+# Dotenv files (Environment variables)
 .env
 .env.*
 
-# System files
+# System-specific files
 .DS_Store
 Thumbs.db
 Icon?
@@ -45,7 +45,7 @@ Icon?
 .idea/
 *.sublime-workspace
 
-# Test and coverage
+# Test and coverage reports
 .nyc_output/
 coverage/
 *.html.report
@@ -55,7 +55,7 @@ instance/
 *.pyc
 __pycache__/
 
-# Other temporary files
+# Temporary files
 *.tmp
 *.bak
 *.swp
@@ -67,5 +67,8 @@ _site/
 test.txt
 test_flask.py
 
-# Local Netlify folder
+# Netlify configuration and cache
 .netlify
+
+# Specific note:
+# Remove "!dist/" as Netlify can generate it during deployment.
