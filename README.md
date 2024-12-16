@@ -112,7 +112,7 @@ Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b663
 
 ## License
 
-This project is licensed under the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/c35afbd0385550563832d946460555c00bc5185e/LICENSE.md)
+This project is licensed under the [Apache 2.0](https://github.com/HelloblueAI/hbLab-B01/blob/c35afbd0385550563832d946460555c00bc5185e/LICENSE.md)
 
 ## Next + Netlify Starter
 
