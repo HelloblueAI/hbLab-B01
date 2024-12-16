@@ -104,7 +104,7 @@ To set up the B01 Contact Assistant on your local machine, follow these steps:
 
 ## Contributing
 
-We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](CONTRIBUTING.md).
+We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](CONTRIBUTING.md)
 
 ## Security Policy
 
