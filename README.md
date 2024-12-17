@@ -89,7 +89,7 @@ Ran all test suites.
 
 ## Related Repositories
 
-- **Express Server**: This repository contains the Express server setup essential for the operation of the hbLab-B01 Contact Assistant. Check it out [here](https://github.com/pejmantheory/express_server.git).
+- **Express Server**: This repository contains the Express server setup essential for the operation of the hbLab-B01 Contact Assistant. Check it out [here](https://github.com/pejmantheory/express_server.git)
 
 ## Installation
 
