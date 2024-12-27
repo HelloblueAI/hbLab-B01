@@ -1,17 +1,6 @@
 // Utility functions
-function add(a, b) {
-  if (typeof a !== 'number' || typeof b !== 'number') {
-    throw new TypeError('Both arguments must be numbers');
-  }
-  return a + b;
-}
-
-function subtract(a, b) {
-  if (typeof a !== 'number' || typeof b !== 'number') {
-    throw new TypeError('Both arguments must be numbers');
-  }
-  return a - b;
-}
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
 
 // A simple class for demonstration
 class Calculator {
@@ -21,17 +10,17 @@ class Calculator {
 
   add(value) {
     this.result += value;
-    return this.result;
+    return this; // Ensure chainability
   }
 
   subtract(value) {
     this.result -= value;
-    return this.result;
+    return this; // Ensure chainability
   }
 
   reset() {
     this.result = 0;
-    return this.result;
+    return this; // Ensure chainability
   }
 }
 

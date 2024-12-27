@@ -59,31 +59,57 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 - **CSV-Parser**: A library for parsing CSV files, utilized to manage and test data imports from company records.
 
 ```javascript
-> helloblue-ai@1.0.3 test 
-> jest --passWithNoTests
-
- PASS  __tests__/index.test.js
+> helloblue-ai@1.0.3 test
   Utility Functions
-    ✓ add() should correctly add two numbers (1 ms)
-    ✓ add() should throw an error for non-number arguments (5 ms)
-    ✓ subtract() should correctly subtract two numbers
-    ✓ subtract() should throw an error for non-number arguments (1 ms)
+    add()
+      ✓ should correctly add two numbers (1 ms)
+      ✓ should handle floating-point precision (1 ms)
+      ✓ should handle large numbers and overflow scenarios
+      ✓ should be used with higher-order functions
+      ✓ should correctly integrate with mocks (1 ms)
+    subtract()
+      ✓ should correctly subtract two numbers
+      ✓ should handle negative results (1 ms)
+      ✓ should handle floating-point precision
+      ✓ should integrate with higher-order functions
+    Integration Tests
+      ✓ add() and subtract() together maintain consistency
+      ✓ Chaining multiple operations with dynamic inputs (1 ms)
   Calculator Class
-    ✓ should initialize result to 0
-    ✓ add() should update the result
-    ✓ subtract() should update the result (2 ms)
-    ✓ reset() should reset the result to 0
+    ✓ should initialize with result as 0 (1 ms)
+    add()
+      ✓ should handle multiple chained operations
+      ✓ should integrate with spies for debugging (1 ms)
+    subtract()
+      ✓ should handle chaining with mixed operations
+      ✓ should correctly integrate with mocks for external dependencies
+    reset()
+      ✓ should maintain class integrity after reset
+    Advanced Scenarios
+      ✓ Simultaneous chaining with different instances (1 ms)
+    Performance and Memory Tests
+      ✓ should handle extremely large numbers without crashing
+      ✓ should maintain memory integrity during high usage (5 ms)
+    Property-Based Testing
+      ✓ result should match a derived formula
+      ✓ result should be zero after adding and subtracting the same value
+      ✓ result should handle a series of random operations
+    Edge Cases
+      ✓ should handle adding zero
+      ✓ should handle subtracting zero (1 ms)
+      ✓ should handle adding and subtracting large numbers
+      ✓ should handle adding and subtracting negative numbers
 
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |     100 |      100 |     100 |     100 |                   
- index.js |     100 |      100 |     100 |     100 |                   
+All files  |     100 |      100 |     100 |     100 |
+ index.js |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       8 passed, 8 total
+Tests:       27 passed, 27 total
 Snapshots:   0 total
-Time:        0.158 s, estimated 1 s
+Time:        0.22 s, estimated 1 s
 Ran all test suites.
 ```
 
