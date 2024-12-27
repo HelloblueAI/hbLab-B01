@@ -103,7 +103,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 ----------|---------|----------|---------|---------|-------------------
 File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files  |     100 |      100 |     100 |     100 |
+All files |     100 |      100 |     100 |     100 |
  index.js |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
