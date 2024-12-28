@@ -61,10 +61,10 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 ```javascript
 > helloblue-ai@1.0.3 test
   Utility Functions
-    ✓ should correctly process voice input and update the UI (4 ms)
-    ✓ should handle recognition errors gracefully (1 ms)
-    ✓ should cache results and reuse them (1 ms)
-    ✓ should not fetch data for low-confidence input (1 ms)
+      ✓ should correctly process voice input and update the UI (4 ms)
+      ✓ should handle recognition errors gracefully (1 ms)
+      ✓ should cache results and reuse them (1 ms)
+      ✓ should not fetch data for low-confidence input (1 ms)
     Advanced Scenarios
       ✓ Simultaneous chaining with different instances (1 ms)
     Performance and Memory Tests
