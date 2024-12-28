@@ -4,8 +4,7 @@ bower_components/
 
 # Build and output directories
 build/
-# Keep dist for deployment
-!dist/
+dist/
 out/
 .cache/
 
