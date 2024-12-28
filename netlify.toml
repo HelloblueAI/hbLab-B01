@@ -2,11 +2,23 @@
   command = "pnpm run build"
   publish = "dist"
   functions = "functions"
+  environment = { NODE_VERSION = "18.16.0" } # Set a compatible Node.js version
 
 [functions]
-  node_bundler = "esbuild"
+  node_bundler = "esbuild" # Use esbuild for efficient function bundling
+  external_node_modules = ["node-fetch"] # Ensure compatibility with external modules if needed
+  included_files = ["src/**/*.js", "src/**/*.ts"] # Include specific source files
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[context.production]
+  environment = { NODE_ENV = "production" } # Set production-specific environment variables
+
+[context.deploy-preview]
+  environment = { NODE_ENV = "development" } # Preview deploys as development mode
+
+[context.branch-deploy]
+  environment = { NODE_ENV = "staging" } # Use staging mode for branch deploys
