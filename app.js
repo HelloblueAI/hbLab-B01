@@ -37,7 +37,7 @@ function getDOMElements() {
   };
 }
 
-class StateManager {
+export class StateManager {
   constructor() {
     this.activeEffect = 'intro';
     this.isConfirmationDialogOpen = false;
@@ -66,6 +66,7 @@ class StateManager {
   }
   
 }
+
 
 function setupEventListeners(elements, state) {
   const debouncedFetchCompanyData = debounce(() => {

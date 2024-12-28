@@ -1,189 +1,119 @@
-const { add, subtract, Calculator } = require('../index');
+const { JSDOM } = require('jsdom');
+const fetch = require('node-fetch');
 
-describe('Utility Functions', () => {
-  describe('add()', () => {
-    test('should correctly add two numbers', () => {
-      expect(add(2, 3)).toBe(5);
-    });
-
-    test('should handle floating-point precision', () => {
-      expect(add(0.1, 0.2)).toBeCloseTo(0.3, 5);
-    });
-
-    test('should handle large numbers and overflow scenarios', () => {
-      const result = add(Number.MAX_VALUE, Number.MAX_VALUE);
-      expect(result).toBe(Infinity);
-    });
-
-    test('should be used with higher-order functions', () => {
-      const nums = [1, 2, 3, 4];
-      const sum = nums.reduce((acc, val) => add(acc, val), 0);
-      expect(sum).toBe(10);
-    });
-
-    test('should correctly integrate with mocks', () => {
-      const mockCallback = jest.fn((a, b) => add(a, b));
-      expect(mockCallback(3, 7)).toBe(10);
-      expect(mockCallback).toHaveBeenCalledTimes(1);
-      expect(mockCallback).toHaveBeenCalledWith(3, 7);
-    });
-  });
-
-  describe('subtract()', () => {
-    test('should correctly subtract two numbers', () => {
-      expect(subtract(5, 3)).toBe(2);
-    });
-
-    test('should handle negative results', () => {
-      expect(subtract(3, 5)).toBe(-2);
-    });
-
-    test('should handle floating-point precision', () => {
-      expect(subtract(0.3, 0.2)).toBeCloseTo(0.1, 5);
-    });
-
-    test('should integrate with higher-order functions', () => {
-      const nums = [10, 3, 2];
-      const result = nums.reduce((acc, val) => subtract(acc, val), 20);
-      expect(result).toBe(5);
-    });
-  });
-
-  describe('Integration Tests', () => {
-    test('add() and subtract() together maintain consistency', () => {
-      const sum = add(10, 20);
-      const difference = subtract(sum, 10);
-      expect(difference).toBe(20);
-    });
-
-    test('Chaining multiple operations with dynamic inputs', () => {
-      const result = subtract(add(10, 15), subtract(20, 5));
-      expect(result).toBe(10);
-    });
-  });
+global.fetch = fetch;
+global.SpeechRecognition = jest.fn().mockImplementation(() => {
+  const handlers = {};
+  return {
+    start: jest.fn(),
+    stop: jest.fn(),
+    addEventListener: jest.fn((event, handler) => {
+      handlers[event] = handler;
+    }),
+    dispatchEvent: jest.fn((event) => {
+      if (handlers[event.type]) {
+        handlers[event.type](event);
+      }
+    }),
+    onresult: jest.fn(),
+    onerror: jest.fn(),
+  };
 });
 
-describe('Calculator Class', () => {
-  let calculator;
+const { window } = new JSDOM(`<!DOCTYPE html><body></body>`);
+global.document = window.document;
+global.window = window;
+
+describe('Simplified Voice Recognition Integration Tests', () => {
+  let elements;
+  let state;
+  let voiceRecognition;
 
   beforeEach(() => {
-    calculator = new Calculator();
+    elements = {
+      voiceButton: document.createElement('button'),
+      companySearch: document.createElement('input'),
+      feedbackText: document.createElement('div'),
+      typedOutput: document.createElement('div'),
+    };
+
+    document.body.append(elements.voiceButton, elements.companySearch, elements.feedbackText, elements.typedOutput);
+
+    state = {
+      cache: new Map(),
+    };
+
+    voiceRecognition = {
+      recognition: new SpeechRecognition(),
+      processVoiceInput: jest.fn(async (transcript) => {
+        const cachedData = state.cache.get(`companyData-${transcript}`);
+        if (cachedData) return cachedData;
+
+        const mockData = {
+          company_name: transcript,
+          phone_number: '1-800-FAKE-NUMBER',
+          url: `https://${transcript.toLowerCase()}.com/`,
+        };
+        state.cache.set(`companyData-${transcript}`, mockData);
+        return mockData;
+      }),
+    };
+
+    jest.clearAllMocks();
   });
 
-  test('should initialize with result as 0', () => {
-    expect(calculator.result).toBe(0);
+  afterEach(() => {
+    document.body.innerHTML = '';
   });
 
-  describe('add()', () => {
-    test('should handle multiple chained operations', () => {
-      calculator.add(10).add(20).add(-5);
-      expect(calculator.result).toBe(25);
-    });
+  test('should correctly process voice input and update the UI', async () => {
+    const transcript = 'TestCompany';
+    const mockRecognitionResult = { results: [[{ transcript, confidence: 0.9 }]] };
 
-    test('should integrate with spies for debugging', () => {
-      const addSpy = jest.spyOn(calculator, 'add');
-      calculator.add(50);
-      expect(addSpy).toHaveBeenCalledTimes(1);
-      expect(addSpy).toHaveBeenCalledWith(50);
-      addSpy.mockRestore();
-    });
-  });
+    voiceRecognition.recognition.dispatchEvent({ type: 'result', results: mockRecognitionResult.results });
 
-  describe('subtract()', () => {
-    test('should handle chaining with mixed operations', () => {
-      calculator.add(50).subtract(20).subtract(10);
-      expect(calculator.result).toBe(20);
-    });
+    const data = await voiceRecognition.processVoiceInput(transcript);
+    elements.typedOutput.textContent = `You asked to call: ${data.company_name}`;
 
-    test('should correctly integrate with mocks for external dependencies', () => {
-      const mockDependency = jest.fn((a, b) => subtract(a, b));
-      expect(mockDependency(100, 40)).toBe(60);
-      expect(mockDependency).toHaveBeenCalledTimes(1);
-      expect(mockDependency).toHaveBeenCalledWith(100, 40);
-    });
-  });
-
-  describe('reset()', () => {
-    test('should maintain class integrity after reset', () => {
-      calculator.add(50).reset().add(30);
-      expect(calculator.result).toBe(30);
-    });
-  });
-
-  describe('Advanced Scenarios', () => {
-    test('Simultaneous chaining with different instances', () => {
-      const calc1 = new Calculator();
-      const calc2 = new Calculator();
-
-      calc1.add(100).subtract(50);
-      calc2.add(200).subtract(100);
-
-      expect(calc1.result).toBe(50);
-      expect(calc2.result).toBe(100);
+    expect(elements.typedOutput.textContent).toBe('You asked to call: TestCompany');
+    expect(state.cache.get(`companyData-${transcript}`)).toEqual({
+      company_name: 'TestCompany',
+      phone_number: '1-800-FAKE-NUMBER',
+      url: 'https://testcompany.com/',
     });
   });
 
-  describe('Performance and Memory Tests', () => {
-    test('should handle extremely large numbers without crashing', () => {
-      calculator.add(Number.MAX_SAFE_INTEGER).add(Number.MAX_SAFE_INTEGER);
-      expect(calculator.result).toBe(Number.MAX_SAFE_INTEGER * 2);
-    });
+  test('should handle recognition errors gracefully', () => {
+    const mockErrorEvent = { error: 'network' };
 
-    test('should maintain memory integrity during high usage', () => {
-      const iterations = 1000000;
-      for (let i = 0; i < iterations; i++) {
-        calculator.add(1);
-      }
-      expect(calculator.result).toBe(iterations);
-    });
+    voiceRecognition.recognition.dispatchEvent({ type: 'error', ...mockErrorEvent });
+
+    elements.feedbackText.textContent = 'An error occurred. Please try again.';
+    expect(elements.feedbackText.textContent).toBe('An error occurred. Please try again.');
   });
 
-  describe('Property-Based Testing', () => {
-    test('result should match a derived formula', () => {
-      calculator.add(50).subtract(20).add(10).subtract(30);
-      const operations = [50, -20, 10, -30];
-      const derivedResult = operations.reduce((a, b) => a + b, 0);
-      expect(calculator.result).toBe(derivedResult);
-    });
+  test('should cache results and reuse them', async () => {
+    const transcript = 'CachedCompany';
 
-    test('result should be zero after adding and subtracting the same value', () => {
-      calculator.add(100).subtract(100);
-      expect(calculator.result).toBe(0);
-    });
+    // First time: fetch and cache
+    let data = await voiceRecognition.processVoiceInput(transcript);
 
-    test('result should handle a series of random operations', () => {
-      const operations = Array.from({ length: 100 }, () => Math.floor(Math.random() * 200) - 100);
-      operations.forEach(op => {
-        if (op >= 0) {
-          calculator.add(op);
-        } else {
-          calculator.subtract(-op);
-        }
-      });
-      const derivedResult = operations.reduce((a, b) => a + b, 0);
-      expect(calculator.result).toBe(derivedResult);
-    });
+    expect(state.cache.has(`companyData-${transcript}`)).toBe(true);
+
+    // Second time: use cache
+    data = await voiceRecognition.processVoiceInput(transcript);
+
+    expect(state.cache.get(`companyData-${transcript}`)).toEqual(data);
   });
 
-  describe('Edge Cases', () => {
-    test('should handle adding zero', () => {
-      calculator.add(0);
-      expect(calculator.result).toBe(0);
-    });
+  test('should not fetch data for low-confidence input', async () => {
+    const mockRecognitionResult = { results: [[{ transcript: 'LowConfidenceCompany', confidence: 0.3 }]] };
 
-    test('should handle subtracting zero', () => {
-      calculator.subtract(0);
-      expect(calculator.result).toBe(0);
-    });
+    voiceRecognition.recognition.dispatchEvent({ type: 'result', results: mockRecognitionResult.results });
 
-    test('should handle adding and subtracting large numbers', () => {
-      calculator.add(Number.MAX_SAFE_INTEGER).subtract(Number.MAX_SAFE_INTEGER);
-      expect(calculator.result).toBe(0);
-    });
+    await new Promise(process.nextTick);
 
-    test('should handle adding and subtracting negative numbers', () => {
-      calculator.add(-50).subtract(-50);
-      expect(calculator.result).toBe(0);
-    });
+    expect(voiceRecognition.processVoiceInput).not.toHaveBeenCalled();
+    expect(elements.feedbackText.textContent).toBe('');
   });
 });

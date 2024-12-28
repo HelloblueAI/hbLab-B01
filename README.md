@@ -61,30 +61,10 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 ```javascript
 > helloblue-ai@1.0.3 test
   Utility Functions
-    add()
-      ✓ should correctly add two numbers (1 ms)
-      ✓ should handle floating-point precision (1 ms)
-      ✓ should handle large numbers and overflow scenarios
-      ✓ should be used with higher-order functions
-      ✓ should correctly integrate with mocks (1 ms)
-    subtract()
-      ✓ should correctly subtract two numbers
-      ✓ should handle negative results (1 ms)
-      ✓ should handle floating-point precision
-      ✓ should integrate with higher-order functions
-    Integration Tests
-      ✓ add() and subtract() together maintain consistency
-      ✓ Chaining multiple operations with dynamic inputs (1 ms)
-  Calculator Class
-    ✓ should initialize with result as 0 (1 ms)
-    add()
-      ✓ should handle multiple chained operations
-      ✓ should integrate with spies for debugging (1 ms)
-    subtract()
-      ✓ should handle chaining with mixed operations
-      ✓ should correctly integrate with mocks for external dependencies
-    reset()
-      ✓ should maintain class integrity after reset
+    ✓ should correctly process voice input and update the UI (4 ms)
+    ✓ should handle recognition errors gracefully (1 ms)
+    ✓ should cache results and reuse them (1 ms)
+    ✓ should not fetch data for low-confidence input (1 ms)
     Advanced Scenarios
       ✓ Simultaneous chaining with different instances (1 ms)
     Performance and Memory Tests

@@ -20,7 +20,7 @@ export default class VoiceRecognition {
   }
 
   initializeRecognition() {
-    const SpeechRecognition = 
+    const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
@@ -42,7 +42,7 @@ export default class VoiceRecognition {
   }
 
   setupEventListeners() {
-    this.elements.voiceButton.addEventListener('click', () => 
+    this.elements.voiceButton.addEventListener('click', () =>
       this.toggleVoiceRecognition(),
     );
 
@@ -78,23 +78,23 @@ export default class VoiceRecognition {
   onRecognitionResult(event) {
     const filteredResults = Array.from(event.results)
       .filter(result => result.isFinal && result[0].confidence >= this.options.confidenceThreshold);
-    
+
     const finalTranscript = filteredResults.map(result => result[0].transcript.trim()).join(' ');
-  
+
     const interimTranscript = Array.from(event.results)
       .filter(result => !result.isFinal)
       .map(result => result[0].transcript.trim())
       .join(' ');
-  
+
     if (interimTranscript) {
       this.updateSearchInput(interimTranscript);
     }
-  
+
     if (finalTranscript) {
       this.handleFinalTranscript(finalTranscript);
     }
   }
-  
+
 
   async handleFinalTranscript(transcript) {
     this.updateSearchInput(transcript);
