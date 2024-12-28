@@ -20,10 +20,6 @@ global.SpeechRecognition = jest.fn().mockImplementation(() => {
   };
 });
 
-const { window } = new JSDOM(`<!DOCTYPE html><body></body>`);
-global.document = window.document;
-global.window = window;
-
 describe('Simplified Voice Recognition Integration Tests', () => {
   let elements;
   let state;

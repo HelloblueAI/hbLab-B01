@@ -17,26 +17,22 @@
   status = 200
 
 [context.production]
-  # Production-specific settings
   environment = {
     NODE_ENV = "production",
-    API_BASE_URL = "https://api.yourproductionurl.com" # Example of production-specific variable
+    API_BASE_URL = "https://api.yourproductionurl.com"
   }
 
 [context.deploy-preview]
-  # Deploy preview settings for pull requests and previews
   environment = {
     NODE_ENV = "development",
-    API_BASE_URL = "https://api.yourpreviewurl.com" # Example of preview-specific variable
+    API_BASE_URL = "https://api.yourpreviewurl.com"
   }
 
 [context.branch-deploy]
-  # Branch deploy settings for specific branches
   environment = {
     NODE_ENV = "staging",
-    API_BASE_URL = "https://api.yourstagingurl.com" # Example of staging-specific variable
+    API_BASE_URL = "https://api.yourstagingurl.com"
   }
 
 [build.environment]
-  # Global environment variables applied to all contexts
-  ADDITIONAL_ENV_VAR = "value" # Example global variable
+  ADDITIONAL_ENV_VAR = "value"
