@@ -10,8 +10,8 @@
     "lint:js": "eslint '**/*.js'",
     "format": "prettier --write '**/*.{html,js,css,json,md}'",
     "build:css": "NODE_ENV=development postcss style.css -o dist/style.min.css",
-    "copy-css": "cp terms-style.css dist/",
-    "build": "mkdir -p dist && cp index.html dist && pnpm install --frozen-lockfile && pnpm run build:css && pnpm run test",
+    "build:css": "postcss style.css -o dist/style.min.css",
+    "build": "pnpm run build:css && other-build-steps",
     "start": "lite-server --baseDir=.",
     "serve": "serve -s dist",
     "prepare": "[ \"$NODE_ENV\" != \"production\" ] && husky install || echo 'Skipping husky in production'",
@@ -30,13 +30,11 @@
     "type": "git",
     "url": "https://github.com/HelloblueAI/hbLab-B01.git"
   },
-  
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
     "abort-controller": "^3.0.0",
     "body-parser": "^1.20.3",
     "braces": "^3.0.3",
-
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
