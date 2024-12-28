@@ -1,38 +1,34 @@
 [build]
-  command = "pnpm run build" # Command to build the project
-  publish = "dist" # Directory to publish the build output
-  functions = "functions" # Directory for Netlify Functions
-  environment = {
-    NODE_VERSION = "18.16.0" # Set a compatible Node.js version
-  }
+  command = "pnpm run build"
+  publish = "dist"
+  functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "20" # Set to the latest LTS version of Node.js
 
 [functions]
-  node_bundler = "esbuild" # Use esbuild for efficient function bundling
-  external_node_modules = ["node-fetch"] # Ensure compatibility with external modules
-  included_files = ["src/**/*.js", "src/**/*.ts"] # Include specific source files for bundling
+  node_bundler = "esbuild"
+  external_node_modules = ["node-fetch"]
+  included_files = ["src/**/*.js", "src/**/*.ts"]
 
 [[redirects]]
-  from = "/*" # Redirect all routes to the index.html file
+  from = "/*"
   to = "/index.html"
   status = 200
 
 [context.production]
-  environment = {
-    NODE_ENV = "production",
+  [context.production.environment]
+    NODE_ENV = "production"
     API_BASE_URL = "https://api.yourproductionurl.com"
-  }
 
 [context.deploy-preview]
-  environment = {
-    NODE_ENV = "development",
+  [context.deploy-preview.environment]
+    NODE_ENV = "development"
     API_BASE_URL = "https://api.yourpreviewurl.com"
-  }
+
 
 [context.branch-deploy]
-  environment = {
-    NODE_ENV = "staging",
+  [context.branch-deploy.environment]
+    NODE_ENV = "staging"
     API_BASE_URL = "https://api.yourstagingurl.com"
-  }
-
-[build.environment]
-  ADDITIONAL_ENV_VAR = "value"
+    
