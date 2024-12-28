@@ -1,24 +1,42 @@
 [build]
-  command = "pnpm run build"
-  publish = "dist"
-  functions = "functions"
-  environment = { NODE_VERSION = "18.16.0" } # Set a compatible Node.js version
+  command = "pnpm run build" # Command to build the project
+  publish = "dist" # Directory to publish the build output
+  functions = "functions" # Directory for Netlify Functions
+  environment = {
+    NODE_VERSION = "18.16.0" # Set a compatible Node.js version
+  }
 
 [functions]
   node_bundler = "esbuild" # Use esbuild for efficient function bundling
-  external_node_modules = ["node-fetch"] # Ensure compatibility with external modules if needed
-  included_files = ["src/**/*.js", "src/**/*.ts"] # Include specific source files
+  external_node_modules = ["node-fetch"] # Ensure compatibility with external modules
+  included_files = ["src/**/*.js", "src/**/*.ts"] # Include specific source files for bundling
 
 [[redirects]]
-  from = "/*"
+  from = "/*" # Redirect all routes to the index.html file
   to = "/index.html"
   status = 200
 
 [context.production]
-  environment = { NODE_ENV = "production" } # Set production-specific environment variables
+  # Production-specific settings
+  environment = {
+    NODE_ENV = "production",
+    API_BASE_URL = "https://api.yourproductionurl.com" # Example of production-specific variable
+  }
 
 [context.deploy-preview]
-  environment = { NODE_ENV = "development" } # Preview deploys as development mode
+  # Deploy preview settings for pull requests and previews
+  environment = {
+    NODE_ENV = "development",
+    API_BASE_URL = "https://api.yourpreviewurl.com" # Example of preview-specific variable
+  }
 
 [context.branch-deploy]
-  environment = { NODE_ENV = "staging" } # Use staging mode for branch deploys
+  # Branch deploy settings for specific branches
+  environment = {
+    NODE_ENV = "staging",
+    API_BASE_URL = "https://api.yourstagingurl.com" # Example of staging-specific variable
+  }
+
+[build.environment]
+  # Global environment variables applied to all contexts
+  ADDITIONAL_ENV_VAR = "value" # Example global variable
