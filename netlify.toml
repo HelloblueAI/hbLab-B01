@@ -2,15 +2,14 @@
   command = "pnpm install && pnpm exec postcss style.css -o dist/style.min.css && pnpm run build"
   publish = "dist"
 
-
 [build.environment]
-  PATH = "/opt/build/repo/node_modules/.bin:$PATH"
-  NODE_VERSION = "20"
-  PNPM_HOME = ".pnpm"
-  NETLIFY_USE_YARN = "false"
+  PATH = "/opt/build/repo/node_modules/.bin:$PATH" # Ensure binaries like postcss are available
+  NODE_VERSION = "20" # Use the latest stable Node.js LTS version
+  PNPM_HOME = ".pnpm" # Explicit PNPM home directory
+  NETLIFY_USE_YARN = "false" # Disable Yarn to enforce PNPM usage
 
 [functions]
-  node_bundler = "esbuild" # Use esbuild for efficient function bundling
+  node_bundler = "esbuild" # Efficient bundler for serverless functions
   included_files = [
     "src/**/*.js",
     "src/**/*.ts",
@@ -18,8 +17,8 @@
     "config/**/*",
     "*.html",
     "*.css"
-  ]
-  external_node_modules = ["node-fetch", "lodash", "dotenv"] # Include required external modules
+  ] # Include necessary files for functions
+  external_node_modules = ["node-fetch", "lodash", "dotenv"] # Bundle required external modules
 
 [[redirects]]
   from = "/*"
@@ -30,15 +29,15 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate" # Set SPA cache policy
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate" # SPA cache policy
+    X-Content-Type-Options = "nosniff" # Prevent MIME type sniffing
+    X-Frame-Options = "DENY" # Prevent iframe embedding
+    Referrer-Policy = "strict-origin-when-cross-origin" # Strict referrer policy
 
 [[headers]]
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable" # Cache static assets aggressively
+    Cache-Control = "public, max-age=31536000, immutable" # Aggressively cache static assets
 
 [context.production]
   [context.production.environment]
@@ -51,14 +50,14 @@
   [context.deploy-preview.environment]
     NODE_ENV = "development"
     API_BASE_URL = "https://api.yourpreviewurl.com"
-    ENABLE_LOGGING = "true" # Enable logging for deploy previews
+    ENABLE_LOGGING = "true" # Enable detailed logging for deploy previews
     ANALYTICS_KEY = "your-preview-analytics-key"
 
 [context.branch-deploy]
   [context.branch-deploy.environment]
     NODE_ENV = "staging"
     API_BASE_URL = "https://api.yourstagingurl.com"
-    ENABLE_LOGGING = "true" # Enable logging for branch deploys
+    ENABLE_LOGGING = "true" # Enable detailed logging for branch deploys
     ANALYTICS_KEY = "your-staging-analytics-key"
 
 [context.local]
