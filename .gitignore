@@ -1,13 +1,15 @@
 # Dependency directories
 node_modules/
-bower_components/
 .pnpm/
+bower_components/
 
 # Build and output directories
 build/
 dist/
 out/
 .cache/
+.temp/
+.esbuild/
 
 # Python virtual environments
 venv/
@@ -18,6 +20,7 @@ ssl/
 *.crt
 *.csr
 *.key
+*.pem
 *.db
 *.db.cache
 
@@ -26,43 +29,113 @@ logs/
 *.log
 *.pid
 *.pid.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Lock files (use pnpm exclusively)
 yarn.lock
+package-lock.json
 
-# Dotenv files
+# Dotenv files (sensitive configurations)
 .env
 .env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# System files
+# System files and artifacts
 .DS_Store
 Thumbs.db
 Icon?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
 
 # Editor and IDE settings
 .vscode/
 .idea/
 *.sublime-workspace
+*.swp
+*.swo
+*.kate-swp
+.viminfo
 
 # Test and coverage
-.nyc_output/
 coverage/
+.nyc_output/
+*.lcov
+*.lcov.info
+*.html.report
+.jest/
+*.test.js.html
+*.coverage
 
 # Flask instance and cache
 instance/
 *.pyc
 __pycache__/
+*.pytest_cache/
 
-# Temporary files
+# Temporary files and backups
 *.tmp
 *.bak
 *.swp
 *.temp
-.aider*
+*.orig
+*.rej
+*.aider*
+*.~*
 
-# Specific directories/files to ignore
+# Static site directories
 _site/
-
+.cache-loader/
+assets/
 
 # Local Netlify folder
 .netlify/
+netlify.toml
+
+# CI/CD configurations
+*.codebuild/
+.github/
+.circleci/
+.gitlab-ci.yml
+*.travis.yml
+
+# Istanbul/Code coverage tools
+lcov-report/
+coverage-final.json
+
+# Miscellaneous tools
+*.eslintcache
+.prettiercache
+.stylelintcache
+
+# Ignore certain development assets
+design/
+mockups/
+docs/
+drafts/
+
+# Specific project-related files
+*.jsx.map
+*.js.map
+*.css.map
+*.ts.map
+cd8f9ae0-7fdf-4cf2-b559-e814e15442da.png
+*.png
+*.gif
+*.jpg
+*.jpeg
+*.svg
+*.ico
+*.webp
+
+# Other directories/files to ignore
+.idea_modules/
+.vscode/
+node_modules_debug/
