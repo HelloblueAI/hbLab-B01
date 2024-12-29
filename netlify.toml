@@ -1,12 +1,13 @@
 [build]
-  command = "pnpm install && pnpm run build"
+  command = "pnpm install && pnpm exec postcss style.css -o dist/style.min.css && pnpm run build"
   publish = "dist"
-  functions = "functions"
+
 
 [build.environment]
-  NODE_VERSION = "20" # Use the latest LTS version of Node.js
-  PNPM_HOME = ".pnpm" # Ensure pnpm environment is set up
-  NETLIFY_USE_YARN = "false" # Explicitly disable yarn to prioritize pnpm
+  PATH = "/opt/build/repo/node_modules/.bin:$PATH"
+  NODE_VERSION = "20"
+  PNPM_HOME = ".pnpm"
+  NETLIFY_USE_YARN = "false"
 
 [functions]
   node_bundler = "esbuild" # Use esbuild for efficient function bundling
