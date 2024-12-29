@@ -51,6 +51,7 @@
     "lodash-es": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "micromatch": "^4.0.8",
+    "mise": "^3.0.0",
     "node-fetch": "^2.7.0",
     "path-to-regexp": "^8.2.0",
     "postcss": "^8.4.49",
