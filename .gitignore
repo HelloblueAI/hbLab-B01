@@ -1,6 +1,7 @@
 # Dependency directories
 node_modules/
 bower_components/
+.pnpm/
 
 # Build and output directories
 build/
@@ -26,8 +27,7 @@ logs/
 *.pid
 *.pid.lock
 
-# Lock files
-package-lock.json
+# Lock files (use pnpm exclusively)
 yarn.lock
 
 # Dotenv files
@@ -47,14 +47,13 @@ Icon?
 # Test and coverage
 .nyc_output/
 coverage/
-*.html.report
 
 # Flask instance and cache
 instance/
 *.pyc
 __pycache__/
 
-# Other temporary files
+# Temporary files
 *.tmp
 *.bak
 *.swp
@@ -63,8 +62,7 @@ __pycache__/
 
 # Specific directories/files to ignore
 _site/
-test.txt
-test_flask.py
+
 
 # Local Netlify folder
-.netlify
+.netlify/
