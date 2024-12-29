@@ -14,7 +14,7 @@
     "clean": "rimraf ./node_modules ./pnpm-lock.yaml ./dist",
     "build": "pnpm run clean && pnpm run prebuild && pnpm run build:css && pnpm run copy-static",
     "build:css": "postcss style.css -o dist/style.min.css",
-    "copy-static": "copyfiles -f \"index.html\" \"assets/**/*\" \"app/**/*\" \"config/**/*\" \"*.html\" \"*.css\" \"*.js\" \"*.png\" \"404.shtml\" \"redirect.php\" \"coverage/**/*\" dist",
+    "copy-static": "copyfiles -f \"index.html\" \"assets/**/*\" \"app/**/*\" \"config/**/*\" \"*.html\" \"*.css\" \"*.js\" \"*.png\" \"404.shtml\" \"redirect.php\" \"voiceRecognition.js\" \"_redirects\" dist",
     "start": "lite-server --baseDir=.",
     "serve": "serve -s dist",
     "prepare": "husky install",
