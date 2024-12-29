@@ -1,6 +1,7 @@
 [build]
   command = "pnpm install && pnpm exec postcss style.css -o dist/style.min.css && pnpm run build"
   publish = "dist"
+  functions = "functions"
 
 [build.environment]
   PATH = "/usr/bin:/bin:/usr/local/bin:$PATH"
