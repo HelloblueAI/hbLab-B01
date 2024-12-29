@@ -4,14 +4,12 @@
 
 [build.environment]
   PATH = "/usr/bin:/bin:/usr/local/bin:$PATH"
-  NODE_VERSION = "20"  # Use the latest LTS version for compatibility
-  PNPM_HOME = ".pnpm"  # Ensure pnpm environment is globally accessible
-  NETLIFY_USE_YARN = "false"  # Explicitly disable Yarn
-  PYTHON_VERSION = "3.9"  # Specify Python version for potential dependency needs
-  CI = "true"  # Enable Continuous Integration optimizations
+  NODE_VERSION = "20"  # Specify Node.js version globally
+  PNPM_HOME = ".pnpm"
+  NETLIFY_USE_YARN = "false"
 
 [functions]
-  node_bundler = "esbuild"  # Use esbuild for faster, efficient bundling
+  node_bundler = "esbuild"  # Use esbuild for efficient function bundling
   included_files = [
     "src/**/*.js",
     "src/**/*.ts",
@@ -20,8 +18,7 @@
     "*.html",
     "*.css"
   ]
-  external_node_modules = ["node-fetch", "lodash", "dotenv"]  # Explicitly include required external modules
-  node_version = "20"  # Ensure functions use the same Node.js version as the build
+  external_node_modules = ["node-fetch", "lodash", "dotenv"]
 
 [[redirects]]
   from = "/*"
