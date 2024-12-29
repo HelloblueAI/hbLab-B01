@@ -12,7 +12,7 @@
     "prebuild": "echo $PATH && ls -la node_modules/.bin",
     "build": "pnpm run prebuild && pnpm run build:css:prod && copyfiles -u 1 'app/**/*' 'dist/'",
     "build:css:dev": "postcss style.css -o dist/style.min.css",
-    "build:css:prod": "node_modules/.bin/postcss style.css -o dist/style.min.css",
+    "build:css:prod": "./node_modules/.bin/postcss style.css -o dist/style.min.css",
     "start": "lite-server --baseDir=.",
     "serve": "serve -s dist",
     "prepare": "[ \"$NODE_ENV\" != \"production\" ] && husky install || echo 'Skipping husky in production'",
