@@ -1,15 +1,15 @@
 [build]
-  command = "pnpm install && pnpm exec postcss style.css -o dist/style.min.css && pnpm run build"
+  command = "echo $PATH && ls -la /usr/bin && pnpm install && pnpm exec postcss style.css -o dist/style.min.css && pnpm run build"
   publish = "dist"
 
 [build.environment]
-  PATH = "/opt/build/repo/node_modules/.bin:$PATH" # Ensure binaries like postcss are available
-  NODE_VERSION = "20" # Use the latest stable Node.js LTS version
-  PNPM_HOME = ".pnpm" # Explicit PNPM home directory
-  NETLIFY_USE_YARN = "false" # Disable Yarn to enforce PNPM usage
+  PATH = "/usr/bin:/bin:/usr/local/bin:$PATH"
+  NODE_VERSION = "20"
+  PNPM_HOME = ".pnpm"
+  NETLIFY_USE_YARN = "false"
 
 [functions]
-  node_bundler = "esbuild" # Efficient bundler for serverless functions
+  node_bundler = "esbuild"
   included_files = [
     "src/**/*.js",
     "src/**/*.ts",
@@ -17,51 +17,11 @@
     "config/**/*",
     "*.html",
     "*.css"
-  ] # Include necessary files for functions
-  external_node_modules = ["node-fetch", "lodash", "dotenv"] # Bundle required external modules
+  ]
+  external_node_modules = ["node-fetch", "lodash", "dotenv"]
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  force = true # Force the redirect for SPA behavior
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate" # SPA cache policy
-    X-Content-Type-Options = "nosniff" # Prevent MIME type sniffing
-    X-Frame-Options = "DENY" # Prevent iframe embedding
-    Referrer-Policy = "strict-origin-when-cross-origin" # Strict referrer policy
-
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable" # Aggressively cache static assets
-
-[context.production]
-  [context.production.environment]
-    NODE_ENV = "production"
-    API_BASE_URL = "https://api.yourproductionurl.com"
-    ENABLE_LOGGING = "false" # Disable detailed logging in production
-    ANALYTICS_KEY = "your-production-analytics-key"
-
-[context.deploy-preview]
-  [context.deploy-preview.environment]
-    NODE_ENV = "development"
-    API_BASE_URL = "https://api.yourpreviewurl.com"
-    ENABLE_LOGGING = "true" # Enable detailed logging for deploy previews
-    ANALYTICS_KEY = "your-preview-analytics-key"
-
-[context.branch-deploy]
-  [context.branch-deploy.environment]
-    NODE_ENV = "staging"
-    API_BASE_URL = "https://api.yourstagingurl.com"
-    ENABLE_LOGGING = "true" # Enable detailed logging for branch deploys
-    ANALYTICS_KEY = "your-staging-analytics-key"
-
-[context.local]
-  [context.local.environment]
-    NODE_ENV = "development"
-    API_BASE_URL = "http://localhost:3000"
-    ENABLE_LOGGING = "true" # Enable logging for local development
+  force = true
