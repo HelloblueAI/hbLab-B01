@@ -1,11 +1,5 @@
 import { config } from './config.js';
-import {
-  capitalizeCompany,
-  displayNotification,
-  isValidURL,
-  delay,
-  debounce,
-} from './utils.js';
+import { capitalizeCompany, debounce, delay, displayNotification, isValidURL } from './utils.js';
 import VoiceRecognition from './voiceRecognition.js';
 
 document.addEventListener('DOMContentLoaded', initApp);
@@ -61,12 +55,12 @@ export class StateManager {
   clearExpiredCache() {
     const now = Date.now();
     this.cache.forEach((value, key) => {
-      if (value.timestamp < now) this.cache.delete(key);
+      if (value.timestamp < now) {
+        this.cache.delete(key);
+      }
     });
   }
-  
 }
-
 
 function setupEventListeners(elements, state) {
   const debouncedFetchCompanyData = debounce(() => {
@@ -90,23 +84,14 @@ function setupEventListeners(elements, state) {
     }
   });
 
-  new VoiceRecognition(
-    elements,
-    (company) => fetchCompanyData(company, elements, state),
-    {
-      interimResults: true,
-      continuous: true,
-      autoRestart: true,
-    },
-  );
+  new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state), {
+    interimResults: true,
+    continuous: true,
+    autoRestart: true,
+  });
 }
 
-function handleCompanySearchInput(
-  event,
-  elements,
-  debouncedFetchCompanyData,
-  state,
-) {
+function handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state) {
   const { value } = event.target;
   const capitalizedValue = capitalizeCompany(value);
 
@@ -155,9 +140,7 @@ const introSentences = [
 
 async function triggerIntroEffect(elements, state) {
   if (state.recentCompanies.length > 0) {
-    introSentences.push(
-      `You recently searched for ${state.recentCompanies.join(', ')}.`,
-    );
+    introSentences.push(`You recently searched for ${state.recentCompanies.join(', ')}.`);
   }
 
   state.activeEffect = 'intro';
@@ -173,7 +156,7 @@ async function triggerIntroEffect(elements, state) {
 async function displayCompanyInfo(
   { company_name: companyName, phone_number: phoneNumber, url },
   elements,
-  state,
+  state
 ) {
   state.activeEffect = 'company';
   const capitalizedCompanyName = capitalizeCompany(companyName);
@@ -183,13 +166,7 @@ async function displayCompanyInfo(
   await typeTextEffect(message, 'company', elements, state);
 
   state.updateRecentCompanies(capitalizedCompanyName);
-  showCompanyConfirmationDialog(
-    capitalizedCompanyName,
-    phoneNumber,
-    url,
-    elements,
-    state,
-  );
+  showCompanyConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 }
 
 async function fetchCompanyData(company, elements, state) {
@@ -214,10 +191,9 @@ async function fetchCompanyData(company, elements, state) {
   const timeout = setTimeout(() => controller.abort(), 5000);
 
   try {
-    const response = await fetch(
-      `${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`,
-      { signal: controller.signal },
-    );
+    const response = await fetch(`${config.API_ENDPOINT}?name=${encodeURIComponent(company)}`, {
+      signal: controller.signal,
+    });
     clearTimeout(timeout);
 
     if (!response.ok) {
@@ -230,8 +206,7 @@ async function fetchCompanyData(company, elements, state) {
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
     if (error.name === 'AbortError') {
-      elements.feedbackText.textContent =
-        'Request timed out. Please try again.';
+      elements.feedbackText.textContent = 'Request timed out. Please try again.';
     } else {
       handleFetchError(elements, state, company);
     }
@@ -242,26 +217,18 @@ async function fetchCompanyData(company, elements, state) {
 
 function handleErrorStatus(status, elements) {
   if (status === 404) {
-    elements.feedbackText.textContent =
-      'Company not found. Please try another one.';
+    elements.feedbackText.textContent = 'Company not found. Please try another one.';
   } else {
     throw new Error(`Unexpected HTTP status: ${status}`);
   }
 }
 
 function handleFetchError(elements, state, company) {
-  elements.feedbackText.textContent =
-    'Failed to fetch company data. Retrying...';
+  elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
   setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 }
 
-function showCompanyConfirmationDialog(
-  companyName,
-  phoneNumber,
-  url,
-  elements,
-  state,
-) {
+function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, state) {
   if (state.isConfirmationDialogOpen) {
     return;
   }
@@ -274,9 +241,7 @@ function showCompanyConfirmationDialog(
 
   if (phoneNumber && phoneNumber !== 'NA') {
     if (confirm(messageContent)) {
-      window.location.href = isValidURL(url)
-        ? url
-        : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
+      window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
 
       showPostCallNotification(companyName, elements, state); // Display recent call notification
     }
@@ -299,7 +264,7 @@ async function showPostCallNotification(companyName, elements, state) {
 
 function displaySuggestions(input, elements, state) {
   const suggestions = state.recentCompanies.filter((company) =>
-    company.toLowerCase().includes(input.toLowerCase()),
+    company.toLowerCase().includes(input.toLowerCase())
   );
   elements.suggestionBox.innerHTML = suggestions
     .map((suggestion) => `<div class="suggestion">${suggestion}</div>`)

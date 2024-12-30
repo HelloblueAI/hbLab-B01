@@ -1,4 +1,3 @@
-const { JSDOM } = require('jsdom');
 const fetch = require('node-fetch');
 
 global.fetch = fetch;
@@ -20,6 +19,24 @@ global.SpeechRecognition = jest.fn().mockImplementation(() => {
   };
 });
 
+// Helper functions
+const createMockRecognitionResult = (transcript, confidence) => ({
+  results: [[{ transcript, confidence }]],
+});
+
+const processAndAssertVoiceInput = async (transcript, state, elements, voiceRecognition) => {
+  const data = await voiceRecognition.processVoiceInput(transcript);
+  elements.typedOutput.textContent = `You asked to call: ${data.company_name}`;
+
+  expect(elements.typedOutput.textContent).toBe(`You asked to call: ${data.company_name}`);
+  expect(state.cache.get(`companyData-${transcript}`)).toEqual({
+    company_name: transcript,
+    phone_number: '1-800-FAKE-NUMBER',
+    url: `https://${transcript.toLowerCase()}.com/`,
+  });
+  return data;
+};
+
 describe('Simplified Voice Recognition Integration Tests', () => {
   let elements;
   let state;
@@ -33,17 +50,22 @@ describe('Simplified Voice Recognition Integration Tests', () => {
       typedOutput: document.createElement('div'),
     };
 
-    document.body.append(elements.voiceButton, elements.companySearch, elements.feedbackText, elements.typedOutput);
+    document.body.append(
+      elements.voiceButton,
+      elements.companySearch,
+      elements.feedbackText,
+      elements.typedOutput
+    );
 
-    state = {
-      cache: new Map(),
-    };
+    state = { cache: new Map() };
 
     voiceRecognition = {
       recognition: new SpeechRecognition(),
       processVoiceInput: jest.fn(async (transcript) => {
         const cachedData = state.cache.get(`companyData-${transcript}`);
-        if (cachedData) return cachedData;
+        if (cachedData) {
+          return cachedData;
+        }
 
         const mockData = {
           company_name: transcript,
@@ -62,50 +84,58 @@ describe('Simplified Voice Recognition Integration Tests', () => {
     document.body.innerHTML = '';
   });
 
-  test('should correctly process voice input and update the UI', async () => {
+  it('should correctly process voice input and update the UI', async () => {
+    expect.assertions(3);
     const transcript = 'TestCompany';
-    const mockRecognitionResult = { results: [[{ transcript, confidence: 0.9 }]] };
+    const mockRecognitionResult = createMockRecognitionResult(transcript, 0.9);
 
-    voiceRecognition.recognition.dispatchEvent({ type: 'result', results: mockRecognitionResult.results });
+    voiceRecognition.recognition.dispatchEvent({
+      type: 'result',
+      results: mockRecognitionResult.results,
+    });
 
-    const data = await voiceRecognition.processVoiceInput(transcript);
-    elements.typedOutput.textContent = `You asked to call: ${data.company_name}`;
+    const data = await processAndAssertVoiceInput(transcript, state, elements, voiceRecognition);
 
-    expect(elements.typedOutput.textContent).toBe('You asked to call: TestCompany');
-    expect(state.cache.get(`companyData-${transcript}`)).toEqual({
-      company_name: 'TestCompany',
+    expect(data).toEqual({
+      company_name: transcript,
       phone_number: '1-800-FAKE-NUMBER',
-      url: 'https://testcompany.com/',
+      url: `https://${transcript.toLowerCase()}.com/`,
     });
   });
 
-  test('should handle recognition errors gracefully', () => {
+  it('should handle recognition errors gracefully', () => {
+    expect.hasAssertions(); // Add this at the start of the test
     const mockErrorEvent = { error: 'network' };
 
-    voiceRecognition.recognition.dispatchEvent({ type: 'error', ...mockErrorEvent });
+    voiceRecognition.recognition.dispatchEvent({
+      type: 'error',
+      ...mockErrorEvent,
+    });
 
     elements.feedbackText.textContent = 'An error occurred. Please try again.';
     expect(elements.feedbackText.textContent).toBe('An error occurred. Please try again.');
   });
 
-  test('should cache results and reuse them', async () => {
+  it('should cache results and reuse them', async () => {
     const transcript = 'CachedCompany';
 
-    // First time: fetch and cache
     let data = await voiceRecognition.processVoiceInput(transcript);
 
     expect(state.cache.has(`companyData-${transcript}`)).toBe(true);
 
-    // Second time: use cache
     data = await voiceRecognition.processVoiceInput(transcript);
 
     expect(state.cache.get(`companyData-${transcript}`)).toEqual(data);
   });
 
-  test('should not fetch data for low-confidence input', async () => {
-    const mockRecognitionResult = { results: [[{ transcript: 'LowConfidenceCompany', confidence: 0.3 }]] };
+  it('should not fetch data for low-confidence input', async () => {
+    expect.hasAssertions(); // Add this at the start of the test
+    const mockRecognitionResult = createMockRecognitionResult('LowConfidenceCompany', 0.3);
 
-    voiceRecognition.recognition.dispatchEvent({ type: 'result', results: mockRecognitionResult.results });
+    voiceRecognition.recognition.dispatchEvent({
+      type: 'result',
+      results: mockRecognitionResult.results,
+    });
 
     await new Promise(process.nextTick);
 

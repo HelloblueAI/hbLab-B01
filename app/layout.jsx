@@ -1,5 +1,5 @@
-import { UserProvider } from "@auth0/nextjs-auth0/client";
-import Navigation from "./Navigation";
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+import Navigation from './Navigation';
 
 export default function RootLayout({ children }) {
   return (

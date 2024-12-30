@@ -3,7 +3,7 @@ export default class VoiceRecognition {
     this.elements = elements;
     this.fetchCompanyData = this.debounce(
       this.retryFetch(fetchCompanyData, options.maxRetries || 3),
-      300,
+      300
     );
     this.options = {
       interimResults: true,
@@ -20,8 +20,7 @@ export default class VoiceRecognition {
   }
 
   initializeRecognition() {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       this.showFeedback('Speech Recognition not supported in this browser.', false);
@@ -42,9 +41,7 @@ export default class VoiceRecognition {
   }
 
   setupEventListeners() {
-    this.elements.voiceButton.addEventListener('click', () =>
-      this.toggleVoiceRecognition(),
-    );
+    this.elements.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
 
     document.addEventListener('keydown', (event) => {
       if (event.altKey && event.key === 'v') {
@@ -76,14 +73,15 @@ export default class VoiceRecognition {
   }
 
   onRecognitionResult(event) {
-    const filteredResults = Array.from(event.results)
-      .filter(result => result.isFinal && result[0].confidence >= this.options.confidenceThreshold);
+    const filteredResults = Array.from(event.results).filter(
+      (result) => result.isFinal && result[0].confidence >= this.options.confidenceThreshold
+    );
 
-    const finalTranscript = filteredResults.map(result => result[0].transcript.trim()).join(' ');
+    const finalTranscript = filteredResults.map((result) => result[0].transcript.trim()).join(' ');
 
     const interimTranscript = Array.from(event.results)
-      .filter(result => !result.isFinal)
-      .map(result => result[0].transcript.trim())
+      .filter((result) => !result.isFinal)
+      .map((result) => result[0].transcript.trim())
       .join(' ');
 
     if (interimTranscript) {
@@ -92,9 +90,9 @@ export default class VoiceRecognition {
 
     if (finalTranscript) {
       this.handleFinalTranscript(finalTranscript);
+      this.animateDetection(); // Add glowing effect on detection
     }
   }
-
 
   async handleFinalTranscript(transcript) {
     this.updateSearchInput(transcript);
@@ -125,7 +123,7 @@ export default class VoiceRecognition {
     const errorMessages = {
       'no-speech': 'No speech detected. Please try again.',
       'audio-capture': 'Microphone unavailable. Check permissions.',
-      network: 'Network error. Check your connection.',
+      'network': 'Network error. Check your connection.',
       'not-allowed': 'Microphone access denied. Update browser settings.',
     };
 
@@ -156,14 +154,20 @@ export default class VoiceRecognition {
     setTimeout(() => voiceButton.classList.remove('success'), 1000);
   }
 
+  animateDetection() {
+    const { voiceButton } = this.elements;
+    voiceButton.classList.add('detected'); // Add detection effect
+    setTimeout(() => voiceButton.classList.remove('detected'), 1000);
+  }
+
   retryFetch(fetchFunction, maxRetries) {
     return async (data) => {
       let attempt = 0;
       while (attempt < maxRetries) {
         try {
           return await fetchFunction(data);
-        } catch (error) {
-          attempt++;
+        } catch {
+          attempt++; // 'error' was unused; just omit it
           if (attempt >= maxRetries) {
             throw new Error('Maximum retry attempts reached.');
           }
@@ -182,6 +186,6 @@ export default class VoiceRecognition {
   }
 
   delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

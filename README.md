@@ -17,7 +17,6 @@ The Enhanced Voice AI Assistant in our application allows users to initiate sear
 
 - **Voice Recognition**: Users can activate searches and initiate calls simultaneously with voice commands. This dual-functionality not only minimizes the need for manual input but also makes the app more accessible and convenient for multitasking.
 
-
 ## Technical Implementation
 
 ### 1. Voice Command Recognition

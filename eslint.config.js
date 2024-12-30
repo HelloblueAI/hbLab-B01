@@ -1,79 +1,144 @@
 const eslintPluginPrettier = require('eslint-plugin-prettier');
+const eslintPluginReact = require('eslint-plugin-react');
+const eslintPluginJest = require('eslint-plugin-jest');
 
 module.exports = [
   {
-    // Ignored directories and files
-    ignores: ['node_modules/**', 'dist/**', 'coverage/**', '*.min.js'],
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'coverage/**',
+      '*.min.js',
+      '.next/**',
+      'build/**',
+      '.netlify/**',
+      'venv/**', // Ignore virtual environment
+      '**/site-packages/**', // Ignore Python site packages
+    ],
   },
   {
-    files: ['**/*.js'],
+    files: ['**/*.js', '**/*.jsx'],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+      parser: require('@babel/eslint-parser'),
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        allowImportExportEverywhere: true,
+        requireConfigFile: false,
+      },
       globals: {
-        // Browser globals
-        window: 'readonly',
-        document: 'readonly',
-        console: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        process: 'readonly',
+        SpeechRecognition: 'readonly',
+        webkitSpeechRecognition: 'readonly',
+        __dirname: 'readonly',
+        exports: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         URL: 'readonly',
+        EVALEX_TRUSTED: 'readonly',
+        CONSOLE_MODE: 'readonly',
+        EVALEX: 'readonly',
+        URLSearchParams: 'readonly',
+        SECRET: 'readonly',
+        alert: 'readonly',
+        requestAnimationFrame: 'readonly',
         fetch: 'readonly',
-        // Node.js globals
-        require: 'readonly',
-        module: 'readonly',
-        process: 'readonly',
-        __dirname: 'readonly',
-        exports: 'readonly',
-        // Jest globals
+        AbortController: 'readonly',
+        confirm: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+
         describe: 'readonly',
+        it: 'readonly',
         test: 'readonly',
         expect: 'readonly',
         beforeEach: 'readonly',
         afterEach: 'readonly',
         jest: 'readonly',
-        // CommonJS globals
-        Buffer: 'readonly',
-        setImmediate: 'readonly',
-        clearImmediate: 'readonly',
+        global: 'readonly',
       },
     },
     plugins: {
       prettier: eslintPluginPrettier,
+      react: eslintPluginReact,
+      jest: eslintPluginJest,
+    },
+    settings: {
+      react: { version: 'detect' },
     },
     rules: {
-      // Formatting rules (Prettier)
       'prettier/prettier': [
         'error',
         {
           singleQuote: true,
           semi: true,
-          trailingComma: 'all',
-          printWidth: 80,
           tabWidth: 2,
+          trailingComma: 'es5',
+          printWidth: 100,
+          arrowParens: 'always',
+          bracketSpacing: true,
+          endOfLine: 'lf',
         },
       ],
-      // Linting rules
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'no-console': 'off',
+      'react/jsx-uses-react': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-vars': 'error',
+
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
+
       'no-undef': 'error',
-      semi: ['error', 'always'],
-      quotes: ['error', 'single', { avoidEscape: true }],
-      eqeqeq: ['warn', 'always'],
-      curly: ['error', 'all'],
-      'dot-notation': 'warn',
-      'no-process-exit': 'error',
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+      'space-before-function-paren': ['off'],
+      'max-len': ['warn', { code: 100, ignoreComments: true }],
+      'no-console': 'warn',
+      'no-debugger': 'error',
       'no-var': 'error',
       'prefer-const': 'warn',
+
       'arrow-spacing': ['error', { before: true, after: true }],
-      'space-before-function-paren': ['error', 'never'],
+      'no-multiple-empty-lines': ['warn', { max: 1 }],
+      'eol-last': ['error', 'always'],
+      'indent': ['error', 2, { SwitchCase: 1 }],
+      'curly': ['error', 'all'],
     },
   },
   {
-    // Special configuration for test files
-    files: ['**/__tests__/**/*.js'],
+    files: ['**/__tests__/**/*.js', '**/*.test.js', '**/*.spec.js'],
+    plugins: { jest: eslintPluginJest },
+    languageOptions: {
+      globals: {
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        jest: 'readonly',
+      },
+    },
     rules: {
-      'no-unused-vars': 'off', // Allow unused variables in test files
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
+      'jest/no-done-callback': 'error',
+      'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
+      'jest/no-conditional-expect': 'error',
+      'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
+      'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
+      'jest/no-commented-out-tests': 'warn',
+      'jest/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
+      'no-console': 'off',
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     },
   },
 ];
