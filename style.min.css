@@ -616,7 +616,16 @@ nav {
   color: white;
   position: fixed;
   bottom: 5px;
-  left: 0;
+  left: -10px;
+  width: calc(100% + 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: transparent;
+  color: white;
+  position: fixed;
+  bottom: 5px;
+  left: 2px;
   width: 100%;
 }
 
@@ -629,18 +638,20 @@ nav {
   flex-wrap: nowrap;
   overflow-x: auto;
   padding-left: 0;
+  margin-left: -11px;
+  font-size: 9.8px;
 }
 
 .footer-links a,
 .social-links a {
   color: white;
   text-decoration: none;
-  margin-right: 10px;
+  margin-right: 4px;
   white-space: nowrap;
 }
 
 .footer-links span {
-  margin-right: 10px;
+  margin-right: 8px;
   white-space: nowrap;
 }
 
