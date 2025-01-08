@@ -1,0 +1,75 @@
+# ===============================
+# Primary Languages Configuration
+# ===============================
+
+# Explicitly mark Python as the main language
+*.py linguist-language=Python
+
+# Explicitly mark Dockerfiles as Docker
+Dockerfile linguist-language=Docker
+*.dockerfile linguist-language=Docker
+
+# ===============================
+# Ignore Common Auxiliary Files
+# ===============================
+
+# Node.js-related
+node_modules/* linguist-vendored
+*.js linguist-vendored
+*.jsx linguist-vendored
+*.ts linguist-vendored
+*.tsx linguist-vendored
+
+# Frontend assets
+*.css linguist-vendored
+*.scss linguist-vendored
+*.html linguist-vendored
+*.svg linguist-vendored
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+
+# Configuration files
+*.yml linguist-vendored
+*.yaml linguist-vendored
+*.json linguist-vendored
+*.ini linguist-vendored
+
+# Package and lock files
+package.json linguist-vendored
+pnpm-lock.yaml linguist-vendored
+package-lock.json linguist-vendored
+
+# CI/CD and deployment files
+.github/* linguist-vendored
+.gitlab-ci.yml linguist-vendored
+
+# Logs, builds, and temporary files
+*.log linguist-vendored
+dist/* linguist-vendored
+coverage/* linguist-vendored
+*.map linguist-vendored
+*.tmp linguist-vendored
+
+# Documentation files
+*.md linguist-documentation
+*.rst linguist-documentation
+*.txt linguist-documentation
+
+# ===============================
+# Advanced Linguist Overrides
+# ===============================
+
+# Boost Python's weight
+*.py linguist-detectable
+
+# Boost Docker's weight
+Dockerfile linguist-detectable
+*.dockerfile linguist-detectable
+
+# Treat all vendored files as non-detectable
+node_modules/* linguist-detectable=false
+dist/* linguist-detectable=false
+coverage/* linguist-detectable=false
+*.js linguist-detectable=false
+*.css linguist-detectable=false
