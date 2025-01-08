@@ -61,7 +61,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 
 ```javascript
 > helloblue-ai@1.0.4 test
-Advanced Voice Recognition Integration Tests
+Advanced Voice Recognition Tests
   Utility Functions
       ✓ should correctly process voice input and update the UI (4 ms)
       ✓ should handle recognition errors gracefully (1 ms)
