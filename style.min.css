@@ -216,22 +216,22 @@ header {
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(14, 17, 230, 0.7);
+    box-shadow: 0 0 0 0 rgba(39, 14, 230, 0.7);
   }
 
   20% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 5px rgba(5, 12, 85, 0.3);
+    box-shadow: 0 0 0 5px rgba(9, 19, 129, 0.3);
   }
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 0 30px rgba(47, 18, 215, 0.658);
+    box-shadow: 0 0 0 30px rgba(36, 3, 223, 0.658);
   }
 
   75% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 30px rgba(17, 14, 209, 0.104);
+    box-shadow: 0 0 0 30px rgba(36, 18, 228, 0.104);
   }
 }
 
