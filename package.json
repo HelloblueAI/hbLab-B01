@@ -53,6 +53,7 @@
     "mkdirp": "^3.0.1",
     "netlify-cli": "^17.38.1",
     "postcss": "^8.4.49",
+    "punycode": "^2.3.1",
     "tunnel-agent": "^0.6.0"
   },
   "devDependencies": {

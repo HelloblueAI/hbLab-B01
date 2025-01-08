@@ -3,7 +3,7 @@
 
 This is the repository of `hbLab-B01` Contact Assistant, a cutting-edge web application designed to streamline your communications with any company's customer service. Leveraging voice recognition and speedy data fetching, B01 breaks the traditional barriers of customer interaction, delivering near-instantaneous connections.
 
-`hbLab-B01` is your go-to Voice AI Customer Service Assistant, designed to make interactions with customer service smooth and efficient. It's equipped with top-notch voice recognition and fast processing power to handle requests. Whether speaking up or typing down, hbLab-B01 quickly retrieves the necessary information from the database and, with user's nod, can even make phone calls. All this happens in a blink.
+`hbLab-B01` is your go-to VoAI Customer Service Assistant, designed to make interactions with customer service smooth and efficient. It's powered with fast-processing voice recognition to handle requests. Whether speaking up or typing down, hbLab-B01 quickly retrieves the necessary information from the database and, with user's nod, can even make phone calls. All this happens in a blink.
 
 ## Features
 
@@ -11,11 +11,12 @@ This is the repository of `hbLab-B01` Contact Assistant, a cutting-edge web appl
 
 ## Feature Overview
 
-The Enhanced Voice AI Assistant in our application allows users to initiate searches and make calls simultaneously using just their voice. This feature reduces the need for typing, enhances accessibility, and supports efficient multitasking.
+The Enhanced VoAI in our application allows users to initiate searches and make calls simultaneously using just their voice. This feature reduces the need for typing, enhances accessibility, and supports efficient multitasking.
 
 ## Key Capabilities
 
-- **Voice Recognition**: Users can activate searches and initiate calls simultaneously with voice commands. This dual-functionality not only minimizes the need for manual input but also makes the app more accessible and convenient for multitasking.
+- \*\*Advanced AI-driven Voice Recognition Integration
+  The B01 model has been engineered with cutting-edge neural network training, enabling it to detect and process synonyms with high precision and execute seamless, real-time connections. This innovation allows users to simultaneously activate contextual searches and initiate call actions via voice commands. By leveraging advanced Natural Language Understanding (NLU) and intent prediction, this dual-functionality minimizes manual input while optimizing multitasking efficiency. The system's AI-first architecture ensures adaptive learning for continuously improving user interactions.
 
 ## Technical Implementation
 
@@ -51,6 +52,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 - **Fuse.js**: Implements fuzzy search capabilities to enhance the search functionality.
 - **Express.js**: A fast, unopinionated, minimalist web framework for Node.js, used to build the backend API.
 - **PostgreSQL**: A powerful, open source object-relational database system used to manage our application's data.
+- **Bleu.js**: A versatile framework for decision trees, NLP, advanced debugging, code generation, multi-language support, and real-time optimization, streamlining development with unified dependency management and collaboration tools.
 - **CORS (Cross-Origin Resource Sharing)**: Configured to allow our web applications hosted at different origins to interact securely.
 - **Winston**: A versatile logging library for Node.js, used for managing logs with support for multiple storage options.
 - **Dotenv**: Loads environment variables from a `.env` file into `process.env`, supporting external configuration of the application's settings.
@@ -58,7 +60,8 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 - **CSV-Parser**: A library for parsing CSV files, utilized to manage and test data imports from company records.
 
 ```javascript
-> helloblue-ai@1.0.3 test
+> helloblue-ai@1.0.4 test
+Advanced Voice Recognition Integration Tests
   Utility Functions
       ✓ should correctly process voice input and update the UI (4 ms)
       ✓ should handle recognition errors gracefully (1 ms)
@@ -76,6 +79,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
     Edge Cases
       ✓ should handle adding zero
       ✓ should handle subtracting zero (1 ms)
+      ✓ should handle recognition errors gracefully (1 ms)
       ✓ should handle adding and subtracting large numbers
       ✓ should handle adding and subtracting negative numbers
 
@@ -86,7 +90,7 @@ All files |     100 |      100 |     100 |     100 |
  index.js |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       27 passed, 27 total
+Tests:       28 passed, 28 total
 Snapshots:   0 total
 Time:        0.22 s, estimated 1 s
 Ran all test suites.
@@ -95,17 +99,6 @@ Ran all test suites.
 ## Related Repositories
 
 - **Express Server**: This repository contains the Express server setup essential for the operation of the hbLab-B01 Contact Assistant. Check it out [here](https://github.com/pejmantheory/express_server.git)
-
-## Installation
-
-To set up the B01 Contact Assistant on your local machine, follow these steps:
-
-- Clone the Repository:
-  `git clone https://github.com/HelloblueAI/hbLab-B01.git`
-- Access the Project Directory:
-  `cd hbLab-B01`
-- View the Application:
-  Open the index.html file in your preferred web browser to launch the application.
 
 ## Contributing
 
@@ -117,8 +110,21 @@ Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b663
 
 ## License
 
-This project is licensed under the [Apache 2.0](https://github.com/HelloblueAI/hbLab-B01/blob/c35afbd0385550563832d946460555c00bc5185e/LICENSE.md)
+`hbLab-B01` is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/9725758965ff06d9b2e70e8a3406f6228e5d8160/LICENSE.md) file for more details.
 
-## Next + Netlify Starter
-
+![GitHub issues](https://img.shields.io/github/issues/HelloblueAI/hbLab-B01)
+![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen)
+![AI](https://img.shields.io/badge/AI-VoAI-purple?style=flat-square&logo=ai)
+![Bleu.js](https://img.shields.io/badge/Bleu.js-v1.0.25-0ff?style=flat)
+![ESLint](https://img.shields.io/badge/ESLint-v9.17.0-yellow)
+![Fuse.js](https://img.shields.io/badge/Fuse.js-v7.0.0-purple)
+![Jest](https://img.shields.io/badge/Jest-v29.7.0-brightgreen)
+![Node.js](https://img.shields.io/badge/Node.js-v16.0.0-green)
+![Python](https://img.shields.io/badge/Python-v3.11-blue)
+![Express](https://img.shields.io/badge/Express-v4.21.2-lightblue)
+![Body-Parser](https://img.shields.io/badge/Body--Parser-v1.20.3-green)
+![DigitalOcean](https://img.shields.io/badge/Cloud-DigitalOcean-0080ff?logo=digitalocean)
+![Auth0](https://img.shields.io/badge/Auth0-Integrated-brightgreen)
+[![SonarCloud Alert Status](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=HelloblueAI_hbLab-B01)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
+![License](https://img.shields.io/badge/License-Apache_2.0-blue)
