@@ -551,38 +551,38 @@ a:hover {
 
 /* Mobile Specific Styles */
 
-  /* Updated Floating Shapes */
+
 body::before,
 body::after {
   content: '';
   position: absolute;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08); /* Slightly more opaque for visibility */
-  animation: floatShapes 12s ease-in-out infinite; /* Slower animation for a subtle effect */
-  z-index: -1; /* Keeps the shapes behind all content */
+  background: rgba(255, 255, 255, 0.08);
+  animation: floatShapes 12s ease-in-out infinite;
+  z-index: -1;
 }
 
 body::before {
-  width: 450px; /* Slightly larger for better impact */
+  width: 450px;
   height: 450px;
-  top: 18%; /* Adjusted position for better alignment */
-  left: 12%; /* Balanced positioning */
+  top: 18%;
+  left: 12%;
 }
 
 body::after {
   width: 350px;
   height: 350px;
-  bottom: 12%; /* Better spacing */
+  bottom: 12%;
   right: 12%;
 }
 
-/* Smooth Floating Animation */
+
 @keyframes floatShapes {
   0% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(20px); /* Slightly larger movement for visual interest */
+    transform: translateY(20px);
   }
   100% {
     transform: translateY(0);
