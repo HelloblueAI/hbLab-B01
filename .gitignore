@@ -1,1 +1,3 @@
-node_modules
+# Node modules
+node_modules/
+sonar-project.properties

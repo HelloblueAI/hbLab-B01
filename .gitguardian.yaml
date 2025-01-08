@@ -1,0 +1,5 @@
+secret:
+  ignored_matches:
+  - match: 4d0a685489bed80575b99e442eb2b58a69b54625b03516e4e28b7edbdc93024d
+    name: SonarQube Token - sonar-project.properties:l.3
+version: 2
