@@ -221,17 +221,17 @@ header {
 
   20% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 5px rgba(50, 3, 241, 0.3);
+    box-shadow: 0 0 0 5px rgba(5, 12, 85, 0.3);
   }
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 0 30px rgba(30, 0, 255, 0.658);
+    box-shadow: 0 0 0 30px rgba(47, 18, 215, 0.658);
   }
 
   75% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 30px rgba(0, 128, 255, 0.05);
+    box-shadow: 0 0 0 30px rgba(17, 14, 209, 0.104);
   }
 }
 
