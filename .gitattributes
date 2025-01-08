@@ -1,75 +1,53 @@
 # ===============================
-# Primary Languages Configuration
+# Force Python and Docker Languages
 # ===============================
 
-# Explicitly mark Python as the main language
+# Treat Python files as Python
 *.py linguist-language=Python
 
-# Explicitly mark Dockerfiles as Docker
+# Treat Dockerfiles as Docker
 Dockerfile linguist-language=Docker
 *.dockerfile linguist-language=Docker
 
 # ===============================
-# Ignore Common Auxiliary Files
+# Exclude All Other Languages
 # ===============================
 
-# Node.js-related
-node_modules/* linguist-vendored
+# Exclude HTML
+*.html linguist-vendored
+*.htm linguist-vendored
+
+# Exclude CSS
+*.css linguist-vendored
+*.scss linguist-vendored
+
+# Exclude JavaScript
 *.js linguist-vendored
 *.jsx linguist-vendored
 *.ts linguist-vendored
 *.tsx linguist-vendored
 
-# Frontend assets
-*.css linguist-vendored
-*.scss linguist-vendored
-*.html linguist-vendored
-*.svg linguist-vendored
-*.png linguist-vendored
-*.jpg linguist-vendored
-*.jpeg linguist-vendored
+# Exclude PHP
+*.php linguist-vendored
 
-# Configuration files
+# Exclude YAML and JSON
 *.yml linguist-vendored
 *.yaml linguist-vendored
 *.json linguist-vendored
-*.ini linguist-vendored
 
-# Package and lock files
-package.json linguist-vendored
+# Exclude Markdown and Text Files
+*.md linguist-documentation
+*.txt linguist-documentation
+
+# Exclude Lock Files and Package Managers
 pnpm-lock.yaml linguist-vendored
+package.json linguist-vendored
 package-lock.json linguist-vendored
 
-# CI/CD and deployment files
-.github/* linguist-vendored
-.gitlab-ci.yml linguist-vendored
-
-# Logs, builds, and temporary files
+# Exclude Logs, Temporary Files, and Build Outputs
 *.log linguist-vendored
 dist/* linguist-vendored
 coverage/* linguist-vendored
-*.map linguist-vendored
-*.tmp linguist-vendored
 
-# Documentation files
-*.md linguist-documentation
-*.rst linguist-documentation
-*.txt linguist-documentation
-
-# ===============================
-# Advanced Linguist Overrides
-# ===============================
-
-# Boost Python's weight
-*.py linguist-detectable
-
-# Boost Docker's weight
-Dockerfile linguist-detectable
-*.dockerfile linguist-detectable
-
-# Treat all vendored files as non-detectable
-node_modules/* linguist-detectable=false
-dist/* linguist-detectable=false
-coverage/* linguist-detectable=false
-*.js linguist-detectable=false
-*.css linguist-detectable=false
+# Exclude Frontend Framework Artifacts
+node_modules/* linguist-vendored
