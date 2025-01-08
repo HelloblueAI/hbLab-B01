@@ -94,7 +94,7 @@ header {
   margin-top: 22px;
 }
 
-.main-content > p {
+.main-content>p {
   color: white;
   margin-bottom: 10px;
 }
@@ -212,6 +212,7 @@ header {
 }
 
 @keyframes futuristicAnimation {
+
   0%,
   100% {
     transform: scale(1);
@@ -334,7 +335,8 @@ header {
   gap: 8px;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
+
   html,
   body {
     height: 100%;
@@ -379,7 +381,7 @@ header {
   }
 
   .sub-text {
-    font-size: 21px;
+    font-size: 19px;
     position: sticky;
     width: 82%;
     margin-top: -95px;
@@ -496,14 +498,14 @@ nav {
 }
 
 /* mini phones */
-@media (width <= 400px) {
+@media (width <=400px) {
   .badges-container {
     bottom: 83px;
     right: 45px;
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   nav {
     padding: 12px 12px 8px 0;
     transform: translateX(1%);
@@ -581,9 +583,11 @@ body::after {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(20px);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -654,5 +658,3 @@ nav {
   margin-right: 8px;
   white-space: nowrap;
 }
-
-
