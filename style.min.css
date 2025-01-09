@@ -212,6 +212,7 @@ header {
 }
 
 @keyframes futuristicAnimation {
+
   0%,
   100% {
     transform: scale(1);
@@ -551,7 +552,6 @@ a:hover {
 }
 
 /* Mobile Specific Styles */
-
 
 body::before,
 body::after {
