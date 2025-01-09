@@ -282,7 +282,7 @@ function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, 
 
   if (phoneNumber && phoneNumber !== 'NA') {
     if (confirm(messageContent)) {
-      window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/[^0-9]/g, '')}`;
+      window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/\D/g, '')}`;
 
       showPostCallNotification(companyName, elements, state); // Display recent call notification
     }

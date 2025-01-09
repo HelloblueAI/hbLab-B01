@@ -275,10 +275,7 @@ header {
   }
 }
 
-#voiceButton.active {
-  animation: futuristicAnimation 1.5s ease-in-out infinite;
-  border-radius: 50%;
-}
+
 
 #voiceButton:active {
   animation-play-state: running;
@@ -485,10 +482,6 @@ nav {
   position: relative;
 }
 
-.footer-links span {
-  margin-right: 10px;
-}
-
 .footer-links a:last-child,
 .social-links a:last-child {
   margin-right: 0;
@@ -564,36 +557,6 @@ a:hover {
   }
 }
 
-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: transparent;
-  color: white;
-  position: fixed;
-  bottom: 5px;
-  left: 0;
-  width: 100%;
-}
-
-.footer-links,
-.social-links {
-  display: flex;
-  align-items: center;
-  margin-bottom: 9px;
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding-left: 0;
-}
-
-.footer-links a,
-.social-links a {
-  color: white;
-  text-decoration: none;
-  margin-right: 10px;
-  white-space: nowrap;
-}
 
 .footer-links span {
   margin-right: 10px;

@@ -216,7 +216,7 @@ header {
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(36, 4, 214, 0.708);
+    box-shadow: 0 0 0 0 rgba(44, 10, 238, 0.708);
   }
 
   20% {
