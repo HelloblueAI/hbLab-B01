@@ -107,7 +107,7 @@ We welcome pull requests, bug reports, and other contributions. Please read the 
 
 ## Security Policy
 
-Please read the [SECURITY](https://github.com/pejmantheory/hbLab-B01/blob/50b6638fdc480cf89d0fe4128a49642adb55fb4b/SECURITY.md)
+Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/b301f98d05b70bab9a7032ae7739814d189b5e35/security.md)
 
 ## License
 
