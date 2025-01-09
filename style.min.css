@@ -373,8 +373,8 @@ header {
   }
 
   .typing-effect {
-    font-size: 26px;
-    margin-top: 94px;
+    font-size: 24px;
+    margin-top: 93px;
     position: sticky;
     z-index: 200;
     margin-left: -31px;
