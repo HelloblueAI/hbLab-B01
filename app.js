@@ -76,7 +76,6 @@ function setupEventListeners(elements, state) {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
   });
 
-  // Event listener for Enter key press
   elements.companySearch.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -87,7 +86,7 @@ function setupEventListeners(elements, state) {
     }
   });
 
-  // Initialize and use VoiceRecognition
+
   const voiceRecognition = new VoiceRecognition(
     elements,
     (spokenCompany) => {
