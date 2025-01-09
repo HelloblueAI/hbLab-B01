@@ -63,6 +63,7 @@ export class StateManager {
 }
 
 function setupEventListeners(elements, state) {
+  // Debounced fetch function for company search
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) {
@@ -70,10 +71,12 @@ function setupEventListeners(elements, state) {
     }
   }, 300);
 
+  // Event listener for input
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
   });
 
+  // Event listener for Enter key press
   elements.companySearch.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -84,12 +87,50 @@ function setupEventListeners(elements, state) {
     }
   });
 
-  new VoiceRecognition(elements, (company) => fetchCompanyData(company, elements, state), {
-    interimResults: true,
-    continuous: true,
-    autoRestart: true,
-  });
+  // Initialize and use VoiceRecognition
+  const voiceRecognition = new VoiceRecognition(
+    elements,
+    (spokenCompany) => {
+      if (spokenCompany) {
+        fetchCompanyData(capitalizeCompany(spokenCompany), elements, state);
+      }
+    },
+    {
+      interimResults: true,
+      continuous: true,
+      autoRestart: true,
+    }
+  );
+
+
+  if (voiceRecognition && typeof voiceRecognition.start === 'function') {
+    voiceRecognition.start();
+
+
+    console.log('VoiceRecognition started successfully.');
+  } else {
+    console.error('VoiceRecognition failed to start. Ensure the class is implemented correctly.');
+  }
+
+
+  if (typeof voiceRecognition.onError === 'function') {
+    voiceRecognition.onError((error) => {
+      console.error('VoiceRecognition error:', error);
+      displayNotification('Voice recognition encountered an issue. Please try again.');
+    });
+  }
+
+
+  if (elements.stopRecognitionButton) {
+    elements.stopRecognitionButton.addEventListener('click', () => {
+      if (voiceRecognition && typeof voiceRecognition.stop === 'function') {
+        voiceRecognition.stop();
+        console.log('VoiceRecognition stopped.');
+      }
+    });
+  }
 }
+
 
 function handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state) {
   const { value } = event.target;
