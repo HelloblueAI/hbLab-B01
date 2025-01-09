@@ -15,7 +15,8 @@ The Enhanced VoAI in our application allows users to initiate searches and make 
 
 ## Key Capabilities
 
-- \*\*Advanced AI-driven Voice Recognition Integration
+### Advanced AI-Driven Voice Recognition Integration
+
   The B01 model has been engineered with cutting-edge neural network training, enabling it to detect and process synonyms with high precision and execute seamless, real-time connections. This innovation allows users to simultaneously activate contextual searches and initiate call actions via voice commands. By leveraging advanced Natural Language Understanding (NLU) and intent prediction, this dual-functionality minimizes manual input while optimizing multitasking efficiency. The system's AI-first architecture ensures adaptive learning for continuously improving user interactions.
 
 ## Technical Implementation
