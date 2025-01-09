@@ -93,7 +93,7 @@ header {
   margin-top: 22px;
 }
 
-.main-content > p {
+.main-content>p {
   color: white;
   margin-bottom: 10px;
 }
@@ -211,6 +211,7 @@ header {
 }
 
 @keyframes futuristicAnimation {
+
   0%,
   100% {
     transform: scale(1);
@@ -330,7 +331,8 @@ header {
   gap: 8px;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
+
   html,
   body {
     height: 100%;
@@ -488,14 +490,14 @@ nav {
 }
 
 /* mini phones */
-@media (width <= 400px) {
+@media (width <=400px) {
   .badges-container {
     bottom: 83px;
     right: 45px;
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   nav {
     padding: 12px 12px 8px 0;
     transform: translateX(1%);
@@ -543,7 +545,7 @@ a:hover {
 
 /* Mobile Specific Styles */
 
-@media (width <= 768px) {
+@media (width <=768px) {
   html {
     background: none;
   }
@@ -563,7 +565,7 @@ a:hover {
   white-space: nowrap;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   nav {
     padding: 1px;
     width: 100%;
