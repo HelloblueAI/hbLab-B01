@@ -4,11 +4,16 @@
     "chainability",
     "cstat",
     "Dockerfiles",
+    "EVALEX",
     "fstat",
     "helloblue",
     "helloblueai",
+    "hoverable",
     "keyline",
+    "nosort",
     "Qube",
-    "scannerwork"
+    "scannerwork",
+    "Selecter",
+    "venv"
   ]
 }

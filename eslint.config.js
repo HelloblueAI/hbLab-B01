@@ -12,8 +12,8 @@ module.exports = [
       '.next/**',
       'build/**',
       '.netlify/**',
-      'venv/**', // Ignore virtual environment
-      '**/site-packages/**', // Ignore Python site packages
+      'venv/**',
+      '**/site-packages/**', 
     ],
   },
   {
@@ -131,10 +131,10 @@ module.exports = [
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
       'jest/no-done-callback': 'error',
-      'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
+
       'jest/no-conditional-expect': 'error',
       'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
-      'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
+
       'jest/no-commented-out-tests': 'warn',
       'jest/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
       'no-console': 'off',

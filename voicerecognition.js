@@ -98,7 +98,7 @@ export default class VoiceRecognition {
     this.updateSearchInput(transcript);
 
     try {
-      await this.fetchCompanyData(transcript);
+      this.fetchCompanyData(transcript);
       this.animateSuccess();
     } catch (error) {
       this.showFeedback(`Error: ${error.message}`, false);
