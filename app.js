@@ -1,9 +1,11 @@
+// app.js
 import { config } from './config.js';
 import { capitalizeCompany, debounce, delay, displayNotification, isValidURL } from './utils.js';
 import VoiceRecognition from './voiceRecognition.js';
 
 document.addEventListener('DOMContentLoaded', initApp);
 
+// Initialize the application
 function initApp() {
   const elements = getDOMElements();
   const state = new StateManager();
@@ -17,6 +19,7 @@ function initApp() {
   window.addEventListener('orientationchange', handleResize, { passive: true });
 }
 
+// Retrieve and return DOM elements
 function getDOMElements() {
   return {
     voiceButton: document.getElementById('voiceButton'),
@@ -28,9 +31,11 @@ function getDOMElements() {
     emailInput: document.getElementById('emailInput'),
     passwordInput: document.getElementById('passwordInput'),
     suggestionBox: document.getElementById('suggestionBox'),
+    stopRecognitionButton: document.getElementById('stopRecognitionButton'),
   };
 }
 
+// State manager class for application state
 export class StateManager {
   constructor() {
     this.activeEffect = 'intro';
@@ -62,8 +67,8 @@ export class StateManager {
   }
 }
 
+// Setup all event listeners
 function setupEventListeners(elements, state) {
-  // Debounced fetch function for company search
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) {
@@ -71,7 +76,6 @@ function setupEventListeners(elements, state) {
     }
   }, 300);
 
-  // Event listener for input
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
   });
@@ -85,7 +89,6 @@ function setupEventListeners(elements, state) {
       }
     }
   });
-
 
   const voiceRecognition = new VoiceRecognition(
     elements,
@@ -101,16 +104,12 @@ function setupEventListeners(elements, state) {
     }
   );
 
-
   if (voiceRecognition && typeof voiceRecognition.start === 'function') {
     voiceRecognition.start();
-
-
     console.log('VoiceRecognition started successfully.');
   } else {
     console.error('VoiceRecognition failed to start. Ensure the class is implemented correctly.');
   }
-
 
   if (typeof voiceRecognition.onError === 'function') {
     voiceRecognition.onError((error) => {
@@ -118,7 +117,6 @@ function setupEventListeners(elements, state) {
       displayNotification('Voice recognition encountered an issue. Please try again.');
     });
   }
-
 
   if (elements.stopRecognitionButton) {
     elements.stopRecognitionButton.addEventListener('click', () => {
@@ -130,15 +128,13 @@ function setupEventListeners(elements, state) {
   }
 }
 
-
+// Handle user input in the company search bar
 function handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state) {
   const { value } = event.target;
   const capitalizedValue = capitalizeCompany(value);
-
   if (value !== capitalizedValue) {
     adjustCursorPosition(event, capitalizedValue);
   }
-
   if (value.trim() && value.length > 1) {
     debouncedFetchCompanyData();
     displaySuggestions(value, elements, state);
@@ -182,7 +178,6 @@ async function triggerIntroEffect(elements, state) {
   if (state.recentCompanies.length > 0) {
     introSentences.push(`You recently searched for ${state.recentCompanies.join(', ')}.`);
   }
-
   state.activeEffect = 'intro';
   for (const sentence of introSentences) {
     await typeTextEffect(sentence, 'intro', elements, state);
@@ -201,10 +196,8 @@ async function displayCompanyInfo(
   state.activeEffect = 'company';
   const capitalizedCompanyName = capitalizeCompany(companyName);
   const message = `You asked to call: ${capitalizedCompanyName}`;
-
   elements.typedOutput.textContent = '';
   await typeTextEffect(message, 'company', elements, state);
-
   state.updateRecentCompanies(capitalizedCompanyName);
   showCompanyConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 }
@@ -213,14 +206,12 @@ async function fetchCompanyData(company, elements, state) {
   if (state.isConfirmationDialogOpen || state.isFetching) {
     return;
   }
-
   state.isFetching = true;
   elements.feedbackText.textContent = '';
   elements.voiceButton.classList.remove('voiceButton-listening');
 
   const cacheKey = `companyData-${company}`;
   const cachedData = state.cache.get(cacheKey);
-
   if (cachedData && !state.isCacheExpired(cachedData.timestamp)) {
     await displayCompanyInfo(cachedData.data, elements, state);
     state.isFetching = false;
@@ -235,12 +226,10 @@ async function fetchCompanyData(company, elements, state) {
       signal: controller.signal,
     });
     clearTimeout(timeout);
-
     if (!response.ok) {
       handleErrorStatus(response.status, elements);
       return;
     }
-
     const data = await response.json();
     state.cache.set(cacheKey, { data, timestamp: Date.now() });
     await displayCompanyInfo(data, elements, state);
@@ -272,8 +261,8 @@ function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, 
   if (state.isConfirmationDialogOpen) {
     return;
   }
-
   state.isConfirmationDialogOpen = true;
+
   const messageContent =
     phoneNumber && phoneNumber !== 'NA'
       ? `${companyName}: ${phoneNumber}. Would you like to dial this number?`
@@ -282,8 +271,7 @@ function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, 
   if (phoneNumber && phoneNumber !== 'NA') {
     if (confirm(messageContent)) {
       window.location.href = isValidURL(url) ? url : `tel:${phoneNumber.replace(/\D/g, '')}`;
-
-      showPostCallNotification(companyName, elements, state); // Display recent call notification
+      showPostCallNotification(companyName, elements, state);
     }
   } else {
     displayNotification(messageContent);
@@ -298,7 +286,6 @@ async function showPostCallNotification(companyName, elements, state) {
   state.activeEffect = 'postCall';
   elements.typedOutput.textContent = '';
   await typeTextEffect(message, 'postCall', elements, state);
-
   await delay(15000);
 }
 
