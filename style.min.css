@@ -626,16 +626,16 @@ body::after {
 }
 
 @media (max-width: 768px) {
-  .small-footer {
-    font-size: 0.7em;
-    color: rgba(255, 255, 255, 0.8);
-    position: absolute;
-    bottom: -225px;
-    left: 18px;
-    right: -230px;
-    text-align: center;
+    .small-footer {
+      font-size: 0.7em;
+      color: rgba(255, 255, 255, 0.8);
+      position: absolute;
+      bottom: -225px;
+      left: 18px;
+      right: -230px;
+      text-align: center;
+    }
   }
-}
 
 
 /* Footer Styling */
@@ -691,29 +691,29 @@ nav {
 /* General Footer Styling */
 .small-footer {
   font-size: 0.8em;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6); /* Light grey color */
   text-align: center;
   font-family: Arial, sans-serif;
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  padding: 5px 10px;
-  z-index: 1000;
-  background-color: transparent;
 }
 
-.small-footer p {
-  display: inline-block;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-}
 
-.small-footer em {
-  display: inline-block;
-  margin-left: 0px;
+@media (max-width: 768px) {
+  .small-footer {
+    font-size: 0.5em; /* Slightly larger for better readability */
+    color: rgba(255, 255, 255, 0.8); /* Consistent light grey color */
+    position: absolute;
+    bottom: -322px; /* Place closer to the bottom */
+    left: 0; /* Center the footer */
+    right: -255px; /* Center the footer */
+    margin: 0 auto; /* Center alignment */
+    text-align: center;
+    padding: 5px 10px; /* Add padding for better spacing */
+  }
 }
 
 /* For devices with max-width 768px */
@@ -722,7 +722,7 @@ nav {
     font-size: 0.7em;
     color: rgba(255, 255, 255, 0.8);
     position: fixed;
-    bottom: 43px;
+    bottom: 9px;
     left: 6px;
     right: -208px;
     margin: 0 auto;
@@ -740,25 +740,15 @@ nav {
 @media (max-width: 375px) {
   .small-footer {
     font-size: 0.6em;
-    /* Smaller font size for very small screens */
     color: rgba(255, 255, 255, 0.8);
-    /* Maintain visibility */
     position: fixed;
-    /* Fixed position for consistency */
     bottom: 10px;
-    /* Adjust placement for smaller screens */
     left: 5px;
-    /* Keep it aligned properly */
     right: 5px;
-    /* Keep it aligned properly */
     margin: 0 auto;
-    /* Ensure it's centered */
     padding: 5px 10px;
-    /* Padding for better readability */
     text-align: center;
-    /* Align text to the center */
     background-color: transparent;
-    /* Keep it transparent */
   }
 
   .small-footer em {
