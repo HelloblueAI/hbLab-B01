@@ -4,69 +4,68 @@ module.exports = {
   // Specify the test environment
   testEnvironment: 'jest-environment-jsdom',
 
-  // Files to run before tests are executed (setup files)
+  // Setup files executed before each test suite
   setupFilesAfterEnv: ['./jest.setup.js'],
 
-  // Ignore patterns for test paths
+  // Ignore paths for tests
   testPathIgnorePatterns: ['/node_modules/', '/dist/', '/coverage/'],
 
-  // Enable coverage collection and specify the output directory and format
+  // Enable coverage collection and specify output directory and formats
   collectCoverage: true,
   coverageDirectory: './coverage',
-  coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'], // Added 'html' for easier viewing in browsers
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'], // Added HTML for better browser visualization
   collectCoverageFrom: [
-    'src/**/*.{js,jsx,ts,tsx}', // Collect coverage from source files
-    '!src/**/*.d.ts',          // Exclude type definition files
+    'src/**/*.{js,jsx,ts,tsx}', // Source files to collect coverage from
+    '!src/**/*.d.ts',          // Exclude type definitions
     '!src/**/__mocks__/**',    // Exclude mock files
     '!src/**/index.{js,ts}',   // Exclude barrel files
+    '!src/setupTests.js',      // Exclude test setup files
   ],
 
+  // Patterns for test file matching
   testMatch: [
     '**/__tests__/**/*.{js,jsx,ts,tsx}',
     '**/?(*.)+(spec|test).[tj]s?(x)',
     '**/tests/**/*.{js,jsx,ts,tsx}',
-    '**/*.{test,spec}.{js,jsx,ts,tsx}', 
-    '!**/node_modules/**',
-    '!**/dist/**',
   ],
 
-
-
+  // Babel transformations
   transform: {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
 
+  // Ignore patterns for transformations
   transformIgnorePatterns: [
     'node_modules/(?!(node-fetch|other-esm-module)/)',
   ],
 
-
-  // Mocks for static assets and styles
+  // Mock configurations for assets and styles
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy', // Mock CSS files
     '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js', // Mock static assets
   },
 
-  // Global variables for specific Jest configurations
+  // Globals for specific configurations
   globals: {
     'ts-jest': {
-      isolatedModules: true, // Improve TypeScript test performance
+      isolatedModules: true, // Speed up TypeScript testing
     },
   },
 
-  // Enable verbose test output
-  verbose: true, // No trailing comma here
+  // Verbose test output for better logging
+  verbose: true,
 
-  // Optimize worker usage for CI/CD environments
+  // Optimize worker usage for CI/CD
   maxWorkers: '50%', // Use half of the available CPUs
 
-  // Extend recognized file extensions for modules
+  // Extend module file extensions
   moduleFileExtensions: [...defaults.moduleFileExtensions, 'js', 'jsx', 'ts', 'tsx'],
 
-  // Reset mocks, modules, and timers after each test to ensure isolation
+  // Reset configurations after each test
   resetMocks: true,
   resetModules: true,
   restoreMocks: true,
 
-    coverageProvider: 'v8', // Faster coverage calculation using V
-  }
+  // Use faster coverage provider
+  coverageProvider: 'v8',
+};
