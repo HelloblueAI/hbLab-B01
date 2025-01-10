@@ -216,7 +216,7 @@ header {
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(44, 31, 238, 0.631);
+    box-shadow: 0 0 0 0 rgba(49, 45, 251, 0.631);
   }
 
   20% {
@@ -226,12 +226,12 @@ header {
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 0 30px rgba(11, 50, 247, 0.575);
+    box-shadow: 0 0 0 30px rgba(47, 75, 219, 0.575);
   }
 
   75% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 30px rgba(45, 45, 250, 0.326);
+    box-shadow: 0 0 0 30px rgba(51, 51, 244, 0.326);
   }
 }
 
@@ -451,6 +451,31 @@ header {
     height: 63px !important;
     width: 154px !important;
     border-radius: 2.5px;
+  }
+}
+
+footer {
+  color: #b0b0b0;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 0.9rem;
+  font-family: 'Arial', sans-serif;
+  background-color: transparent;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer p span {
+  font-weight: bold;
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  footer {
+    font-size: 0.8rem;
+    padding: 15px 5px;
   }
 }
 
@@ -682,33 +707,23 @@ nav {
   }
 }
 
-/* For devices with max-width 375px */
+
 @media (max-width: 375px) {
   .small-footer {
     font-size: 0.6em;
-    /* Smaller font size for very small screens */
     color: rgba(255, 255, 255, 0.8);
-    /* Maintain visibility */
     position: fixed;
-    /* Fixed position for consistency */
     bottom: 10px;
-    /* Adjust placement for smaller screens */
     left: 5px;
-    /* Keep it aligned properly */
     right: 5px;
-    /* Keep it aligned properly */
     margin: 0 auto;
-    /* Ensure it's centered */
     padding: 5px 10px;
-    /* Padding for better readability */
     text-align: center;
-    /* Align text to the center */
     background-color: transparent;
-    /* Keep it transparent */
   }
 
   .small-footer em {
     margin-left: 10px;
-    /* Adjust alignment for smaller devices */
+
   }
 }
