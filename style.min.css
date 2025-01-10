@@ -221,12 +221,12 @@ header {
 
   20% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 5px rgba(56, 70, 216, 0.3);
+    box-shadow: 0 0 0 5px rgba(51, 89, 238, 0.3);
   }
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 0 30px rgba(47, 75, 219, 0.575);
+    box-shadow: 0 0 0 30px rgba(63, 95, 252, 0.575);
   }
 
   75% {
