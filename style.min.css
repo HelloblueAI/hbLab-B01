@@ -335,18 +335,6 @@ header {
   gap: 8px;
 }
 
-/* Powered BY style */
-.small-footer {
-  font-size: 0.8em;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-
-
-
-
 @media (width <=768px) {
 
   html,
@@ -515,7 +503,7 @@ nav {
 /* mini phones */
 @media (width <=400px) {
   .badges-container {
-    bottom: 83px;
+    bottom: 105px;
     right: 45px;
   }
 }
@@ -625,18 +613,6 @@ body::after {
   }
 }
 
-@media (max-width: 768px) {
-    .small-footer {
-      font-size: 0.7em;
-      color: rgba(255, 255, 255, 0.8);
-      position: absolute;
-      bottom: -225px;
-      left: 18px;
-      right: -230px;
-      text-align: center;
-    }
-  }
-
 
 /* Footer Styling */
 nav {
@@ -687,32 +663,42 @@ nav {
   white-space: nowrap;
 }
 
-
-/* General Footer Styling */
-.small-footer {
-  font-size: 0.7em;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  font-family: Arial, sans-serif;
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-}
-
-
+/* For devices with max-width 768px */
 @media (max-width: 768px) {
   .small-footer {
-    font-size: 0.5em;
+    font-size: 0.7em;
     color: rgba(255, 255, 255, 0.8);
-    position: absolute;
-    bottom: -322px;
-    left: 0;
-    right: -255px;
+    position: fixed;
+    bottom: 8px;
+    left: 200px;
+    right: -010px;
     margin: 0 auto;
-    text-align: center;
     padding: 5px 10px;
+    text-align: center;
+    background-color: transparent;
+  }
 
+  .small-footer em {
+    margin-left: 16px;
+  }
+}
+
+/* For devices with max-width 375px */
+@media (max-width: 375px) {
+  .small-footer {
+    font-size: 0.6em; /* Smaller font size for very small screens */
+    color: rgba(255, 255, 255, 0.8); /* Maintain visibility */
+    position: fixed; /* Fixed position for consistency */
+    bottom: 10px; /* Adjust placement for smaller screens */
+    left: 5px; /* Keep it aligned properly */
+    right: 5px; /* Keep it aligned properly */
+    margin: 0 auto; /* Ensure it's centered */
+    padding: 5px 10px; /* Padding for better readability */
+    text-align: center; /* Align text to the center */
+    background-color: transparent; /* Keep it transparent */
+  }
+
+  .small-footer em {
+    margin-left: 10px; /* Adjust alignment for smaller devices */
   }
 }
