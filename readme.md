@@ -129,6 +129,8 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/b301f98
 ![Auth0](https://img.shields.io/badge/Auth0-Integrated-brightgreen)
 ![Husky](https://img.shields.io/badge/Husky-enabled-9cf)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=alert_status)](https://sonarcloud.io/dashboard?id=HelloblueAI_hbLab-B01)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=bugs)](https://sonarcloud.io/summary/new_code?id=HelloblueAI_hbLab-B01)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=HelloblueAI_hbLab-B01)
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue)
 ![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
