@@ -135,8 +135,8 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/b301f98
 ![Prettier](https://img.shields.io/badge/Prettier-enabled-blueviolet)
 ![Husky](https://img.shields.io/badge/Husky-enabled-9cf)
 ![Stylelint](https://img.shields.io/badge/Stylelint-v16.12.0-orange)
-![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)
 ![Build status](https://img.shields.io/badge/Build-passing-brightgreen)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-brightgreen?logo=mongodb)
 ![pnpm](https://img.shields.io/badge/PackageManager-pnpm-ffc700?logo=pnpm)
-![Platform](https://img.shields.io/badge/Platform-Mac%20%26%20Linux-lightgrey)
+![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
+
