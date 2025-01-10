@@ -131,10 +131,9 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/b301f98
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=alert_status)](https://sonarcloud.io/dashboard?id=HelloblueAI_hbLab-B01)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
-![PostCSS](https://img.shields.io/badge/PostCSS-v8.4.49-ff69b4)
 ![Prettier](https://img.shields.io/badge/Prettier-enabled-blueviolet)
+![pnpm](https://img.shields.io/badge/PackageManager-pnpm-ffc700?logo=pnpm)
 ![Stylelint](https://img.shields.io/badge/Stylelint-v16.12.0-orange)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-brightgreen?logo=mongodb)
-![pnpm](https://img.shields.io/badge/PackageManager-pnpm-ffc700?logo=pnpm)
 ![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
 
