@@ -335,6 +335,18 @@ header {
   gap: 8px;
 }
 
+/* Powered BY style */
+.small-footer {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+
+
+
+
 @media (width <=768px) {
 
   html,
@@ -454,6 +466,8 @@ header {
   }
 }
 
+
+
 nav {
   display: flex;
   flex-direction: column;
@@ -496,6 +510,7 @@ nav {
 .social-links a:last-child {
   margin-right: 0;
 }
+
 
 /* mini phones */
 @media (width <=400px) {
@@ -610,6 +625,19 @@ body::after {
   }
 }
 
+@media (max-width: 768px) {
+    .small-footer {
+      font-size: 0.7em;
+      color: rgba(255, 255, 255, 0.8);
+      position: absolute;
+      bottom: -225px;
+      left: 18px;
+      right: -230px;
+      text-align: center;
+    }
+  }
+
+
 /* Footer Styling */
 nav {
   display: flex;
@@ -631,6 +659,7 @@ nav {
   left: 2px;
   width: 100%;
 }
+
 
 .footer-links,
 .social-links {
@@ -656,4 +685,73 @@ nav {
 .footer-links span {
   margin-right: 8px;
   white-space: nowrap;
+}
+
+
+/* General Footer Styling */
+.small-footer {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 5px 10px;
+  z-index: 1000;
+  background-color: transparent;
+}
+
+.small-footer p {
+  display: inline-block;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.small-footer em {
+  display: inline-block;
+  margin-left: 0px;
+}
+
+/* For devices with max-width 768px */
+@media (max-width: 768px) {
+  .small-footer {
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    bottom: 43px;
+    left: 10px;
+    right: -208px;
+    margin: 0 auto;
+    padding: 5px 10px;
+    text-align: center;
+    background-color: transparent;
+  }
+
+  .small-footer em {
+    margin-left: 16px;
+  }
+}
+
+/* For devices with max-width 375px */
+@media (max-width: 375px) {
+  .small-footer {
+    font-size: 0.6em; /* Smaller font size for very small screens */
+    color: rgba(255, 255, 255, 0.8); /* Maintain visibility */
+    position: fixed; /* Fixed position for consistency */
+    bottom: 10px; /* Adjust placement for smaller screens */
+    left: 5px; /* Keep it aligned properly */
+    right: 5px; /* Keep it aligned properly */
+    margin: 0 auto; /* Ensure it's centered */
+    padding: 5px 10px; /* Padding for better readability */
+    text-align: center; /* Align text to the center */
+    background-color: transparent; /* Keep it transparent */
+  }
+
+  .small-footer em {
+    margin-left: 10px; /* Adjust alignment for smaller devices */
+  }
 }
