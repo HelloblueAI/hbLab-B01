@@ -103,7 +103,7 @@ Ran all test suites.
 
 ## Contributing
 
-We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](CONTRIBUTING.md)
+We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](CONTRIBUTING.md) file for more detaills.
 
 ## Security Policy
 
