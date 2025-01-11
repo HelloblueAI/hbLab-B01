@@ -107,7 +107,7 @@ We welcome pull requests, bug reports, and other contributions. Please read the 
 
 ## Security Policy
 
-Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3aa9c3897869aee5f7030ac22919d1a882/SECURITY.md) document.
+Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3aa9c3897869aee5f7030ac22919d1a882/SECURITY.md) document for more details.
 
 ## License
 
