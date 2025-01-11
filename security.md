@@ -11,7 +11,8 @@
 | 4.0.x   | :white_check_mark: |
 | < 4.0   | :x:                |
 
-<img width="732" alt="Screenshot 2025-01-09 at 6 44 27 AM" src="https://github.com/user-attachments/assets/7a97a4b8-f1f7-4513-94a8-3397825612ab" />
+<img width="797" alt="Screenshot 2025-01-09 at 3 00 13 PM" src="https://github.com/user-attachments/assets/030b3c7f-3f56-4f58-9bbf-778c378e2fd2" />
+
 
 ## Reporting a Vulnerability
 
