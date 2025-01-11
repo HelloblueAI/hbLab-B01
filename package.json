@@ -1,6 +1,6 @@
 {
   "name": "helloblue-ai",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A project to facilitate connecting users to company customer services quickly and efficiently.",
   "main": "app.js",
   "scripts": {

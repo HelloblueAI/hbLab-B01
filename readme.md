@@ -61,7 +61,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 - **CSV-Parser**: A library for parsing CSV files, utilized to manage and test data imports from company records.
 
 ```javascript
-> helloblue-ai@1.0.4 test
+> helloblue-ai@1.0.5 test
 Advanced Voice Recognition Tests
   Utility Functions
       ✓ should correctly process voice input and update the UI (4 ms)
