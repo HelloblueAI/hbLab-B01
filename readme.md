@@ -103,15 +103,15 @@ Ran all test suites.
 
 ## Contributing
 
-We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](CONTRIBUTING.md)
+We welcome pull requests, bug reports, and other contributions. Please read the [CONTRIBUTING](CONTRIBUTING.md) file for more detaills.
 
 ## Security Policy
 
-Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/b301f98d05b70bab9a7032ae7739814d189b5e35/security.md)
+Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3aa9c3897869aee5f7030ac22919d1a882/SECURITY.md) document for more details.
 
 ## License
 
-`hbLab-B01` is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/9725758965ff06d9b2e70e8a3406f6228e5d8160/LICENSE.md) file for more details.
+`hbLab-B01` is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/9725758965ff06d9b2e70e8a3406f6228e5d8160/LICENSE.md)
 
 ![GitHub issues](https://img.shields.io/github/issues/HelloblueAI/hbLab-B01)
 ![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen)
