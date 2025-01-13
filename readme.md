@@ -111,7 +111,7 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3
 
 ## License
 
-`hbLab-B01` is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/9725758965ff06d9b2e70e8a3406f6228e5d8160/LICENSE.md)
+`hbLab-B01` is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/HelloblueAI/hbLab-B01/blob/e68331e63a118c5f0d39bcdbebd80038313f1cd6/LICENSE.md)
 
 ![GitHub issues](https://img.shields.io/github/issues/HelloblueAI/hbLab-B01)
 ![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen)
