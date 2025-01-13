@@ -114,7 +114,6 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3
 `hbLab-B01` is licensed under the Apache License Version 2.0. See the [LICENSE](LICENSE.md)
 
 ![GitHub issues](https://img.shields.io/github/issues/HelloblueAI/hbLab-B01)
-![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen)
 ![AI](https://img.shields.io/badge/AI-VoAI-purple?style=flat-square&logo=ai)
 ![Bleu.js](https://img.shields.io/badge/Bleu.js-v1.0.25-0ff?style=flat)
 ![ESLint](https://img.shields.io/badge/ESLint-v9.17.0-yellow)
@@ -131,6 +130,7 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=alert_status)](https://sonarcloud.io/dashboard?id=HelloblueAI_hbLab-B01)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=bugs)](https://sonarcloud.io/summary/new_code?id=HelloblueAI_hbLab-B01)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=HelloblueAI_hbLab-B01&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=HelloblueAI_hbLab-B01)
+![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen)
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue)
 ![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/221cf2a1-0447-4d32-ace5-5c177916fc4e/deploy-status)](https://app.netlify.com/sites/helloblueai/deploys)
