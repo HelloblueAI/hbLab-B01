@@ -216,12 +216,12 @@ header {
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(15, 15, 203, 0.822);
+    box-shadow: 0 0 0 0 rgba(31, 31, 152, 0.693);
   }
 
   20% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 5px rgba(16, 33, 188, 0.52);
+    box-shadow: 0 0 0 5px rgba(27, 44, 200, 0.52);
   }
 
   50% {
@@ -231,7 +231,7 @@ header {
 
   75% {
     transform: scale(1);
-    box-shadow: 0 0 0 30px rgba(44, 63, 237, 0.958);
+    box-shadow: 0 0 0 30px rgba(27, 43, 183, 0.958);
   }
 }
 
