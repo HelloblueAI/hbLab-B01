@@ -1,4 +1,4 @@
-import VoiceRecognition from '../voiceRecognition';
+import VoiceRecognition from '../voicerecognition';
 
 describe('Simplified Voice Recognition Integration Tests', () => {
   let voiceRecognition;
@@ -33,6 +33,10 @@ describe('Simplified Voice Recognition Integration Tests', () => {
       stop: jest.fn(),
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
+      onstart: jest.fn(),
+      onresult: jest.fn(),
+      onend: jest.fn(),
+      onerror: jest.fn(),
     }));
 
     voiceRecognition.recognition = voiceRecognition.initializeRecognition();
@@ -41,7 +45,7 @@ describe('Simplified Voice Recognition Integration Tests', () => {
 
   it('should process voice input and update the UI correctly', async () => {
     expect.assertions(3);
-
+    voiceRecognition.recognition.onresult({ results: result.results });
     const transcript = 'TestCompany';
     const result = mockRecognitionResult(transcript, 0.9);
 
@@ -53,15 +57,13 @@ describe('Simplified Voice Recognition Integration Tests', () => {
   });
 
   it('should handle recognition errors gracefully', () => {
-    expect.assertions(1);
+    expect.assertions(2);
 
-    simulateDispatchEvent('error', { error: 'network' });
+    const mockError = new Error('Network error');
+    voiceRecognition.recognition.onerror(mockError);
 
-    try {
-      throw new Error('Network error');
-    } catch (e) {
-      expect(e.message).toBe('Network error');
-    }
+    expect(voiceRecognition.elements.feedbackText.classList.add).toHaveBeenCalledWith('error');
+    expect(voiceRecognition.elements.feedbackText.textContent).toBe('Network error');
   });
 
   it('should skip low-confidence inputs', async () => {
@@ -92,22 +94,22 @@ describe('Simplified Voice Recognition Integration Tests', () => {
     ['audio-capture', 'Microphone unavailable'],
     ['network', 'Network error'],
   ])('should handle error: %s', (errorType, expectedMessage) => {
-    expect.assertions(1);
+    expect.assertions(2);
 
     voiceRecognition.recognition.dispatchEvent.mockImplementation(({ type }) => {
       if (type === 'error') {
-        throw new Error(expectedMessage);
+        voiceRecognition.recognition.onerror({ error: errorType });
       }
     });
 
-    try {
-      simulateDispatchEvent('error', { error: errorType });
-    } catch (e) {
-      expect(e.message).toBe(expectedMessage);
-    }
+    simulateDispatchEvent('error', { error: errorType });
+
+    expect(voiceRecognition.recognition.dispatchEvent).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
+    expect(voiceRecognition.elements.feedbackText.classList.add).toHaveBeenCalledWith('error');
+    expect(voiceRecognition.elements.feedbackText.textContent).toBe(expectedMessage);
   });
 
-  it('should allow starting and stopping recognition', () => {
+  it('should start and stop recognition', () => {
     expect.assertions(2);
 
     voiceRecognition.startRecognition();
@@ -128,7 +130,6 @@ describe('Simplified Voice Recognition Integration Tests', () => {
     voiceRecognition.toggleVoiceRecognition();
     expect(voiceRecognition.recognition.stop).toHaveBeenCalled();
   });
-
   it('should update feedback text on successful recognition', () => {
     expect.assertions(1);
 

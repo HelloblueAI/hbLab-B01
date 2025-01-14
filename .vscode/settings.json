@@ -20,6 +20,7 @@
     "fastify",
     "fastq",
     "fstat",
+    "gnutls",
     "Haghighatnia",
     "hapi",
     "helloblue",
@@ -62,6 +63,7 @@
     "urlpattern",
     "venv",
     "vercel",
+    "voicerecognition",
     "xhmikosr",
     "yargs"
   ],

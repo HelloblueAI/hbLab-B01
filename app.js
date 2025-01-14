@@ -1,6 +1,6 @@
 import { config } from './config.js';
 import { capitalizeCompany, debounce, delay, displayNotification, isValidURL } from './utils.js';
-import VoiceRecognition from './voiceRecognition.js';
+import VoiceRecognition from './voicerecognition.js';
 
 document.addEventListener('DOMContentLoaded', initApp);
 
