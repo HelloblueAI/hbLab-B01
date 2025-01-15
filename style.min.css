@@ -212,28 +212,27 @@ header {
 }
 
 @keyframes futuristicAnimation {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(57, 120, 196, 0.693);
+    box-shadow: 0 0 0 0 rgba(7, 124, 220, 0.9); /* Light blue */
   }
 
   20% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 5px rgba(4, 128, 244, 0.794);
+    box-shadow: 0 0 0 5px rgba(11, 116, 209, 0.8); /* Slightly darker blue */
   }
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 0 30px rgb(38, 119, 217);
+    box-shadow: 0 0 0 30px rgba(25, 118, 210, 0.7); /* Modern deep blue */
   }
 
   75% {
     transform: scale(1);
-    box-shadow: 0 0 0 30px rgba(26, 99, 207, 0.958);
+    box-shadow: 0 0 0 30px rgba(2, 121, 219, 0.6); /* Stylish dark blue */
   }
 }
+
 
 @keyframes detectionPulse {
   0% {
