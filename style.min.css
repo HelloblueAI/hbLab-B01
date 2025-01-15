@@ -214,22 +214,22 @@ header {
 @keyframes futuristicAnimation {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(11, 115, 241, 0.9); 
+    box-shadow: 0 0 0 0 rgba(31, 98, 179, 0.9);
   }
 
   20% {
     transform: scale(1.1);
-    box-shadow: 0 0 0 5px rgba(32, 127, 210, 0.8);
+    box-shadow: 0 0 0 5px rgba(35, 88, 224, 0.769);
   }
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 0 30px rgba(4, 107, 210, 0.7);
+    box-shadow: 0 0 0 30px rgba(1, 64, 238, 0.768);
   }
 
   75% {
     transform: scale(1);
-    box-shadow: 0 0 0 30px rgba(8, 129, 229, 0.77);
+    box-shadow: 0 0 0 30px rgba(20, 64, 222, 0.856);
   }
 }
 
