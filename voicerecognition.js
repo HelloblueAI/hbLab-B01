@@ -123,7 +123,7 @@ export default class VoiceRecognition {
     const errorMessages = {
       'no-speech': 'No speech detected. Please try again.',
       'audio-capture': 'Microphone unavailable. Check permissions.',
-      'network': 'Network error. Check your connection.',
+      network: 'Network error. Check your connection.',
       'not-allowed': 'Microphone access denied. Update browser settings.',
     };
 

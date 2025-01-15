@@ -86,7 +86,6 @@ function setupEventListeners(elements, state) {
     }
   });
 
-
   const voiceRecognition = new VoiceRecognition(
     elements,
     (spokenCompany) => {
@@ -101,16 +100,13 @@ function setupEventListeners(elements, state) {
     }
   );
 
-
   if (voiceRecognition && typeof voiceRecognition.start === 'function') {
     voiceRecognition.start();
-
 
     console.log('VoiceRecognition started successfully.');
   } else {
     console.error('VoiceRecognition failed to start. Ensure the class is implemented correctly.');
   }
-
 
   if (typeof voiceRecognition.onError === 'function') {
     voiceRecognition.onError((error) => {
@@ -118,7 +114,6 @@ function setupEventListeners(elements, state) {
       displayNotification('Voice recognition encountered an issue. Please try again.');
     });
   }
-
 
   if (elements.stopRecognitionButton) {
     elements.stopRecognitionButton.addEventListener('click', () => {
@@ -129,7 +124,6 @@ function setupEventListeners(elements, state) {
     });
   }
 }
-
 
 function handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state) {
   const { value } = event.target;

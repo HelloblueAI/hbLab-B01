@@ -20,8 +20,13 @@ describe('Simplified Voice Recognition Integration Tests', () => {
 
   beforeEach(() => {
     const mockElements = {
-      feedbackText: { textContent: '', classList: { add: jest.fn(), remove: jest.fn() } },
-      voiceButton: { classList: { add: jest.fn(), remove: jest.fn(), toggle: jest.fn() } },
+      feedbackText: {
+        textContent: '',
+        classList: { add: jest.fn(), remove: jest.fn() },
+      },
+      voiceButton: {
+        classList: { add: jest.fn(), remove: jest.fn(), toggle: jest.fn() },
+      },
       companySearch: { value: '' },
     };
 
@@ -42,7 +47,6 @@ describe('Simplified Voice Recognition Integration Tests', () => {
     voiceRecognition.recognition = voiceRecognition.initializeRecognition();
   });
 
-
   it('should process voice input and update the UI correctly', async () => {
     expect.assertions(3);
     voiceRecognition.recognition.onresult({ results: result.results });
@@ -51,7 +55,9 @@ describe('Simplified Voice Recognition Integration Tests', () => {
 
     simulateDispatchEvent('result', { results: result.results });
 
-    expect(voiceRecognition.recognition.dispatchEvent).toHaveBeenCalledWith(expect.objectContaining({ type: 'result' }));
+    expect(voiceRecognition.recognition.dispatchEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ type: 'result' })
+    );
     expect(result.results[0][0].transcript).toBe('TestCompany');
     expect(result.results[0][0].confidence).toBe(0.9);
   });
@@ -104,7 +110,9 @@ describe('Simplified Voice Recognition Integration Tests', () => {
 
     simulateDispatchEvent('error', { error: errorType });
 
-    expect(voiceRecognition.recognition.dispatchEvent).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
+    expect(voiceRecognition.recognition.dispatchEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ type: 'error' })
+    );
     expect(voiceRecognition.elements.feedbackText.classList.add).toHaveBeenCalledWith('error');
     expect(voiceRecognition.elements.feedbackText.textContent).toBe(expectedMessage);
   });

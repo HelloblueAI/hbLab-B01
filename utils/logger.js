@@ -25,7 +25,7 @@ class Logger {
   writeToFile(message) {
     fs.appendFile(this.logFilePath, `${message}\n`, (err) => {
       if (err) {
-        console.error('[LOGGER ERROR]: Failed to write to log file.', err); // eslint-disable-line no-console
+        console.error('[LOGGER ERROR]: Failed to write to log file.', err);
       }
     });
   }
@@ -33,7 +33,7 @@ class Logger {
   log(message, additionalInfo = null) {
     const formattedMessage = this.formatMessage('LOG', message, additionalInfo);
     if (this.debugMode) {
-      console.log(formattedMessage); // eslint-disable-line no-console
+      console.log(formattedMessage);
     }
     this.writeToFile(formattedMessage);
   }
@@ -41,14 +41,14 @@ class Logger {
   warn(message, additionalInfo = null) {
     const formattedMessage = this.formatMessage('WARN', message, additionalInfo);
     if (this.debugMode) {
-      console.warn(formattedMessage); // eslint-disable-line no-console
+      console.warn(formattedMessage);
     }
     this.writeToFile(formattedMessage);
   }
 
   error(message, additionalInfo = null) {
     const formattedMessage = this.formatMessage('ERROR', message, additionalInfo);
-    console.error(formattedMessage); // eslint-disable-line no-console
+    console.error(formattedMessage);
     this.writeToFile(formattedMessage);
   }
 }

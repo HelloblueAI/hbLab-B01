@@ -4,9 +4,7 @@ const { TextDecoder, TextEncoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-console.log(require.resolve('@testing-library/jest-dom/extend-expect'));
 require('@testing-library/jest-dom/extend-expect');
-
 
 // Mock for voice recognition functionality (if needed for your tests)
 global.createMockRecognitionResult = (transcript, confidence) => ({

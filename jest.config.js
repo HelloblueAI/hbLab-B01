@@ -2,7 +2,7 @@ const { defaults } = require('jest-config');
 
 module.exports = {
   // Specify the test environment
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: 'jsdom',
 
   // Setup files executed before each test suite
   setupFilesAfterEnv: ['./jest.setup.js'],
@@ -16,10 +16,10 @@ module.exports = {
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'html'], // Added HTML for better browser visualization
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}', // Source files to collect coverage from
-    '!src/**/*.d.ts',          // Exclude type definitions
-    '!src/**/__mocks__/**',    // Exclude mock files
-    '!src/**/index.{js,ts}',   // Exclude barrel files
-    '!src/setupTests.js',      // Exclude test setup files
+    '!src/**/*.d.ts', // Exclude type definitions
+    '!src/**/__mocks__/**', // Exclude mock files
+    '!src/**/index.{js,ts}', // Exclude barrel files
+    '!src/setupTests.js', // Exclude test setup files
   ],
 
   // Patterns for test file matching
@@ -35,9 +35,7 @@ module.exports = {
   },
 
   // Ignore patterns for transformations
-  transformIgnorePatterns: [
-    'node_modules/(?!(node-fetch|other-esm-module)/)',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(node-fetch|other-esm-module)/)'],
 
   // Mock configurations for assets and styles
   moduleNameMapper: {

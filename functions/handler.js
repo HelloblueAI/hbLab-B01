@@ -8,7 +8,9 @@ describe('handler', () => {
     };
     const response = await handler(event);
     expect(response.statusCode).toBe(302);
-    expect(response.headers.Location).toBe('https://play.google.com/store/apps/details?id=com.cloudtenlabs.helloblue');
+    expect(response.headers.Location).toBe(
+      'https://play.google.com/store/apps/details?id=com.cloudtenlabs.helloblue'
+    );
   });
 
   it('should redirect to the iOS app store for iPhone user-agents', async () => {

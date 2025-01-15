@@ -119,18 +119,13 @@ describe('Simplified Voice Recognition Integration Tests', () => {
   it('should cache results and reuse them', async () => {
     const transcript = 'CachedCompany';
 
-
     await voiceRecognition.processVoiceInput(transcript);
     expect(state.cache.has(`companyData-${transcript}`)).toBe(true);
-
-    
     const cachedData = state.cache.get(`companyData-${transcript}`);
     const processedData = await voiceRecognition.processVoiceInput(transcript);
 
-
     expect(cachedData).toEqual(processedData);
   });
-
 
   it('should not fetch data for low-confidence input', async () => {
     expect.hasAssertions(); // Add this at the start of the test

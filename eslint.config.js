@@ -1,6 +1,7 @@
 const eslintPluginPrettier = require('eslint-plugin-prettier');
 const eslintPluginReact = require('eslint-plugin-react');
 const eslintPluginJest = require('eslint-plugin-jest');
+const eslintPluginJSX = require('eslint-plugin-jsx-a11y');
 
 module.exports = [
   {
@@ -13,7 +14,7 @@ module.exports = [
       'build/**',
       '.netlify/**',
       'venv/**',
-      '**/site-packages/**', 
+      '**/site-packages/**',
     ],
   },
   {
@@ -23,35 +24,28 @@ module.exports = [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        allowImportExportEverywhere: true,
+        ecmaFeatures: {
+          jsx: true,
+        },
         requireConfigFile: false,
       },
       globals: {
         module: 'readonly',
         require: 'readonly',
         process: 'readonly',
-        SpeechRecognition: 'readonly',
-        webkitSpeechRecognition: 'readonly',
         __dirname: 'readonly',
-        exports: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
-        URL: 'readonly',
-        EVALEX_TRUSTED: 'readonly',
-        CONSOLE_MODE: 'readonly',
-        EVALEX: 'readonly',
-        URLSearchParams: 'readonly',
-        SECRET: 'readonly',
-        alert: 'readonly',
-        requestAnimationFrame: 'readonly',
         fetch: 'readonly',
+        URL: 'readonly',
         AbortController: 'readonly',
-        confirm: 'readonly',
         window: 'readonly',
         document: 'readonly',
-        navigator: 'readonly',
         console: 'readonly',
+        confirm: 'readonly',
+        SpeechRecognition: 'readonly',
 
+        // Jest
         describe: 'readonly',
         it: 'readonly',
         test: 'readonly',
@@ -66,11 +60,13 @@ module.exports = [
       prettier: eslintPluginPrettier,
       react: eslintPluginReact,
       jest: eslintPluginJest,
+      'jsx-a11y': eslintPluginJSX,
     },
     settings: {
       react: { version: 'detect' },
     },
     rules: {
+      // Prettier
       'prettier/prettier': [
         'error',
         {
@@ -84,61 +80,45 @@ module.exports = [
           endOfLine: 'lf',
         },
       ],
+
+      // React
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-vars': 'error',
+      'react/prop-types': 'off',
 
-      'jest/no-disabled-tests': 'warn',
-      'jest/no-focused-tests': 'error',
-      'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error',
+      // JSX Accessibility
+      'jsx-a11y/anchor-is-valid': [
+        'warn',
+        {
+          components: ['Link'],
+          specialLink: ['to'],
+          aspects: ['noHref', 'invalidHref', 'preferButton'],
+        },
+      ],
 
+      // General rules
       'no-undef': 'error',
       'no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
-      'space-before-function-paren': ['off'],
-      'max-len': ['warn', { code: 100, ignoreComments: true }],
-      'no-console': 'warn',
+      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': 'error',
-      'no-var': 'error',
-      'prefer-const': 'warn',
-
       'arrow-spacing': ['error', { before: true, after: true }],
       'no-multiple-empty-lines': ['warn', { max: 1 }],
       'eol-last': ['error', 'always'],
-      'indent': ['error', 2, { SwitchCase: 1 }],
-      'curly': ['error', 'all'],
+      curly: ['error', 'all'],
     },
   },
   {
     files: ['**/__tests__/**/*.js', '**/*.test.js', '**/*.spec.js'],
     plugins: { jest: eslintPluginJest },
-    languageOptions: {
-      globals: {
-        describe: 'readonly',
-        it: 'readonly',
-        test: 'readonly',
-        expect: 'readonly',
-        beforeEach: 'readonly',
-        afterEach: 'readonly',
-        jest: 'readonly',
-      },
-    },
     rules: {
       'jest/no-disabled-tests': 'warn',
       'jest/no-focused-tests': 'error',
       'jest/no-identical-title': 'error',
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
-      'jest/no-done-callback': 'error',
-
-      'jest/no-conditional-expect': 'error',
-      'jest/prefer-expect-assertions': ['warn', { onlyFunctionsWithAsyncKeyword: true }],
-
       'jest/no-commented-out-tests': 'warn',
       'jest/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
-      'no-console': 'off',
-      'no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     },
   },
 ];
