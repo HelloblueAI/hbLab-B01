@@ -1,7 +1,9 @@
 const eslintPluginPrettier = require('eslint-plugin-prettier');
 const eslintPluginReact = require('eslint-plugin-react');
+const eslintPluginReactHooks = require('eslint-plugin-react-hooks');
 const eslintPluginJest = require('eslint-plugin-jest');
 const eslintPluginJSX = require('eslint-plugin-jsx-a11y');
+const eslintPluginTypescript = require('@typescript-eslint/eslint-plugin');
 
 module.exports = [
   {
@@ -18,22 +20,26 @@ module.exports = [
     ],
   },
   {
-    files: ['**/*.js', '**/*.jsx'],
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     languageOptions: {
       parser: require('@babel/eslint-parser'),
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
         ecmaFeatures: {
-          jsx: true,
+          jsx: true, 
         },
         requireConfigFile: false,
       },
+
       globals: {
+        // Node.js globals
         module: 'readonly',
         require: 'readonly',
         process: 'readonly',
         __dirname: 'readonly',
+
+        // Browser globals
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         fetch: 'readonly',
@@ -45,7 +51,7 @@ module.exports = [
         confirm: 'readonly',
         SpeechRecognition: 'readonly',
 
-        // Jest
+        // Jest globals
         describe: 'readonly',
         it: 'readonly',
         test: 'readonly',
@@ -59,14 +65,16 @@ module.exports = [
     plugins: {
       prettier: eslintPluginPrettier,
       react: eslintPluginReact,
+      'react-hooks': eslintPluginReactHooks,
       jest: eslintPluginJest,
       'jsx-a11y': eslintPluginJSX,
+      '@typescript-eslint': eslintPluginTypescript,
     },
     settings: {
       react: { version: 'detect' },
     },
     rules: {
-      // Prettier
+      // Prettier integration
       'prettier/prettier': [
         'error',
         {
@@ -81,13 +89,15 @@ module.exports = [
         },
       ],
 
-      // React
+      // React-specific rules
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-vars': 'error',
       'react/prop-types': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
 
-      // JSX Accessibility
+      // JSX Accessibility rules
       'jsx-a11y/anchor-is-valid': [
         'warn',
         {
@@ -96,6 +106,13 @@ module.exports = [
           aspects: ['noHref', 'invalidHref', 'preferButton'],
         },
       ],
+      'jsx-a11y/no-static-element-interactions': 'warn',
+      'jsx-a11y/click-events-have-key-events': 'warn',
+
+      // TypeScript-specific rules
+      '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
 
       // General rules
       'no-undef': 'error',

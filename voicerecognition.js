@@ -1,12 +1,8 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = elements;
-    this.fetchCompanyData = this.debounce(
-      this.retryFetch(fetchCompanyData, options.maxRetries || 3),
-      300
-    );
+    this.fetchCompanyData = this.retryFetch(fetchCompanyData, options.maxRetries || 3);
     this.options = {
-      interimResults: true,
       continuous: false,
       language: 'en-US',
       confidenceThreshold: 0.6,
@@ -14,7 +10,13 @@ export default class VoiceRecognition {
     };
 
     this.isListening = false;
-    this.recognition = this.initializeRecognition();
+
+    try {
+      this.recognition = this.initializeRecognition();
+    } catch (error) {
+      console.error('Speech Recognition API Initialization Error:', error.message);
+      this.recognition = null;
+    }
 
     this.setupEventListeners();
   }
@@ -41,7 +43,9 @@ export default class VoiceRecognition {
   }
 
   setupEventListeners() {
-    this.elements.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
+    if (this.elements.voiceButton) {
+      this.elements.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
+    }
 
     document.addEventListener('keydown', (event) => {
       if (event.altKey && event.key === 'v') {
@@ -51,19 +55,23 @@ export default class VoiceRecognition {
   }
 
   startRecognition() {
-    if (!this.isListening) {
+    if (this.recognition && !this.isListening) {
       this.recognition.start();
     }
   }
 
   stopRecognition() {
-    if (this.isListening) {
+    if (this.recognition && this.isListening) {
       this.recognition.stop();
     }
   }
 
   toggleVoiceRecognition() {
-    this.isListening ? this.stopRecognition() : this.startRecognition();
+    if (this.recognition) {
+      this.isListening ? this.stopRecognition() : this.startRecognition();
+    } else {
+      this.showFeedback('Speech Recognition is not available.', false);
+    }
   }
 
   onRecognitionStart() {
@@ -88,9 +96,9 @@ export default class VoiceRecognition {
       this.updateSearchInput(interimTranscript);
     }
 
-    if (finalTranscript) {
+    if (finalTranscript && finalTranscript.trim() !== '') {
       this.handleFinalTranscript(finalTranscript);
-      this.animateDetection(); // Add glowing effect on detection
+      this.animateDetection();
     }
   }
 
@@ -98,7 +106,7 @@ export default class VoiceRecognition {
     this.updateSearchInput(transcript);
 
     try {
-      this.fetchCompanyData(transcript);
+      await this.fetchCompanyData(transcript);
       this.animateSuccess();
     } catch (error) {
       this.showFeedback(`Error: ${error.message}`, false);
@@ -133,31 +141,45 @@ export default class VoiceRecognition {
 
   showFeedback(message, isActive) {
     const { feedbackText, voiceButton } = this.elements;
-    feedbackText.textContent = message;
+    if (feedbackText) {
+      feedbackText.textContent = message;
+    }
 
     if (isActive) {
-      feedbackText.classList.add('active');
-      voiceButton.classList.add('active');
+      if (feedbackText) {
+        feedbackText.classList.add('active');
+      }
+      if (voiceButton) {
+        voiceButton.classList.add('active');
+      }
     } else {
-      feedbackText.classList.remove('active');
-      voiceButton.classList.remove('active');
+      if (feedbackText) {
+        feedbackText.classList.remove('active');
+      }
+      if (voiceButton) {
+        voiceButton.classList.remove('active');
+      }
     }
   }
 
   toggleButtonState(isActive) {
-    this.elements.voiceButton.classList.toggle('listening', isActive);
+    if (this.elements.voiceButton) {
+      this.elements.voiceButton.classList.toggle('listening', isActive);
+    }
   }
 
   animateSuccess() {
-    const { voiceButton } = this.elements;
-    voiceButton.classList.add('success');
-    setTimeout(() => voiceButton.classList.remove('success'), 1000);
+    if (this.elements.voiceButton) {
+      this.elements.voiceButton.classList.add('success');
+      setTimeout(() => this.elements.voiceButton.classList.remove('success'), 1000);
+    }
   }
 
   animateDetection() {
-    const { voiceButton } = this.elements;
-    voiceButton.classList.add('detected'); // Add detection effect
-    setTimeout(() => voiceButton.classList.remove('detected'), 1000);
+    if (this.elements.voiceButton) {
+      this.elements.voiceButton.classList.add('detected');
+      setTimeout(() => this.elements.voiceButton.classList.remove('detected'), 1000);
+    }
   }
 
   retryFetch(fetchFunction, maxRetries) {
@@ -166,8 +188,9 @@ export default class VoiceRecognition {
       while (attempt < maxRetries) {
         try {
           return await fetchFunction(data);
-        } catch {
-          attempt++; // 'error' was unused; just omit it
+        } catch (error) {
+          console.warn(`Retrying (${attempt + 1}/${maxRetries}):`, error.message);
+          attempt++;
           if (attempt >= maxRetries) {
             throw new Error('Maximum retry attempts reached.');
           }
