@@ -85,7 +85,9 @@ export default class VoiceRecognition {
       (result) => result.isFinal && result[0].confidence >= this.options.confidenceThreshold
     );
 
-    const finalTranscript = filteredResults.map((result) => result[0].transcript.trim()).join(' ');
+    let finalTranscript = filteredResults
+      .map((result) => result[0].transcript.trim())
+      .join(' ');
 
     const interimTranscript = Array.from(event.results)
       .filter((result) => !result.isFinal)
@@ -97,6 +99,7 @@ export default class VoiceRecognition {
     }
 
     if (finalTranscript && finalTranscript.trim() !== '') {
+      finalTranscript = this.deduplicateWords(finalTranscript);
       this.handleFinalTranscript(finalTranscript);
       this.animateDetection();
     }
@@ -104,6 +107,14 @@ export default class VoiceRecognition {
 
   async handleFinalTranscript(transcript) {
     this.updateSearchInput(transcript);
+
+
+    if (this.lastProcessedTranscript === transcript) {
+      console.log('Duplicate request avoided:', transcript);
+      return;
+    }
+
+    this.lastProcessedTranscript = transcript;
 
     try {
       await this.fetchCompanyData(transcript);
@@ -114,6 +125,15 @@ export default class VoiceRecognition {
       this.stopRecognition();
     }
   }
+
+  deduplicateWords(input) {
+
+    return input
+      .split(' ')
+      .filter((word, index, arr) => word !== arr[index - 1])
+      .join(' ');
+  }
+
 
   updateSearchInput(transcript) {
     if (this.elements.companySearch) {
