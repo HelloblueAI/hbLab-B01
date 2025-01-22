@@ -96,7 +96,7 @@ function setupEventListeners(elements, state) {
     {
       interimResults: true,
       continuous: true,
-      autoRestart: true, 
+      autoRestart: true,
     }
   );
 
@@ -106,7 +106,6 @@ function setupEventListeners(elements, state) {
   } else {
     console.error('VoiceRecognition failed to start. Ensure the class is implemented correctly.');
   }
-
 
   if (voiceRecognition && typeof voiceRecognition.start === 'function') {
     voiceRecognition.start();

@@ -43,9 +43,6 @@ global.SpeechRecognition = jest.fn().mockImplementation(() => {
   };
 });
 
-
-
-
 // Mock document.createElement for DOM elements
 global.document.createElement = jest.fn(() => ({
   classList: {

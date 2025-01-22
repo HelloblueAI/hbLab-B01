@@ -27,7 +27,7 @@ module.exports = [
         ecmaVersion: 'latest',
         sourceType: 'module',
         ecmaFeatures: {
-          jsx: true, 
+          jsx: true,
         },
         requireConfigFile: false,
       },

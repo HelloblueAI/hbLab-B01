@@ -127,8 +127,7 @@ describe('Simplified Voice Recognition Integration Tests', () => {
     expect(voiceRecognition.recognition.stop).toHaveBeenCalled();
   });
 
-  it('should toggle voice recognition on and off', () => {
-  });
+  it('should toggle voice recognition on and off', () => {});
   it('should update feedback text on successful recognition', () => {
     expect.assertions(1);
 
