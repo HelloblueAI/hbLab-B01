@@ -115,7 +115,7 @@ Please read the [SECURITY](https://github.com/HelloblueAI/hbLab-B01/blob/92442a3
 
 ![GitHub issues](https://img.shields.io/github/issues/HelloblueAI/hbLab-B01)
 ![AI](https://img.shields.io/badge/AI-VoAI-purple?style=flat-square&logo=ai)
-![Bleu.js](https://img.shields.io/badge/Bleu.js-v1.0.28-0ff?style=flat)
+![Bleu.js](https://img.shields.io/badge/Bleu.js-v1.0.29-0ff?style=flat)
 ![Fuse.js](https://img.shields.io/badge/Fuse.js-v7.0.0-purple)
 ![ESLint](https://img.shields.io/badge/ESLint-v9.17.0-yellow)
 ![Jest](https://img.shields.io/badge/Jest-v29.7.0-brightgreen)
