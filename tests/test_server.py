@@ -1,9 +1,9 @@
-import pytest
+import pytest # type: ignore
 from server import create_app
 import traceback
 import logging
-from flask import jsonify
-from werkzeug.exceptions import HTTPException
+from flask import jsonify # type: ignore
+from werkzeug.exceptions import HTTPException # type: ignore
 
 @pytest.fixture
 def client():

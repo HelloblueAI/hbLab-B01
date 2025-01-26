@@ -38,6 +38,7 @@
     "ioredis",
     "istanbuljs",
     "jridgewell",
+    "jsonify",
     "jsonlint",
     "keyline",
     "keyval",
@@ -84,5 +85,10 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "helloblueai",
     "projectKey": "HelloblueAI_hbLab-B01"
-  }
+  },
+  "python.analysis.extraPaths": [
+    "./test_",
+    "./test_",
+    "./test_"
+  ]
 }
