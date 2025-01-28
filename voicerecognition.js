@@ -6,10 +6,14 @@ export default class VoiceRecognition {
       continuous: false,
       language: 'en-US',
       confidenceThreshold: 0.6,
+      maxInterimDelay: 3000,
+      autoRestart: true,
+      noiseFilter: true,
       ...options,
     };
 
     this.isListening = false;
+    this.lastProcessedTranscript = '';
 
     try {
       this.recognition = this.initializeRecognition();
@@ -35,7 +39,7 @@ export default class VoiceRecognition {
     recognition.interimResults = this.options.interimResults;
 
     recognition.onstart = this.onRecognitionStart.bind(this);
-    recognition.onresult = this.onRecognitionResult.bind(this);
+    recognition.onresult = this.debounce(this.onRecognitionResult.bind(this), 100);
     recognition.onend = this.onRecognitionEnd.bind(this);
     recognition.onerror = this.onRecognitionError.bind(this);
 
@@ -94,9 +98,10 @@ export default class VoiceRecognition {
 
     if (interimTranscript) {
       this.updateSearchInput(interimTranscript);
+      this.filterBackgroundNoise(interimTranscript);
     }
 
-    if (finalTranscript && finalTranscript.trim() !== '') {
+    if (finalTranscript) {
       finalTranscript = this.deduplicateWords(finalTranscript);
       this.handleFinalTranscript(finalTranscript);
       this.animateDetection();
@@ -119,7 +124,11 @@ export default class VoiceRecognition {
     } catch (error) {
       this.showFeedback(`Error: ${error.message}`, false);
     } finally {
-      this.stopRecognition();
+      if (this.options.autoRestart) {
+        this.startRecognition();
+      } else {
+        this.stopRecognition();
+      }
     }
   }
 
@@ -136,10 +145,25 @@ export default class VoiceRecognition {
     }
   }
 
+  filterBackgroundNoise(interimTranscript) {
+    if (this.options.noiseFilter) {
+      const noiseWords = ['uh', 'um', 'ah', 'er'];
+      const filtered = interimTranscript
+        .split(' ')
+        .filter((word) => !noiseWords.includes(word))
+        .join(' ');
+      this.updateSearchInput(filtered);
+    }
+  }
+
   onRecognitionEnd() {
     this.isListening = false;
     this.showFeedback('Click to start speaking.', false);
     this.toggleButtonState(false);
+
+    if (this.options.autoRestart) {
+      this.startRecognition();
+    }
   }
 
   onRecognitionError(event) {
@@ -152,29 +176,19 @@ export default class VoiceRecognition {
 
     this.showFeedback(errorMessages[event.error] || `Error: ${event.error}`, false);
     this.stopRecognition();
+
+    if (this.options.autoRestart) {
+      this.startRecognition();
+    }
   }
 
   showFeedback(message, isActive) {
     const { feedbackText, voiceButton } = this.elements;
-    if (feedbackText) {
-      feedbackText.textContent = message;
-    }
+    if (feedbackText) feedbackText.textContent = message;
 
-    if (isActive) {
-      if (feedbackText) {
-        feedbackText.classList.add('active');
-      }
-      if (voiceButton) {
-        voiceButton.classList.add('active');
-      }
-    } else {
-      if (feedbackText) {
-        feedbackText.classList.remove('active');
-      }
-      if (voiceButton) {
-        voiceButton.classList.remove('active');
-      }
-    }
+    [feedbackText, voiceButton].forEach((el) => {
+      if (el) el.classList.toggle('active', isActive);
+    });
   }
 
   toggleButtonState(isActive) {

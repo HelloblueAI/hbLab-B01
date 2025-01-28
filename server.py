@@ -1,20 +1,19 @@
 import os
 import logging
-import traceback
 from logging.handlers import RotatingFileHandler
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-from werkzeug.exceptions import HTTPException
-from dotenv import load_dotenv
+from flask import Flask, jsonify, request # type: ignore
+from flask_cors import CORS # type: ignore
+from werkzeug.exceptions import HTTPException # type: ignore
+from dotenv import load_dotenv # type: ignore
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
 def create_app() -> Flask:
     """Create and configure the Flask application."""
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
 
-    # Enable CORS for all routes
+    # Enable CORS
     CORS(app)
 
     # Load configuration
@@ -23,17 +22,15 @@ def create_app() -> Flask:
     # Set up logging
     configure_logging()
 
-    # Register error handlers
-    register_error_handlers(app)
-
-    # Register routes
+    # Register routes and error handlers
     register_routes(app)
+    register_error_handlers(app)
 
     return app
 
 def configure_app(app: Flask) -> None:
     """Load configurations into the Flask app."""
-    app.config['JSON_SORT_KEYS'] = False  # Do not sort keys in JSON responses
+    app.config['JSON_SORT_KEYS'] = False  # Preserve order in JSON responses
     app.config['DEBUG'] = os.getenv('FLASK_DEBUG', 'false').lower() == 'true'
 
     # Security configurations
@@ -57,58 +54,66 @@ def configure_logging() -> None:
 
     # Configure root logger
     logging.basicConfig(level=log_level, handlers=[console_handler, file_handler])
-    logger = logging.getLogger(__name__)
-    logger.info("Logging is configured.")
-
-def register_error_handlers(app: Flask) -> None:
-    """Register custom error handlers for the Flask app."""
-    @app.errorhandler(HTTPException)
-    def handle_http_exception(e: HTTPException):
-        logging.error(f"HTTP error occurred: {e}")
-        return jsonify({"error": e.description, "code": e.code}), e.code
-
-    @app.errorhandler(Exception)
-    def handle_exception(e: Exception):
-        logging.error(f"An error occurred: {e}")
-        if app.config['DEBUG']:
-            logging.debug(traceback.format_exc())  # Detailed traceback in dev mode
-            return jsonify({"error": "An internal error occurred.", "details": str(e)}), 500
-        return jsonify({"error": "An internal error occurred."}), 500
+    logging.getLogger().info("Logging is configured.")
 
 def register_routes(app: Flask) -> None:
     """Register application routes."""
+
     @app.route('/')
     def home():
-        logging.info("Home route accessed")
+        """Home route."""
+        logging.info("Home route accessed.")
         return jsonify({"message": "Welcome to the enhanced Flask server!"})
 
     @app.route('/api/v1/data', methods=['GET'])
     def get_data():
-        logging.info("Data route accessed")
-        data = {"key": "value"}
-        return jsonify(data)
+        """Fetch static data."""
+        logging.info("Data route accessed.")
+        return jsonify({"key": "value"})
 
     @app.route('/api/v1/echo', methods=['POST'])
     def echo():
         """Echo back the received JSON data."""
-        logging.info("Echo route accessed")
+        logging.info("Echo route accessed.")
         data = request.get_json()
         if not data:
-            logging.warning("No JSON data received in echo route.")
-            return jsonify({"error": "No JSON data received"}), 400
+            logging.warning("No data received in the echo route.")
+            return jsonify({"error": "No data received"}), 400
         return jsonify({"received": data})
 
     @app.route('/health', methods=['GET'])
     def health_check():
         """Health check endpoint."""
-        logging.info("Health check route accessed")
+        logging.info("Health check route accessed.")
         return jsonify({"status": "healthy"})
+
+def register_error_handlers(app: Flask) -> None:
+    """Register custom error handlers for the Flask app."""
+
+    @app.errorhandler(HTTPException)
+    def handle_http_exception(e):
+        """Handle HTTP exceptions."""
+        logging.error(f"HTTP error occurred: {e}")
+        return jsonify({
+            "error": e.description,
+            "code": e.code
+        }), e.code
+
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        """Handle generic exceptions."""
+        logging.error(f"An unexpected error occurred: {e}")
+        if app.config['DEBUG']:
+            return jsonify({
+                "error": "An internal error occurred.",
+                "details": str(e)
+            }), 500
+        return jsonify({"error": "An internal error occurred."}), 500
 
 if __name__ == '__main__':
     # Validate critical environment variables
     port = int(os.getenv('PORT', 5050))
-    if not os.getenv('FLASK_DEBUG'):
-        logging.warning("FLASK_DEBUG is not set. Defaulting to 'false'.")
-
     app = create_app()
+
+    logging.info("Starting Flask server...")
     app.run(host='0.0.0.0', port=port, debug=app.config['DEBUG'])
