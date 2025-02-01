@@ -1,28 +1,34 @@
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
-    this.elements = elements;
-    this.fetchCompanyData = this.retryFetch(fetchCompanyData, options.maxRetries || 3);
+
+    this.elements = this.validateElements(elements);
+    this.fetchCompanyData = fetchCompanyData;
+
     this.options = {
       continuous: false,
       language: 'en-US',
       confidenceThreshold: 0.6,
-      maxInterimDelay: 3000,
-      autoRestart: true,
-      noiseFilter: true,
-      ...options,
+      maxRetries: 3,
+      ...options
     };
 
-    this.isListening = false;
-    this.lastProcessedTranscript = '';
+    this.state = {
+      isListening: false,
+      lastTranscript: '',
+      animationFrame: null
+    };
 
-    try {
-      this.recognition = this.initializeRecognition();
-    } catch (error) {
-      console.error('Speech Recognition API Initialization Error:', error.message);
-      this.recognition = null;
+
+    this.initializeRecognition();
+
+
+    if (this.elements.voiceButton) {
+      this.elements.voiceButton.addEventListener('click', () => {
+        this.toggleVoiceRecognition();
+      });
     }
 
-    this.setupEventListeners();
+
   }
 
   initializeRecognition() {
@@ -30,214 +36,160 @@ export default class VoiceRecognition {
 
     if (!SpeechRecognition) {
       this.showFeedback('Speech Recognition not supported in this browser.', false);
-      throw new Error('Speech Recognition API is not available.');
+      return;
     }
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = this.options.language;
-    recognition.continuous = this.options.continuous;
-    recognition.interimResults = this.options.interimResults;
+    this.recognition = new SpeechRecognition();
+    this.recognition.continuous = this.options.continuous;
+    this.recognition.interimResults = true;
+    this.recognition.lang = this.options.language;
 
-    recognition.onstart = this.onRecognitionStart.bind(this);
-    recognition.onresult = this.debounce(this.onRecognitionResult.bind(this), 100);
-    recognition.onend = this.onRecognitionEnd.bind(this);
-    recognition.onerror = this.onRecognitionError.bind(this);
 
-    return recognition;
+    this.recognition.onstart = () => {
+      this.isListening = true;
+      this.showFeedback('Listening... Speak now.', true);
+      this.startMicAnimation();
+    };
+
+    this.recognition.onend = () => {
+      this.isListening = false;
+      this.showFeedback('Click to start speaking.', false);
+      this.stopMicAnimation();
+    };
+
+    this.recognition.onresult = (event) => {
+      const results = Array.from(event.results);
+      const finalResults = results.filter(result => result.isFinal);
+
+
+      if (finalResults.length > 0) {
+        const transcript = finalResults[finalResults.length - 1][0].transcript.trim();
+        if (transcript) {
+          this.stopRecognition();
+          this.handleFinalTranscript(transcript);
+        }
+      }
+    };
+
+    this.recognition.onerror = (event) => {
+      this.showFeedback(`Error: ${event.error}`, false);
+      this.stopRecognition();
+    };
   }
 
-  setupEventListeners() {
-    if (this.elements.voiceButton) {
-      this.elements.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
+  toggleVoiceRecognition() {
+    if (this.isListening) {
+      this.stopRecognition();
+    } else {
+      this.startRecognition();
     }
-
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey && event.key === 'v') {
-        this.toggleVoiceRecognition();
-      }
-    });
   }
 
   startRecognition() {
     if (this.recognition && !this.isListening) {
-      this.recognition.start();
+      try {
+        this.recognition.start();
+      } catch (error) {
+        console.error('Failed to start recognition:', error);
+      }
     }
   }
 
   stopRecognition() {
     if (this.recognition && this.isListening) {
-      this.recognition.stop();
-    }
-  }
-
-  toggleVoiceRecognition() {
-    if (this.recognition) {
-      this.isListening ? this.stopRecognition() : this.startRecognition();
-    } else {
-      this.showFeedback('Speech Recognition is not available.', false);
-    }
-  }
-
-  onRecognitionStart() {
-    this.isListening = true;
-    this.showFeedback('Listening... Speak now.', true);
-    this.toggleButtonState(true);
-  }
-
-  onRecognitionResult(event) {
-    const filteredResults = Array.from(event.results).filter(
-      (result) => result.isFinal && result[0].confidence >= this.options.confidenceThreshold
-    );
-
-    let finalTranscript = filteredResults.map((result) => result[0].transcript.trim()).join(' ');
-
-    const interimTranscript = Array.from(event.results)
-      .filter((result) => !result.isFinal)
-      .map((result) => result[0].transcript.trim())
-      .join(' ');
-
-    if (interimTranscript) {
-      this.updateSearchInput(interimTranscript);
-      this.filterBackgroundNoise(interimTranscript);
-    }
-
-    if (finalTranscript) {
-      finalTranscript = this.deduplicateWords(finalTranscript);
-      this.handleFinalTranscript(finalTranscript);
-      this.animateDetection();
+      try {
+        this.recognition.stop();
+        this.stopMicAnimation();
+      } catch (error) {
+        console.error('Failed to stop recognition:', error);
+      }
     }
   }
 
   async handleFinalTranscript(transcript) {
-    this.updateSearchInput(transcript);
-
-    if (this.lastProcessedTranscript === transcript) {
-      console.log('Duplicate request avoided:', transcript);
-      return;
+    if (this.elements.companySearch) {
+      this.elements.companySearch.value = transcript;
     }
 
-    this.lastProcessedTranscript = transcript;
+
 
     try {
       await this.fetchCompanyData(transcript);
       this.animateSuccess();
     } catch (error) {
       this.showFeedback(`Error: ${error.message}`, false);
-    } finally {
-      if (this.options.autoRestart) {
-        this.startRecognition();
+
+    }
+  }
+
+  startMicAnimation() {
+    const button = this.elements.voiceButton;
+    if (!button) return;
+
+    button.classList.add('listening');
+
+    let scale = 1;
+    let growing = true;
+
+    const animate = () => {
+      if (!this.isListening) return;
+
+      if (growing) {
+        scale += 0.01;
+        if (scale >= 1.1) growing = false;
       } else {
-        this.stopRecognition();
+        scale -= 0.01;
+        if (scale <= 1) growing = true;
       }
-    }
-  }
 
-  deduplicateWords(input) {
-    return input
-      .split(' ')
-      .filter((word, index, arr) => word !== arr[index - 1])
-      .join(' ');
-  }
-
-  updateSearchInput(transcript) {
-    if (this.elements.companySearch) {
-      this.elements.companySearch.value = transcript;
-    }
-  }
-
-  filterBackgroundNoise(interimTranscript) {
-    if (this.options.noiseFilter) {
-      const noiseWords = ['uh', 'um', 'ah', 'er'];
-      const filtered = interimTranscript
-        .split(' ')
-        .filter((word) => !noiseWords.includes(word))
-        .join(' ');
-      this.updateSearchInput(filtered);
-    }
-  }
-
-  onRecognitionEnd() {
-    this.isListening = false;
-    this.showFeedback('Click to start speaking.', false);
-    this.toggleButtonState(false);
-
-    if (this.options.autoRestart) {
-      this.startRecognition();
-    }
-  }
-
-  onRecognitionError(event) {
-    const errorMessages = {
-      'no-speech': 'No speech detected. Please try again.',
-      'audio-capture': 'Microphone unavailable. Check permissions.',
-      network: 'Network error. Check your connection.',
-      'not-allowed': 'Microphone access denied. Update browser settings.',
+      button.style.transform = `scale(${scale})`;
+      this.state.animationFrame = requestAnimationFrame(animate);
     };
 
-    this.showFeedback(errorMessages[event.error] || `Error: ${event.error}`, false);
-    this.stopRecognition();
-
-    if (this.options.autoRestart) {
-      this.startRecognition();
-    }
+    this.state.animationFrame = requestAnimationFrame(animate);
   }
 
-  showFeedback(message, isActive) {
-    const { feedbackText, voiceButton } = this.elements;
-    if (feedbackText) feedbackText.textContent = message;
+  stopMicAnimation() {
+    const button = this.elements.voiceButton;
+    if (!button) return;
 
-    [feedbackText, voiceButton].forEach((el) => {
-      if (el) el.classList.toggle('active', isActive);
-    });
-  }
+    button.classList.remove('listening');
+    button.style.transform = 'scale(1)';
 
-  toggleButtonState(isActive) {
-    if (this.elements.voiceButton) {
-      this.elements.voiceButton.classList.toggle('listening', isActive);
+    if (this.state.animationFrame) {
+      cancelAnimationFrame(this.state.animationFrame);
+      this.state.animationFrame = null;
     }
   }
 
   animateSuccess() {
+    const button = this.elements.voiceButton;
+    if (!button) return;
+
+    button.classList.add('success');
+    setTimeout(() => {
+      button.classList.remove('success');
+    }, 1000);
+  }
+
+  showFeedback(message, isActive) {
+    if (this.elements.feedbackText) {
+      this.elements.feedbackText.textContent = message;
+    }
+
+
     if (this.elements.voiceButton) {
-      this.elements.voiceButton.classList.add('success');
-      setTimeout(() => this.elements.voiceButton.classList.remove('success'), 1000);
+      this.elements.voiceButton.classList.toggle('active', isActive);
     }
   }
 
-  animateDetection() {
-    if (this.elements.voiceButton) {
-      this.elements.voiceButton.classList.add('detected');
-      setTimeout(() => this.elements.voiceButton.classList.remove('detected'), 1000);
+  validateElements(elements) {
+    const required = ['voiceButton', 'companySearch', 'feedbackText'];
+    const missing = required.filter(key => !elements[key]);
+
+    if (missing.length > 0) {
+      throw new Error(`Missing required elements: ${missing.join(', ')}`);
     }
-  }
-
-  retryFetch(fetchFunction, maxRetries) {
-    return async (data) => {
-      let attempt = 0;
-      while (attempt < maxRetries) {
-        try {
-          return await fetchFunction(data);
-        } catch (error) {
-          console.warn(`Retrying (${attempt + 1}/${maxRetries}):`, error.message);
-          attempt++;
-          if (attempt >= maxRetries) {
-            throw new Error('Maximum retry attempts reached.');
-          }
-          await this.delay(300 * attempt);
-        }
-      }
-    };
-  }
-
-  debounce(func, wait) {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  }
-
-  delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return elements;
   }
 }
