@@ -52,7 +52,7 @@ export default class VoiceRecognition {
 
       .voice-button.listening {
         background: #4f46e5;
-        box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
+        box-shadow: 0 0 20px rgba(240, 239, 248, 0.5);
       }
 
       .voice-button svg {
@@ -76,7 +76,7 @@ export default class VoiceRecognition {
         position: absolute;
         inset: -8px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(79, 70, 229, 0.2) 0%, rgba(79, 70, 229, 0) 70%);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(79, 70, 229, 0) 70%);
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       }
 
@@ -104,20 +104,23 @@ export default class VoiceRecognition {
         animation: success 1s ease;
       }
 
-      @keyframes success {
-        0% {
-          transform: scale(1);
-          background:rgb(11, 199, 237);
-        }
-        50% {
-          transform: scale(1.1);
-          background: #3b82f6;
-        }
-        100% {
-          transform: scale(1);
-          background:rgb(111, 156, 248);
-        }
-      }
+@keyframes success {
+  0% {
+    transform: scale(1);
+    background: linear-gradient(135deg, rgb(11, 199, 237), rgb(58, 130, 251));
+    box-shadow: 0 0 10px rgba(11, 75, 237, 0.85);
+  }
+  50% {
+    transform: scale(1.15);
+    background: linear-gradient(135deg, rgb(58, 130, 251), rgb(111, 156, 248));
+    box-shadow: 0 0 20px rgba(58, 130, 251, 0.9);
+  }
+  100% {
+    transform: scale(1);
+    background: linear-gradient(135deg, rgb(111, 156, 248), rgb(0, 140, 255));
+    box-shadow: 0 0 10px rgba(111, 156, 248, 0.8);
+  }
+}
     `;
     document.head.appendChild(styleSheet);
   }
