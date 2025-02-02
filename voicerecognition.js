@@ -4,18 +4,21 @@ export default class VoiceRecognition {
     this.fetchCompanyData = fetchCompanyData;
 
     this.options = {
-      continuous: false,
+      continuous: true,
       language: 'en-US',
-      confidenceThreshold: 0.7,
-      maxRetries: 3,
-      retryDelay: 1000,
+      confidenceThreshold: 0.75,
+      maxRetries: 5,
+      retryDelay: 500,
+      noiseReduction: true,
+      adaptiveThreshold: true,
       ...options
     };
 
     this.state = {
       isListening: false,
       lastTranscript: '',
-      retryCount: 0
+      retryCount: 0,
+      silenceTimeout: null
     };
 
     this.setupStyles();
@@ -33,20 +36,20 @@ export default class VoiceRecognition {
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: #f3f4f6;
+        background: #4f46e5;
         border: none;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.3s ease, box-shadow 0.3s ease;
+        transition: background 0.2s ease, box-shadow 0.2s ease;
       }
-      .voice-button:hover { background: #e5e7eb; }
-      .voice-button.listening { background: #4f46e5; box-shadow: 0 0 20px rgba(240, 239, 248, 0.5); }
-      .voice-button.detected { background: #22c55e; box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
-      .voice-button svg { width: 28px; height: 28px; transition: color 0.3s ease; }
+      .voice-button:hover { background: #4338ca; }
+      .voice-button.listening { background: #1d4ed8; box-shadow: 0 0 20px rgba(30, 58, 138, 0.7); }
+      .voice-button.detected { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
+      .voice-button svg { width: 28px; height: 28px; transition: color 0.2s ease; }
       .voice-button.listening svg, .voice-button.detected svg { color: white; }
-      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.2; } }
+      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.1; } }
     `;
     document.head.appendChild(styleSheet);
   }
@@ -59,8 +62,9 @@ export default class VoiceRecognition {
     }
     this.recognition = new SpeechRecognition();
     this.recognition.continuous = this.options.continuous;
-    this.recognition.interimResults = false;
+    this.recognition.interimResults = true;
     this.recognition.lang = this.options.language;
+    this.recognition.maxAlternatives = 3;
 
     this.recognition.onstart = () => this.handleStart();
     this.recognition.onend = () => this.handleEnd();
@@ -75,23 +79,30 @@ export default class VoiceRecognition {
   handleStart() {
     this.state.isListening = true;
     this.showFeedback('Listening... Speak now.', true);
+    this.state.silenceTimeout = setTimeout(() => {
+      if (this.state.isListening) {
+        this.stopRecognition();
+        this.showFeedback('No speech detected. Try again.', false);
+      }
+    }, 5000);
   }
 
   handleEnd() {
     this.state.isListening = false;
     this.showFeedback('Click to start speaking.', false);
+    clearTimeout(this.state.silenceTimeout);
   }
 
   handleResult(event) {
-    const result = event.results[event.results.length - 1][0];
-    const transcript = result.transcript.trim();
-    const confidence = result.confidence;
+    const bestResult = [...event.results[event.results.length - 1]]
+      .sort((a, b) => b.confidence - a.confidence)[0];
 
-    if (confidence < this.options.confidenceThreshold) {
+    if (bestResult.confidence < this.options.confidenceThreshold) {
       this.showFeedback('Low confidence. Try again.', false);
       return;
     }
 
+    const transcript = bestResult.transcript.trim();
     if (transcript) {
       this.stopRecognition();
       this.processTranscript(transcript);
@@ -100,7 +111,7 @@ export default class VoiceRecognition {
 
   handleError(event) {
     console.error('Voice Recognition Error:', event.error);
-    if (event.error === 'network' || event.error === 'no-speech') {
+    if (['network', 'no-speech', 'audio-capture'].includes(event.error)) {
       if (this.state.retryCount < this.options.maxRetries) {
         this.state.retryCount++;
         setTimeout(() => this.startRecognition(), this.options.retryDelay);
@@ -128,7 +139,7 @@ export default class VoiceRecognition {
     const button = this.elements.voiceButton;
     if (!button) return;
     button.classList.add('detected');
-    setTimeout(() => button.classList.remove('detected'), 1500);
+    setTimeout(() => button.classList.remove('detected'), 1000);
   }
 
   toggleVoiceRecognition() {
