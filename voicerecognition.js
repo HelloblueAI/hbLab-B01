@@ -6,12 +6,13 @@ export default class VoiceRecognition {
     this.options = {
       continuous: true,
       language: 'en-US',
-      confidenceThreshold: 0.8,
+      confidenceThreshold: 0.85,
       maxRetries: 7,
-      retryDelay: 300,
+      retryDelay: 200,
       noiseReduction: true,
       adaptiveThreshold: true,
       fastMode: true,
+      instantDisplay: true,
       ...options
     };
 
@@ -44,14 +45,14 @@ export default class VoiceRecognition {
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+        transition: background 0.05s ease-in-out, box-shadow 0.05s ease-in-out;
       }
       .voice-button:hover { background: #4338ca; }
       .voice-button.listening { background: #2563eb; box-shadow: 0 0 25px rgba(30, 58, 138, 0.8); }
       .voice-button.detected { background: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
-      .voice-button svg { width: 28px; height: 28px; transition: color 0.1s ease-in-out; }
+      .voice-button svg { width: 28px; height: 28px; transition: color 0.05s ease-in-out; }
       .voice-button.listening svg, .voice-button.detected svg { color: white; }
-      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.05; } }
+      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.02; } }
     `;
     document.head.appendChild(styleSheet);
   }
@@ -86,7 +87,7 @@ export default class VoiceRecognition {
         this.stopRecognition();
         this.showFeedback('No speech detected. Try again.', false);
       }
-    }, 4000);
+    }, 3000);
   }
 
   handleEnd() {
@@ -97,19 +98,18 @@ export default class VoiceRecognition {
 
   handleResult(event) {
     if (this.state.processing) return;
-    this.state.processing = true;
 
-    const bestResult = [...event.results[event.results.length - 1]]
-      .sort((a, b) => b.confidence - a.confidence)[0];
-
-    if (bestResult.confidence < this.options.confidenceThreshold) {
-      this.showFeedback('Low confidence. Try again.', false);
-      this.state.processing = false;
-      return;
+    let transcript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        transcript += event.results[i][0].transcript.trim();
+      } else if (this.options.instantDisplay) {
+        this.elements.companySearch.value = event.results[i][0].transcript.trim();
+      }
     }
 
-    const transcript = bestResult.transcript.trim();
     if (transcript) {
+      this.state.processing = true;
       this.stopRecognition();
       this.processTranscript(transcript);
     }
@@ -147,7 +147,7 @@ export default class VoiceRecognition {
     const button = this.elements.voiceButton;
     if (!button) return;
     button.classList.add('detected');
-    setTimeout(() => button.classList.remove('detected'), 800);
+    setTimeout(() => button.classList.remove('detected'), 500);
   }
 
   toggleVoiceRecognition() {
