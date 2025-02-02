@@ -5,18 +5,20 @@ export default class VoiceRecognition {
     this.errorHandler = null;
 
     this.options = {
-      continuous: options.continuous || false,
-      interimResults: options.interimResults || false,
-      autoRestart: options.autoRestart || false,
-      language: 'en-US',
-      confidenceThreshold: 0.6,
-      ...options
+      continuous: options.continuous ?? true, // Ensure seamless experience
+      interimResults: options.interimResults ?? true, // Enable real-time updates
+      autoRestart: options.autoRestart ?? true,
+      language: options.language || 'en-US',
+      confidenceThreshold: options.confidenceThreshold ?? 0.6,
+      noiseSuppression: options.noiseSuppression ?? true,
+      enhancedSpeechModel: options.enhancedSpeechModel ?? true,
+      multiLingualSupport: options.multiLingualSupport ?? ['en-US', 'es-ES', 'fr-FR', 'de-DE'],
     };
 
     this.state = {
       isListening: false,
       lastTranscript: '',
-      animationFrame: null
+      animationFrame: null,
     };
 
     this.setupStyles();
@@ -24,34 +26,32 @@ export default class VoiceRecognition {
     this.elements.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
   }
 
-  start() {
-    this.startRecognition();
-  }
-
-  stop() {
-    this.stopRecognition();
-  }
-
-  onError(handler) {
-    this.errorHandler = handler;
-  }
 
   initializeRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      this.handleError({ error: 'Speech Recognition not supported.' });
-      return;
-    }
+    if (!SpeechRecognition) return this.handleError({ error: 'Speech Recognition not supported.' });
 
     this.recognition = new SpeechRecognition();
-    this.recognition.continuous = this.options.continuous;
-    this.recognition.interimResults = this.options.interimResults;
-    this.recognition.lang = this.options.language;
+    Object.assign(this.recognition, {
+      continuous: this.options.continuous,
+      interimResults: this.options.interimResults,
+      lang: this.options.language,
+    });
 
-    this.recognition.onstart = () => this.handleStart();
-    this.recognition.onend = () => this.handleEnd();
-    this.recognition.onresult = (event) => this.handleResult(event);
-    this.recognition.onerror = (event) => this.handleError(event);
+    this.recognition.onstart = this.handleStart.bind(this);
+    this.recognition.onend = this.handleEnd.bind(this);
+    this.recognition.onresult = this.handleResult.bind(this);
+    this.recognition.onerror = this.handleError.bind(this);
+    this.recognition.onaudioend = this.handleAudioEnd.bind(this);
+  }
+
+  setLanguage(lang) {
+    if (this.options.multiLingualSupport.includes(lang)) {
+      this.recognition.lang = lang;
+      console.log(`Language switched to: ${lang}`);
+    } else {
+      console.warn(`Language ${lang} is not supported.`);
+    }
   }
 
   startRecognition() {
@@ -59,10 +59,10 @@ export default class VoiceRecognition {
       try {
         this.recognition.start();
         this.state.isListening = true;
-        this.showFeedback('Listening...', true);
+        this.updateUI('Listening...', true);
         this.startAnimation();
       } catch (error) {
-        console.error('Failed to start recognition:', error);
+
         this.handleError(error);
       }
     }
@@ -74,9 +74,9 @@ export default class VoiceRecognition {
         this.recognition.stop();
         this.state.isListening = false;
         this.stopAnimation();
-        this.showFeedback('Click to start speaking', false);
+        this.updateUI('Click to start speaking', false);
       } catch (error) {
-        console.error('Failed to stop recognition:', error);
+        this.handleError(error);
       }
     }
   }
@@ -87,16 +87,16 @@ export default class VoiceRecognition {
 
   handleStart() {
     this.elements.voiceButton.classList.add('listening');
-    this.showFeedback('Listening... Speak now', true);
+    this.updateUI('Listening... Speak now', true);
     this.startAnimation();
   }
 
   handleEnd() {
     if (this.options.autoRestart && this.state.isListening) {
-      setTimeout(() => this.startRecognition(), 1000);
+      setTimeout(() => this.startRecognition(), 500);
     } else {
       this.elements.voiceButton.classList.remove('listening');
-      this.showFeedback('Click to start speaking', false);
+      this.updateUI('Click to start speaking', false);
       this.stopAnimation();
     }
   }
@@ -108,27 +108,36 @@ export default class VoiceRecognition {
 
     if (confidence > this.options.confidenceThreshold && transcript) {
       this.state.lastTranscript = transcript;
-      this.processTranscript(transcript);
+      this.debouncedProcessTranscript(transcript);
     }
   }
 
   handleError(event) {
     console.error('Voice Recognition Error:', event.error);
-    this.showFeedback(`Error: ${event.error}`, false);
+    this.updateUI(`Error: ${event.error}`, false);
+    if (this.errorHandler) this.errorHandler(event);
+    if (this.options.autoRestart) setTimeout(() => this.startRecognition(), 500);
+  }
 
-    if (this.errorHandler) {
-      this.errorHandler(event);
-    }
-
-    if (this.options.autoRestart) {
-      setTimeout(() => this.startRecognition(), 1000);
+  handleAudioEnd() {
+    console.log('Audio ended. Restarting recognition...');
+    if (this.options.autoRestart && this.state.isListening) {
+      setTimeout(() => this.startRecognition(), 500);
     }
   }
 
-  processTranscript(transcript) {
+  debouncedProcessTranscript = this.debounce((transcript) => {
     this.elements.companySearch.value = transcript;
     this.fetchCompanyData(transcript);
-    this.showFeedback('Processing...', true);
+    this.updateUI('Processing...', true);
+  }, 200);
+
+  debounce(func, delay) {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => func.apply(this, args), delay);
+    };
   }
 
   startAnimation() {
@@ -141,36 +150,30 @@ export default class VoiceRecognition {
       const ripple = document.createElement('div');
       ripple.className = 'ripple';
       button.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 1000);
 
-      setTimeout(() => ripple.remove(), 1500);
+
+      
       this.state.animationFrame = requestAnimationFrame(animate);
     };
 
-    animate();
+    this.state.animationFrame = requestAnimationFrame(animate);
   }
 
   stopAnimation() {
-    if (this.state.animationFrame) {
-      cancelAnimationFrame(this.state.animationFrame);
-      this.state.animationFrame = null;
-    }
+    cancelAnimationFrame(this.state.animationFrame);
+    this.state.animationFrame = null;
   }
 
-  showFeedback(message, isActive) {
-    if (this.elements.feedbackText) {
-      this.elements.feedbackText.textContent = message;
-    }
-    if (this.elements.voiceButton) {
-      this.elements.voiceButton.classList.toggle('active', isActive);
-    }
+  updateUI(message, isActive) {
+    if (this.elements.feedbackText) this.elements.feedbackText.textContent = message;
+    this.elements.voiceButton?.classList.toggle('active', isActive);
   }
 
   validateElements(elements) {
     const required = ['voiceButton', 'companySearch', 'feedbackText'];
     const missing = required.filter(key => !elements[key]);
-    if (missing.length > 0) {
-      throw new Error(`Missing required elements: ${missing.join(', ')}`);
-    }
+    if (missing.length) throw new Error(`Missing required elements: ${missing.join(', ')}`);
     return elements;
   }
 
@@ -180,54 +183,11 @@ export default class VoiceRecognition {
     const styleSheet = document.createElement('style');
     styleSheet.id = 'voice-recognition-styles';
     styleSheet.textContent = `
-      .voice-button {
-        position: relative;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: #f3f4f6;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .voice-button:hover {
-        background: #e5e7eb;
-      }
-      .voice-button.listening {
-        background: #4f46e5;
-        box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
-      }
-      .voice-button.active {
-        background: #4f46e5;
-      }
-      .voice-button svg {
-        width: 28px;
-        height: 28px;
-        transition: all 0.3s ease;
-      }
-      .voice-button.listening svg,
-      .voice-button.active svg {
-        color: white;
-      }
-      .ripple {
-        position: absolute;
-        border: 2px solid #4f46e5;
-        border-radius: 50%;
-        animation: ripple 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
-      }
-      @keyframes ripple {
-        0% {
-          transform: scale(1);
-          opacity: 0.4;
-        }
-        100% {
-          transform: scale(2);
-          opacity: 0;
-        }
-      }
+      .voice-button { width: 64px; height: 64px; border-radius: 50%; background: #f3f4f6; border: none; cursor: pointer; transition: 0.3s ease; display: flex; align-items: center; justify-content: center; }
+      .voice-button:hover { background: #e5e7eb; }
+      .voice-button.listening, .voice-button.active { background: #4f46e5; box-shadow: 0 0 20px rgba(79, 70, 229, 0.5); }
+      .ripple { position: absolute; border: 2px solid #4f46e5; border-radius: 50%; animation: ripple 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+      @keyframes ripple { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2); opacity: 0; } }
     `;
     document.head.appendChild(styleSheet);
   }
