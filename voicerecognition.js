@@ -6,11 +6,12 @@ export default class VoiceRecognition {
     this.options = {
       continuous: true,
       language: 'en-US',
-      confidenceThreshold: 0.75,
-      maxRetries: 5,
-      retryDelay: 500,
+      confidenceThreshold: 0.8,
+      maxRetries: 7,
+      retryDelay: 300,
       noiseReduction: true,
       adaptiveThreshold: true,
+      fastMode: true,
       ...options
     };
 
@@ -18,7 +19,8 @@ export default class VoiceRecognition {
       isListening: false,
       lastTranscript: '',
       retryCount: 0,
-      silenceTimeout: null
+      silenceTimeout: null,
+      processing: false
     };
 
     this.setupStyles();
@@ -36,20 +38,20 @@ export default class VoiceRecognition {
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: #4f46e5;
+        background: #1d4ed8;
         border: none;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.2s ease, box-shadow 0.2s ease;
+        transition: background 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
       }
       .voice-button:hover { background: #4338ca; }
-      .voice-button.listening { background: #1d4ed8; box-shadow: 0 0 20px rgba(30, 58, 138, 0.7); }
-      .voice-button.detected { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
-      .voice-button svg { width: 28px; height: 28px; transition: color 0.2s ease; }
+      .voice-button.listening { background: #2563eb; box-shadow: 0 0 25px rgba(30, 58, 138, 0.8); }
+      .voice-button.detected { background: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
+      .voice-button svg { width: 28px; height: 28px; transition: color 0.1s ease-in-out; }
       .voice-button.listening svg, .voice-button.detected svg { color: white; }
-      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.1; } }
+      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.05; } }
     `;
     document.head.appendChild(styleSheet);
   }
@@ -64,7 +66,7 @@ export default class VoiceRecognition {
     this.recognition.continuous = this.options.continuous;
     this.recognition.interimResults = true;
     this.recognition.lang = this.options.language;
-    this.recognition.maxAlternatives = 3;
+    this.recognition.maxAlternatives = 5;
 
     this.recognition.onstart = () => this.handleStart();
     this.recognition.onend = () => this.handleEnd();
@@ -84,7 +86,7 @@ export default class VoiceRecognition {
         this.stopRecognition();
         this.showFeedback('No speech detected. Try again.', false);
       }
-    }, 5000);
+    }, 4000);
   }
 
   handleEnd() {
@@ -94,11 +96,15 @@ export default class VoiceRecognition {
   }
 
   handleResult(event) {
+    if (this.state.processing) return;
+    this.state.processing = true;
+
     const bestResult = [...event.results[event.results.length - 1]]
       .sort((a, b) => b.confidence - a.confidence)[0];
 
     if (bestResult.confidence < this.options.confidenceThreshold) {
       this.showFeedback('Low confidence. Try again.', false);
+      this.state.processing = false;
       return;
     }
 
@@ -122,6 +128,7 @@ export default class VoiceRecognition {
       this.showFeedback(`Error: ${event.error}`, false);
     }
     this.stopRecognition();
+    this.state.processing = false;
   }
 
   async processTranscript(transcript) {
@@ -133,13 +140,14 @@ export default class VoiceRecognition {
     } catch (error) {
       this.showFeedback(`Error: ${error.message}`, false);
     }
+    this.state.processing = false;
   }
 
   animateCompanyDetection() {
     const button = this.elements.voiceButton;
     if (!button) return;
     button.classList.add('detected');
-    setTimeout(() => button.classList.remove('detected'), 1000);
+    setTimeout(() => button.classList.remove('detected'), 800);
   }
 
   toggleVoiceRecognition() {
