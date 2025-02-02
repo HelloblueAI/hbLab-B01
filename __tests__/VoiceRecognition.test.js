@@ -153,7 +153,7 @@ export default class VoiceRecognition {
       setTimeout(() => ripple.remove(), 1000);
 
 
-      
+
       this.state.animationFrame = requestAnimationFrame(animate);
     };
 
@@ -192,3 +192,46 @@ export default class VoiceRecognition {
     document.head.appendChild(styleSheet);
   }
 }
+
+beforeEach(() => {
+
+  let elements = {
+    voiceButton: document.createElement('button'),
+    companySearch: document.createElement('input'),
+    feedbackText: document.createElement('div'),
+    typedOutput: document.createElement('div'),
+  };
+
+  document.body.append(
+    elements.voiceButton,
+    elements.companySearch,
+    elements.feedbackText,
+    elements.typedOutput
+  );
+
+
+
+  const mockSpeechRecognition = jest.fn().mockImplementation(() => {
+    const handlers = {};
+    return {
+      start: jest.fn(),
+      stop: jest.fn(),
+      addEventListener: jest.fn((event, handler) => {
+        handlers[event] = handler;
+      }),
+      dispatchEvent: jest.fn((event) => {
+        if (handlers[event.type]) {
+          handlers[event.type](event);
+        }
+      }),
+      onresult: jest.fn(),
+      onerror: jest.fn(),
+    };
+  });
+
+  global.SpeechRecognition = mockSpeechRecognition;
+
+
+
+  jest.clearAllMocks();
+});
