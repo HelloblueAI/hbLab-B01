@@ -147,7 +147,7 @@ export default class VoiceRecognition {
     const button = this.elements.voiceButton;
     if (!button) return;
     button.classList.add('detected');
-    setTimeout(() => button.classList.remove('detected'), 500);
+    setTimeout(() => button.classList.remove('detected'), 1800);
   }
 
   toggleVoiceRecognition() {
