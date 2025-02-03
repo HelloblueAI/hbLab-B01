@@ -74,10 +74,10 @@ This hands-free operation allows users to perform tasks on the go, making our ap
  PASS  __tests__/VoiceRecognition.test.js
     VoiceRecognition Class Tests
     Core Functionality
-      ✓ ✅ initializes with correct default state (28 ms)
-      ✓ 🎤 starts voice recognition correctly (5 ms)
-      ✓ 🛑 stops voice recognition correctly (4 ms)
-      ✓ ⚡ toggles recognition state on button click (3 ms)
+      ✓ initializes with correct default state (28 ms)
+      ✓ starts voice recognition correctly (5 ms)
+      ✓ stops voice recognition correctly (4 ms)
+      ✓ toggles recognition state on button click (3 ms)
     Recognition Results
       ✓ 📝 processes high-confidence results (4 ms)
       ✓ ⚠️ ignores low-confidence results (4 ms)
