@@ -63,7 +63,7 @@ export class StateManager {
 }
 
 function setupEventListeners(elements, state) {
-  // Debounced fetch function for company search
+
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
     if (value) {
@@ -71,7 +71,7 @@ function setupEventListeners(elements, state) {
     }
   }, 300);
 
-  // Event listener for input
+
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
   });
