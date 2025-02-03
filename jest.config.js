@@ -1,23 +1,32 @@
 module.exports = {
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  
   transform: {
-    '^.+\\.jsx?$': 'babel-jest', // Use Babel for JS/JSX
+    '^.+\\.(js|jsx)$': ['babel-jest', {
+      presets: [
+        ['@babel/preset-env', {
+          targets: { node: 'current' }
+        }],
+        '@babel/preset-react'
+      ]
+    }]
   },
-  transformIgnorePatterns: ['node_modules/(?!(node-fetch)/)'], // Transform ESM modules
+
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy', // Mock CSS imports
-    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js', // Mock static assets
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^voicerecognition$': '<rootDir>/voicerecognition.js'
   },
-  globals: {
-    'ts-jest': {
-      useESM: true, // Support ESM for TypeScript
-    },
-  },
-  verbose: true,
+  transformIgnorePatterns: [
+    '/node_modules/(?!node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill)/'
+  ],
+  moduleDirectories: ['node_modules', '<rootDir>'],
   moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
-  resetMocks: true,
-  resetModules: true,
-  restoreMocks: true,
-  coverageProvider: 'v8',
+  verbose: true,
+  testTimeout: 10000,
+  resetMocks: false,
+  resetModules: false,
+  restoreMocks: false
 };

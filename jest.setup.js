@@ -3,16 +3,22 @@ const { TextDecoder, TextEncoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-// Include testing library
-require('@testing-library/jest-dom');
-
-// Mock fetch
+// Mock fetch instead of using node-fetch
 global.fetch = jest.fn(() =>
   Promise.resolve({
+    ok: true,
     json: () => Promise.resolve({}),
+    text: () => Promise.resolve(''),
+    blob: () => Promise.resolve(new Blob()),
+    arrayBuffer: () => Promise.resolve(new ArrayBuffer()),
+    formData: () => Promise.resolve(new FormData()),
   })
 );
 
+// Include testing library
+require('@testing-library/jest-dom');
+
+// Mock SpeechRecognition
 global.SpeechRecognition = jest.fn().mockImplementation(() => {
   const handlers = {};
 
@@ -43,7 +49,14 @@ global.SpeechRecognition = jest.fn().mockImplementation(() => {
   };
 });
 
-// Mock document.createElement for DOM elements
+// Mock window.webkitSpeechRecognition as fallback
+global.webkitSpeechRecognition = global.SpeechRecognition;
+
+// Mock requestAnimationFrame and cancelAnimationFrame
+global.requestAnimationFrame = jest.fn(callback => setTimeout(callback, 0));
+global.cancelAnimationFrame = jest.fn(id => clearTimeout(id));
+
+// Mock document.createElement
 global.document.createElement = jest.fn(() => ({
   classList: {
     add: jest.fn(),

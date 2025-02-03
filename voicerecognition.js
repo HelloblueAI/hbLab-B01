@@ -30,30 +30,29 @@ export default class VoiceRecognition {
   }
 
   setupStyles() {
+    if (typeof document === 'undefined' || typeof window === 'undefined') {
+      console.warn('🛑 JSDOM environment detected - Skipping style injection.');
+      return;
+    }
     if (document.getElementById('voice-recognition-styles')) return;
-    const styleSheet = document.createElement('style');
-    styleSheet.id = 'voice-recognition-styles';
-    styleSheet.textContent = `
-      .voice-button {
-        position: relative;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: #1d4ed8;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s, box-shadow 0.2s;
-      }
-      .voice-button:hover { background: #4338ca; }
-      .voice-button.listening { background: #2563eb; box-shadow: 0 0 20px rgba(30, 58, 138, 0.7); }
-      .voice-button.detected { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
-      .voice-button svg { width: 28px; height: 28px; color: white; transition: color 0.2s; }
-    `;
-    document.head.appendChild(styleSheet);
+
+    try {
+      const styleSheet = document.createElement('style');
+      styleSheet.id = 'voice-recognition-styles';
+      styleSheet.textContent = `
+        .voice-button { width: 64px; height: 64px; border-radius: 50%; background: #f3f4f6; border: none; cursor: pointer; transition: 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .voice-button:hover { background: #e5e7eb; }
+        .voice-button.listening, .voice-button.active { background: #4f46e5; box-shadow: 0 0 20px rgba(79, 70, 229, 0.5); }
+        .ripple { position: absolute; border: 2px solid #4f46e5; border-radius: 50%; animation: ripple 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        @keyframes ripple { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2); opacity: 0; } }
+      `;
+      document.head.appendChild(styleSheet);
+    } catch (error) {
+      console.warn('🛑 JSDOM detected - Skipping style injection.');
+    }
   }
+
+
 
   initializeRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -158,6 +157,7 @@ export default class VoiceRecognition {
     if (this.recognition && !this.state.isListening) {
       try {
         this.recognition.start();
+        this.state.isListening = true;
       } catch (error) {
         console.error('Failed to start recognition:', error);
       }
