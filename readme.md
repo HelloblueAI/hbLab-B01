@@ -61,6 +61,10 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 - **CSV-Parser**: A library for parsing CSV files, utilized to manage and test data imports from company records.
 
 ```javascript
+pnpm test
+```
+
+```javascript
 > helloblue-ai@1.0.8 test
 > jest --passWithNoTests
 
