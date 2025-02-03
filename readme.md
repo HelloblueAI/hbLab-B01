@@ -61,39 +61,45 @@ This hands-free operation allows users to perform tasks on the go, making our ap
 - **CSV-Parser**: A library for parsing CSV files, utilized to manage and test data imports from company records.
 
 ```javascript
-> helloblue-ai@1.0.5 test
-Advanced Voice Recognition Tests
-  Utility Functions
-      ✓ should correctly process voice input and update the UI (4 ms)
-      ✓ should handle recognition errors gracefully (1 ms)
-      ✓ should cache results and reuse them (1 ms)
-      ✓ should not fetch data for low-confidence input (1 ms)
-    Advanced Scenarios
-      ✓ Simultaneous chaining with different instances (1 ms)
-    Performance and Memory Tests
-      ✓ should handle extremely large numbers without crashing
-      ✓ should maintain memory integrity during high usage (5 ms)
-    Property-Based Testing
-      ✓ result should match a derived formula
-      ✓ result should be zero after adding and subtracting the same value
-      ✓ result should handle a series of random operations
-    Edge Cases
-      ✓ should handle adding zero
-      ✓ should handle subtracting zero (1 ms)
-      ✓ should handle recognition errors gracefully (1 ms)
-      ✓ should handle adding and subtracting large numbers
-      ✓ should handle adding and subtracting negative numbers
+> helloblue-ai@1.0.8 test
+> jest --passWithNoTests
 
-----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
-----------|---------|----------|---------|---------|-------------------
-All files |     100 |      100 |     100 |     100 |
- index.js |     100 |      100 |     100 |     100 |
-----------|---------|----------|---------|---------|-------------------
-Test Suites: 1 passed, 1 total
-Tests:       28 passed, 28 total
+ PASS  __tests__/index.test.js
+  Simplified Voice Recognition Integration Tests
+    ✓ should correctly process voice input and update the UI (5 ms)
+    ✓ should handle recognition errors gracefully (1 ms)
+    ✓ should cache results and reuse them (3 ms)
+    ✓ should not fetch data for low-confidence input (1 ms)
+
+ PASS  __tests__/VoiceRecognition.test.js
+  🚀 VoiceRecognition Class Tests
+    Core Functionality
+      ✓ ✅ initializes with correct default state (28 ms)
+      ✓ 🎤 starts voice recognition correctly (5 ms)
+      ✓ 🛑 stops voice recognition correctly (4 ms)
+      ✓ ⚡ toggles recognition state on button click (3 ms)
+    Recognition Results
+      ✓ 📝 processes high-confidence results (4 ms)
+      ✓ ⚠️ ignores low-confidence results (4 ms)
+      ✓ 🔄 handles multiple recognition attempts (5 ms)
+    Edge Cases
+      ✓ 💫 handles empty transcripts (3 ms)
+      ✓ 🔀 handles multiple recognition results (8 ms)
+    Error Handling
+      ✓ 🚨 handles network errors (5 ms)
+      ✓ 🎤 handles audio capture errors (4 ms)
+    Performance
+      ✓ ⏱️ handles rapid start/stop sequences (3 ms)
+    Configuration
+      ✓ ⚙️ applies custom configuration (2 ms)
+      ✓ 🔧 validates configuration values (9 ms)
+    State Management
+      ✓ 🔒 prevents concurrent recognition sessions (5 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       19 passed, 19 total
 Snapshots:   0 total
-Time:        0.22 s, estimated 1 s
+Time:        1.485 s, estimated 2 s
 Ran all test suites.
 ```
 

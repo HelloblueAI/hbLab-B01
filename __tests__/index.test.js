@@ -19,7 +19,7 @@ global.SpeechRecognition = jest.fn().mockImplementation(() => {
   };
 });
 
-// Helper functions
+
 const createMockRecognitionResult = (transcript, confidence) => ({
   results: [[{ transcript, confidence }]],
 });
@@ -104,7 +104,7 @@ describe('Simplified Voice Recognition Integration Tests', () => {
   });
 
   it('should handle recognition errors gracefully', () => {
-    expect.hasAssertions(); // Add this at the start of the test
+    expect.hasAssertions();
     const mockErrorEvent = { error: 'network' };
 
     voiceRecognition.recognition.dispatchEvent({
@@ -128,7 +128,7 @@ describe('Simplified Voice Recognition Integration Tests', () => {
   });
 
   it('should not fetch data for low-confidence input', async () => {
-    expect.hasAssertions(); // Add this at the start of the test
+    expect.hasAssertions();
     const mockRecognitionResult = createMockRecognitionResult('LowConfidenceCompany', 0.3);
 
     voiceRecognition.recognition.dispatchEvent({
