@@ -146,12 +146,36 @@ export default class VoiceRecognition {
   animateCompanyDetection() {
     const button = this.elements.voiceButton;
     if (!button) return;
+
+
+    button.classList.remove('listening');
+
+
     button.classList.add('detected');
-    setTimeout(() => button.classList.remove('detected'), 1800);
+
+
+    this.state.detectionTimeout = setTimeout(() => {
+
+      if (!this.state.isListening) {
+        button.classList.remove('detected');
+      }
+
+      if (!this.state.isListening && !this.state.processing) {
+        button.classList.remove('detected', 'listening');
+      }
+    }, 1800);
   }
 
   toggleVoiceRecognition() {
-    this.state.isListening ? this.stopRecognition() : this.startRecognition();
+    if (this.state.isListening) {
+
+      if (this.state.detectionTimeout) {
+        clearTimeout(this.state.detectionTimeout);
+      }
+      this.stopRecognition();
+    } else {
+      this.startRecognition();
+    }
   }
 
   startRecognition() {
