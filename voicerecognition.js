@@ -7,11 +7,10 @@ export default class VoiceRecognition {
       continuous: true,
       language: 'en-US',
       confidenceThreshold: 0.85,
-      maxRetries: 7,
-      retryDelay: 200,
+      maxRetries: 5,
+      retryDelay: 250,
       noiseReduction: true,
       adaptiveThreshold: true,
-      fastMode: true,
       instantDisplay: true,
       ...options
     };
@@ -21,7 +20,8 @@ export default class VoiceRecognition {
       lastTranscript: '',
       retryCount: 0,
       silenceTimeout: null,
-      processing: false
+      processing: false,
+      detectionTimeout: null
     };
 
     this.setupStyles();
@@ -45,14 +45,12 @@ export default class VoiceRecognition {
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.05s ease-in-out, box-shadow 0.05s ease-in-out;
+        transition: background 0.2s, box-shadow 0.2s;
       }
       .voice-button:hover { background: #4338ca; }
-      .voice-button.listening { background: #2563eb; box-shadow: 0 0 25px rgba(30, 58, 138, 0.8); }
-      .voice-button.detected { background: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
-      .voice-button svg { width: 28px; height: 28px; transition: color 0.05s ease-in-out; }
-      .voice-button.listening svg, .voice-button.detected svg { color: white; }
-      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.02; } }
+      .voice-button.listening { background: #2563eb; box-shadow: 0 0 20px rgba(30, 58, 138, 0.7); }
+      .voice-button.detected { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
+      .voice-button svg { width: 28px; height: 28px; color: white; transition: color 0.2s; }
     `;
     document.head.appendChild(styleSheet);
   }
@@ -82,17 +80,13 @@ export default class VoiceRecognition {
   handleStart() {
     this.state.isListening = true;
     this.showFeedback('Listening... Speak now.', true);
-    this.state.silenceTimeout = setTimeout(() => {
-      if (this.state.isListening) {
-        this.stopRecognition();
-        this.showFeedback('No speech detected. Try again.', false);
-      }
-    }, 3000);
+    this.elements.voiceButton.classList.add('listening');
   }
 
   handleEnd() {
     this.state.isListening = false;
     this.showFeedback('Click to start speaking.', false);
+    this.elements.voiceButton.classList.remove('listening');
     clearTimeout(this.state.silenceTimeout);
   }
 
@@ -145,50 +139,38 @@ export default class VoiceRecognition {
 
   animateCompanyDetection() {
     const button = this.elements.voiceButton;
-    if (!button) return;
-
 
     button.classList.remove('listening');
-
-
+    
     button.classList.add('detected');
 
-
+    clearTimeout(this.state.detectionTimeout);
     this.state.detectionTimeout = setTimeout(() => {
-
-      if (!this.state.isListening) {
-        button.classList.remove('detected');
-      }
-
-      if (!this.state.isListening && !this.state.processing) {
-        button.classList.remove('detected', 'listening');
-      }
-    }, 1800);
+      button.classList.remove('detected');
+    }, 1000);
   }
 
   toggleVoiceRecognition() {
-    if (this.state.isListening) {
-
-      if (this.state.detectionTimeout) {
-        clearTimeout(this.state.detectionTimeout);
-      }
-      this.stopRecognition();
-    } else {
-      this.startRecognition();
-    }
+    this.state.isListening ? this.stopRecognition() : this.startRecognition();
   }
 
   startRecognition() {
     if (this.recognition && !this.state.isListening) {
-      try { this.recognition.start(); }
-      catch (error) { console.error('Failed to start recognition:', error); }
+      try {
+        this.recognition.start();
+      } catch (error) {
+        console.error('Failed to start recognition:', error);
+      }
     }
   }
 
   stopRecognition() {
     if (this.recognition && this.state.isListening) {
-      try { this.recognition.stop(); }
-      catch (error) { console.error('Failed to stop recognition:', error); }
+      try {
+        this.recognition.stop();
+      } catch (error) {
+        console.error('Failed to stop recognition:', error);
+      }
     }
   }
 
