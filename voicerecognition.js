@@ -141,7 +141,7 @@ export default class VoiceRecognition {
     const button = this.elements.voiceButton;
 
     button.classList.remove('listening');
-    
+
     button.classList.add('detected');
 
     clearTimeout(this.state.detectionTimeout);
