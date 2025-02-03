@@ -72,7 +72,7 @@ This hands-free operation allows users to perform tasks on the go, making our ap
     ✓ should not fetch data for low-confidence input (1 ms)
 
  PASS  __tests__/VoiceRecognition.test.js
-  🚀 VoiceRecognition Class Tests
+    VoiceRecognition Class Tests
     Core Functionality
       ✓ ✅ initializes with correct default state (28 ms)
       ✓ 🎤 starts voice recognition correctly (5 ms)

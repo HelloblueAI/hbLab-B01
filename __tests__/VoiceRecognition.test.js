@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom';
 import VoiceRecognition from '../voicerecognition';
 
-describe('🚀 VoiceRecognition Class Tests', () => {
+describe('VoiceRecognition Class Tests', () => {
   let elements, voiceRecognition, mockFetchCompanyData, speechRecognitionMock;
   let originalConsoleError, originalConsoleWarn;
   const DEFAULT_CONFIDENCE_THRESHOLD = 0.75;
