@@ -6,7 +6,7 @@ describe('VoiceRecognition Class Tests', () => {
   let originalConsoleError, originalConsoleWarn;
   const DEFAULT_CONFIDENCE_THRESHOLD = 0.75;
 
-  // 🛠️ Setup Helpers
+
   const createMockElements = (dom) => ({
     voiceButton: dom.window.document.createElement('button'),
     companySearch: dom.window.document.createElement('input'),
@@ -35,7 +35,7 @@ describe('VoiceRecognition Class Tests', () => {
     maxAlternatives: 1
   });
 
-  // 🎬 Test Setup
+
   beforeEach(() => {
     // Save original console methods
     originalConsoleError = console.error;
@@ -43,14 +43,14 @@ describe('VoiceRecognition Class Tests', () => {
     console.error = jest.fn();
     console.warn = jest.fn();
 
-    // Setup JSDOM environment
+
     const dom = new JSDOM('<!doctype html><html><body></body></html>', {
       url: 'https://example.org',
       referrer: 'https://example.com',
       contentType: 'text/html'
     });
 
-    // Setup global objects
+
     global.document = dom.window.document;
     global.window = dom.window;
     global.navigator = dom.window.navigator;
@@ -91,14 +91,14 @@ describe('VoiceRecognition Class Tests', () => {
 
   // 📋 Core Functionality Tests
   describe('Core Functionality', () => {
-    test('✅ initializes with correct default state', () => {
+    test('initializes with correct default state', () => {
       expect(voiceRecognition).toBeDefined();
       expect(voiceRecognition.recognition).toBeDefined();
       expect(voiceRecognition.state.isListening).toBe(false);
       expect(voiceRecognition.options.confidenceThreshold).toBe(DEFAULT_CONFIDENCE_THRESHOLD);
     });
 
-    test('🎤 starts voice recognition correctly', () => {
+    test('starts voice recognition correctly', () => {
       voiceRecognition.startRecognition();
       voiceRecognition.showFeedback('Listening', true);
       expect(voiceRecognition.state.isListening).toBe(true);
@@ -106,7 +106,7 @@ describe('VoiceRecognition Class Tests', () => {
       expect(elements.feedbackText.textContent).toBe('Listening');
     });
 
-    test('🛑 stops voice recognition correctly', () => {
+    test('stops voice recognition correctly', () => {
       voiceRecognition.startRecognition();
       voiceRecognition.state.isListening = true;
       try {
@@ -117,7 +117,7 @@ describe('VoiceRecognition Class Tests', () => {
       }
     });
 
-    test('⚡ toggles recognition state on button click', () => {
+    test('toggles recognition state on button click', () => {
       const clickHandler = jest.fn(() => {
         voiceRecognition.state.isListening = !voiceRecognition.state.isListening;
       });
@@ -130,9 +130,9 @@ describe('VoiceRecognition Class Tests', () => {
     });
   });
 
-  // 🎯 Recognition Result Tests
+
   describe('Recognition Results', () => {
-    test('📝 processes high-confidence results', () => {
+    test('processes high-confidence results', () => {
       const mockEvent = {
         results: [[{ transcript: 'TestCompany', confidence: 0.9 }]]
       };
@@ -149,7 +149,7 @@ describe('VoiceRecognition Class Tests', () => {
       expect(mockFetchCompanyData).toHaveBeenCalledWith('TestCompany');
     });
 
-    test('⚠️ ignores low-confidence results', () => {
+    test('ignores low-confidence results', () => {
       const mockEvent = {
         results: [[{ transcript: 'UnclearCompany', confidence: 0.3 }]]
       };
@@ -159,7 +159,7 @@ describe('VoiceRecognition Class Tests', () => {
       expect(mockFetchCompanyData).not.toHaveBeenCalled();
     });
 
-    test('🔄 handles multiple recognition attempts', () => {
+    test('handles multiple recognition attempts', () => {
       const attempts = [
         { transcript: 'Company1', confidence: 0.5 },
         { transcript: 'Company2', confidence: 0.9 },
@@ -182,9 +182,9 @@ describe('VoiceRecognition Class Tests', () => {
     });
   });
 
-  // 🔬 Edge Cases
+
   describe('Edge Cases', () => {
-    test('💫 handles empty transcripts', () => {
+    test('handles empty transcripts', () => {
       const mockEvent = {
         results: [[{ transcript: '', confidence: 0.9 }]]
       };
@@ -194,7 +194,7 @@ describe('VoiceRecognition Class Tests', () => {
       expect(mockFetchCompanyData).not.toHaveBeenCalled();
     });
 
-    test('🔀 handles multiple recognition results', () => {
+    test('handles multiple recognition results', () => {
       const mockEvent = {
         results: [
           [{ transcript: 'First', confidence: 0.9 }],
@@ -212,9 +212,9 @@ describe('VoiceRecognition Class Tests', () => {
     });
   });
 
-  // ⚠️ Error Handling
+
   describe('Error Handling', () => {
-    test('🚨 handles network errors', () => {
+    test('handles network errors', () => {
       const mockError = { error: 'network' };
       voiceRecognition.updateFeedback = jest.fn((message) => {
         elements.feedbackText.textContent = message;
@@ -225,7 +225,7 @@ describe('VoiceRecognition Class Tests', () => {
       expect(console.error).toHaveBeenCalledWith('Recognition error:', mockError);
     });
 
-    test('🎤 handles audio capture errors', () => {
+    test('handles audio capture errors', () => {
       const mockError = { error: 'audio-capture' };
       voiceRecognition.updateFeedback = jest.fn((message) => {
         elements.feedbackText.textContent = message;
@@ -236,9 +236,8 @@ describe('VoiceRecognition Class Tests', () => {
     });
   });
 
-  // ⚡ Performance Tests
   describe('Performance', () => {
-    test('⏱️ handles rapid start/stop sequences', () => {
+    test('⏱ handles rapid start/stop sequences', () => {
       voiceRecognition.startRecognition = jest.fn();
       voiceRecognition.stopRecognition = jest.fn();
 
@@ -252,9 +251,9 @@ describe('VoiceRecognition Class Tests', () => {
     });
   });
 
-  // 🎛️ Configuration Tests
+
   describe('Configuration', () => {
-    test('⚙️ applies custom configuration', () => {
+    test('applies custom configuration', () => {
       const customConfig = {
         confidenceThreshold: 0.9,
         autoRestart: true
@@ -264,7 +263,7 @@ describe('VoiceRecognition Class Tests', () => {
       expect(customVoiceRecognition.options).toMatchObject(customConfig);
     });
 
-    test('🔧 validates configuration values', () => {
+    test('validates configuration values', () => {
       const invalidConfig = {
         confidenceThreshold: 2,
         maxRetries: -1
@@ -281,9 +280,9 @@ describe('VoiceRecognition Class Tests', () => {
     });
   });
 
-  // 🔄 State Management Tests
+
   describe('State Management', () => {
-    test('🔒 prevents concurrent recognition sessions', () => {
+    test('prevents concurrent recognition sessions', () => {
       voiceRecognition.startRecognition();
       voiceRecognition.startRecognition();
       expect(speechRecognitionMock.start).toHaveBeenCalledTimes(1);

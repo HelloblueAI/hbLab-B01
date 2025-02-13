@@ -80,22 +80,22 @@ pnpm test
       ✓ stops voice recognition correctly (4 ms)
       ✓ toggles recognition state on button click (3 ms)
     Recognition Results
-      ✓ 📝 processes high-confidence results (4 ms)
-      ✓ ⚠️ ignores low-confidence results (4 ms)
-      ✓ 🔄 handles multiple recognition attempts (5 ms)
+      ✓ processes high-confidence results (4 ms)
+      ✓ ignores low-confidence results (4 ms)
+      ✓ handles multiple recognition attempts (5 ms)
     Edge Cases
-      ✓ 💫 handles empty transcripts (3 ms)
-      ✓ 🔀 handles multiple recognition results (8 ms)
+      ✓ handles empty transcripts (3 ms)
+      ✓ handles multiple recognition results (8 ms)
     Error Handling
-      ✓ 🚨 handles network errors (5 ms)
-      ✓ 🎤 handles audio capture errors (4 ms)
+      ✓ handles network errors (5 ms)
+      ✓ handles audio capture errors (4 ms)
     Performance
-      ✓ ⏱️ handles rapid start/stop sequences (3 ms)
+      ✓ handles rapid start/stop sequences (3 ms)
     Configuration
-      ✓ ⚙️ applies custom configuration (2 ms)
-      ✓ 🔧 validates configuration values (9 ms)
+      ✓ applies custom configuration (2 ms)
+      ✓ validates configuration values (9 ms)
     State Management
-      ✓ 🔒 prevents concurrent recognition sessions (5 ms)
+      ✓ prevents concurrent recognition sessions (5 ms)
 
 Test Suites: 2 passed, 2 total
 Tests:       19 passed, 19 total
