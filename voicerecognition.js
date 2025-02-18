@@ -7,19 +7,20 @@ export default class VoiceRecognition {
       continuous: true,
       language: 'en-US',
       confidenceThreshold: 0.85,
-      maxRetries: 5,
-      retryDelay: 250,
+      autoDetectLanguage: false,
       noiseReduction: true,
-      adaptiveThreshold: true,
+      maxRetries: 3,
+      retryDelay: 500,
       instantDisplay: true,
+      customCommands: {},
       ...options
     };
 
     this.state = {
       isListening: false,
-      lastTranscript: '',
+
       retryCount: 0,
-      silenceTimeout: null,
+
       processing: false,
       detectionTimeout: null
     };
@@ -30,23 +31,20 @@ export default class VoiceRecognition {
   }
 
   setupStyles() {
-    if (navigator.userAgent.includes('jsdom')) {
-      console.warn('🛑 JSDOM detected - Skipping style injection.');
-      return;
-    }
+    if (navigator.userAgent.includes('jsdom')) return;
 
     try {
       const styleSheet = document.createElement('style');
       styleSheet.innerText = `
         .voice-button { width: 64px; height: 64px; border-radius: 50%; background: #f3f4f6; border: none; cursor: pointer; transition: 0.3s ease; display: flex; align-items: center; justify-content: center; }
         .voice-button:hover { background: #e5e7eb; }
-        .voice-button.listening, .voice-button.active { background: #4f46e5; box-shadow: 0 0 20px rgba(79, 70, 229, 0.5); }
+        .voice-button.listening { background: #4f46e5; box-shadow: 0 0 20px rgba(79, 70, 229, 0.5); }
         .ripple { position: absolute; border: 2px solid #4f46e5; border-radius: 50%; animation: ripple 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
         @keyframes ripple { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2); opacity: 0; } }
       `;
       document.head.appendChild(styleSheet);
     } catch (error) {
-      console.warn('🛑 Style injection failed.', error);
+      console.warn('Style injection failed:', error);
     }
   }
 
@@ -79,7 +77,7 @@ export default class VoiceRecognition {
 
   handleStart() {
     this.state.isListening = true;
-    this.showFeedback('Listening... Speak now.', true);
+    this.showFeedback('🎤 Listening... Speak now.', true);
     this.elements.voiceButton.classList.add('listening');
   }
 
@@ -87,23 +85,34 @@ export default class VoiceRecognition {
     this.state.isListening = false;
     this.showFeedback('Click to start speaking.', false);
     this.elements.voiceButton.classList.remove('listening');
-    clearTimeout(this.state.silenceTimeout);
+
   }
 
   handleResult(event) {
     if (this.state.processing) return;
 
     let transcript = '';
+    let bestConfidence = 0;
+
     for (let i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal) {
-        transcript += event.results[i][0].transcript.trim();
-      } else if (this.options.instantDisplay) {
-        this.elements.companySearch.value = event.results[i][0].transcript.trim();
+      const result = event.results[i];
+      const text = result[0].transcript.trim();
+      const confidence = result[0].confidence;
+
+      if (confidence > bestConfidence) {
+        bestConfidence = confidence;
+        transcript = text;
+      }
+
+      if (this.options.instantDisplay) {
+        this.elements.companySearch.value = text;
       }
     }
 
-    if (transcript) {
+    if (bestConfidence >= this.options.confidenceThreshold) {
       this.processTranscript(transcript);
+    } else {
+      this.showFeedback('Voice not clear, please try again.', false);
     }
   }
 
@@ -124,14 +133,21 @@ export default class VoiceRecognition {
   async processTranscript(transcript) {
     this.state.processing = true;
     this.stopRecognition();
+
     this.elements.companySearch.value = transcript;
+
+
+    if (this.options.customCommands[transcript.toLowerCase()]) {
+      this.options.customCommands[transcript.toLowerCase()]();
+      return;
+    }
 
     try {
       await this.fetchCompanyData(transcript);
-      this.showFeedback('Company detected!', true);
+      this.showFeedback('✅ Company found!', true);
       this.animateCompanyDetection();
     } catch (error) {
-      this.showFeedback(`Error: ${error.message}`, false);
+      this.showFeedback(`❌ Error: ${error.message}`, false);
     }
 
     this.state.processing = false;
