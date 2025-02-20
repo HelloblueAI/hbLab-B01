@@ -1,6 +1,6 @@
 {
   "name": "helloblue-ai",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A project to facilitate connecting users to company customer services quickly and efficiently.",
   "main": "app.js",
   "scripts": {
@@ -38,7 +38,10 @@
     "url": "https://github.com/HelloblueAI/hbLab-B01/issues"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^4.0.1",
+    "@auth0/nextjs-auth0": "^4.0.2",
+    "@netlify/build": "^29.58.9",
+    "@netlify/edge-bundler": "^12.3.2",
+    "@netlify/zip-it-and-ship-it": "^9.42.5",
     "abort-controller": "^3.0.0",
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
@@ -55,7 +58,7 @@
     "mkdirp": "^3.0.1",
     "netlify-cli": "^18.1.0",
     "node-fetch": "^3.3.2",
-    "postcss": "^8.5.2",
+    "postcss": "^8.5.3",
     "punycode": "^2.3.1",
     "tunnel-agent": "^0.6.0"
   },

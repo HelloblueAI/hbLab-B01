@@ -62,7 +62,7 @@ pnpm test
 ```
 
 ```javascript
-> helloblue-ai@1.0.8 test
+> helloblue-ai@1.0.9 test
 > jest --passWithNoTests
 
  PASS  __tests__/index.test.js

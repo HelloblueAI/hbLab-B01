@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+  <title>helloblue: Call any company...</title>
+  <link rel="stylesheet" href="./style.min.css" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="helloblue: Call any company" />
+  <meta name="twitter:description" content="The world's first Voice AI Customer Service Assistant" />
+  <meta name="twitter:image" content="https://helloblue.ai/images/1.png" />
+  <meta property="og:title" content="helloblue: Call any company" />
+  <meta property="og:description" content="The world's first Voice AI Customer Service Assistant" />
+  <meta property="og:image" content="https://helloblue.ai/images/1.png" />
+  <meta property="og:url" content="https://helloblue.ai/" />
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+    integrity="sha384-kC1SZDSVPgfHSRBlVxkE7NOZ1lHV7hBxoXzGVGSR5YrMA1Ml4QG3E+Gh6U3T2niA"
+    crossorigin="anonymous"></script>
+
+
+  <base href="/" />
+</head>
+
+<body page="home">
+  <header>
+    <div id="logo">
+      <a href="/">
+        <img
+          src="https://i.postimg.cc/CLYrn5hh/Copy-of-Original-size-Copy-of-Copy-of-Professional-Gradient-Abstract-Circle-Technology-Company-Log.png"
+          alt="Your Logo" />
+      </a>
+    </div>
+    <nav>
+      <div class="social-links">
+        <a href="twitter://user?screen_name=HelloblueAI">𝕏 @HelloblueAI</a>
+        <a href="https://github.com/HelloblueAI">GitHub</a>
+      </div>
+
+
+      <div class="footer-links">
+        <span class="copyright-text">© 2025 Helloblue, Inc.</span>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+        <a href="https://drive.google.com/file/d/1XneGJFsyEjW6tVZ3h871arsbF-RWPAkd/view?usp=sharing">Brand
+          guidelines</a>
+      </div>
+    </nav>
+  </header>
+  <div class="main-content">
+    <h1 class="typing-effect">
+      <span id="typed-output"></span>
+      <span id="cursor">|</span>
+    </h1>
+    <p class="sub-text">Open-source VoAI: Transforming Customer Service Connections</p>
+    <p class="sub-text specific-line">Don't browse for customer services. Use helloblue to get connected!</p>
+    <div class="search-section">
+      <input type="text" id="companySearch" placeholder="Search for a company" inputmode="search" />
+      <div class="voice-container">
+        <div class="voice-button-container">
+          <button id="voiceButton" aria-label="Voice search for a company">
+            <div class="voice-button-wrapper">
+              <img src="https://i.postimg.cc/bwBLVbVY/Mysterious-Are-you-Ready-Animated-Instagram-Post.png"
+                alt="Microphone" width="21" height="21" />
+            </div>
+          </button>
+        </div>
+        <div id="feedbackText"></div>
+      </div>
+      <div id="companyName" class="hidden"></div>
+    </div>
+  </div>
+  <div class="badges-container">
+    <a href="https://apps.apple.com/us/app/helloblue/id6450708010?itsct=apps_box_badge&amp;itscg=30200"
+      class="app-store-badge">
+      <img
+        src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1692057600"
+        alt="Download on the App Store" />
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=com.cloudtenlabs.helloblue&hl=en_US&gl=US"
+      class="google-play-badge">
+      <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+        alt="Get it on Google Play" style="width: 140px; height: 59px" />
+    </a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"
+    integrity="sha384-O4fBiAjrNGKoUtdE4TkTfok2o1MMrbmox3M9m+eL+cR7tBe3axzU+iVQoG1W2p/U"
+    crossorigin="anonymous"></script>
+
+  <script type="module" src="app.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', (user) => {
+        if (!user) {
+          window.netlifyIdentity.on('login', () => {
+            document.location.href = '/dashboard/';
+          });
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
