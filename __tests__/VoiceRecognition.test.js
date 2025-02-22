@@ -112,7 +112,7 @@ describe('VoiceRecognition Class Tests', () => {
     jest.useRealTimers();
   });
 
-  // 📋 Core Functionality Tests
+
   describe('Core Functionality', () => {
     test('initializes with correct default state', () => {
       expect(voiceRecognition).toBeDefined();
