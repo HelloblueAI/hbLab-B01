@@ -101,7 +101,7 @@
     "serve": "^14.2.4",
     "stylelint": "^16.14.1",
     "stylelint-config-standard": "^37.0.0",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.6"
   },
   "engines": {
     "node": ">=18.16.0",
