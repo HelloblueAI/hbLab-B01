@@ -25,7 +25,7 @@ export default class VoiceRecognition {
     this.elements = this.validateElements(elements);
     this.fetchCompanyData = fetchCompanyData;
     this.errorHandler = null;
-    
+
     this.options = {
       continuous: false,
       language: 'en-US',
@@ -530,9 +530,9 @@ export default class VoiceRecognition {
 
   updateOptions(newOptions = {}) {
     const needsRestart = this.state.isListening &&
-                         (newOptions.continuous !== undefined && newOptions.continuous !== this.options.continuous ||
-                          newOptions.language !== undefined && newOptions.language !== this.options.language ||
-                          newOptions.interimResults !== undefined && newOptions.interimResults !== this.options.interimResults);
+      (newOptions.continuous !== undefined && newOptions.continuous !== this.options.continuous ||
+        newOptions.language !== undefined && newOptions.language !== this.options.language ||
+        newOptions.interimResults !== undefined && newOptions.interimResults !== this.options.interimResults);
 
 
     this.options = {
