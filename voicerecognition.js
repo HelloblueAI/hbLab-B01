@@ -20,6 +20,7 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+
 export default class VoiceRecognition {
   constructor(elements, fetchCompanyData, options = {}) {
     this.elements = this.validateElements(elements);
@@ -178,20 +179,23 @@ export default class VoiceRecognition {
   attachEventListeners() {
     if (!this.elements.voiceButton) return;
 
-
     const newButton = this.elements.voiceButton.cloneNode(true);
+    newButton.setAttribute('aria-label', 'Toggle voice recognition');
+    newButton.setAttribute('role', 'button');
     this.elements.voiceButton.parentNode.replaceChild(newButton, this.elements.voiceButton);
     this.elements.voiceButton = newButton;
 
+    let debounceTimeout;
     this.elements.voiceButton.addEventListener('click', () => {
-      this.toggleVoiceRecognition();
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => this.toggleVoiceRecognition(), this.options.debounceDelay);
     });
 
-
     document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key === 'space') {
+      if (e.ctrlKey && e.key === ' ') {
         e.preventDefault();
-        this.toggleVoiceRecognition();
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => this.toggleVoiceRecognition(), this.options.debounceDelay);
       }
     });
   }
@@ -281,26 +285,24 @@ export default class VoiceRecognition {
   handleError(event) {
     console.error('Voice Recognition Error:', event.error);
 
-    const isTryableError = ['network', 'no-speech', 'audio-capture', 'aborted'].includes(event.error);
+    const isRetryableError = ['network', 'no-speech', 'audio-capture', 'aborted'].includes(event.error);
 
-
-    if (isTryableError && this.state.retryCount < this.options.maxRetries) {
+    if (isRetryableError && this.state.retryCount < this.options.maxRetries) {
       this.state.retryCount++;
+      const retryDelay = this.options.retryDelay * Math.pow(2, this.state.retryCount - 1);
       this.showFeedback(`Retrying... (${this.state.retryCount}/${this.options.maxRetries})`, false);
 
       setTimeout(() => {
         if (!this.state.manualStop) {
           this.startRecognition();
         }
-      }, this.options.retryDelay * this.state.retryCount);// Exponential backoff
+      }, retryDelay);
     } else {
-
       this.showFeedback(`Error: ${this.getErrorMessage(event.error)}`, false);
       this.triggerErrorHandler({
         error: event.error,
         message: this.getErrorMessage(event.error)
       });
-
 
       if (this.elements.voiceButton) {
         this.elements.voiceButton.classList.add('error');
@@ -312,7 +314,6 @@ export default class VoiceRecognition {
 
     this.stopRecognition();
     this.state.processing = false;
-
 
     setTimeout(() => {
       this.state.retryCount = 0;

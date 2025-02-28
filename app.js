@@ -86,6 +86,8 @@ export class StateManager {
 }
 
 function setupEventListeners(elements, state) {
+  elements.voiceButton.setAttribute('aria-label', 'Activate voice recognition');
+  elements.voiceButton.setAttribute('role', 'button');
 
   const debouncedFetchCompanyData = debounce(() => {
     const value = elements.companySearch.value.trim();
@@ -93,7 +95,6 @@ function setupEventListeners(elements, state) {
       fetchCompanyData(capitalizeCompany(value), elements, state);
     }
   }, 300);
-
 
   elements.companySearch.addEventListener('input', (event) => {
     handleCompanySearchInput(event, elements, debouncedFetchCompanyData, state);
@@ -125,14 +126,6 @@ function setupEventListeners(elements, state) {
 
   if (voiceRecognition && typeof voiceRecognition.start === 'function') {
     voiceRecognition.start();
-    console.log('VoiceRecognition started successfully.');
-  } else {
-    console.error('VoiceRecognition failed to start. Ensure the class is implemented correctly.');
-  }
-
-  if (voiceRecognition && typeof voiceRecognition.start === 'function') {
-    voiceRecognition.start();
-
     console.log('VoiceRecognition started successfully.');
   } else {
     console.error('VoiceRecognition failed to start. Ensure the class is implemented correctly.');
@@ -233,7 +226,7 @@ async function displayCompanyInfo(
   showCompanyConfirmationDialog(capitalizedCompanyName, phoneNumber, url, elements, state);
 }
 
-async function fetchCompanyData(company, elements, state) {
+async function fetchCompanyData(company, elements, state, retryCount = 0) {
   if (state.isConfirmationDialogOpen || state.isFetching) {
     return;
   }
@@ -269,10 +262,16 @@ async function fetchCompanyData(company, elements, state) {
     state.cache.set(cacheKey, { data, timestamp: Date.now() });
     await displayCompanyInfo(data, elements, state);
   } catch (error) {
+    clearTimeout(timeout);
     if (error.name === 'AbortError') {
       elements.feedbackText.textContent = 'Request timed out. Please try again.';
+    } else if (retryCount < 3) {
+      const retryDelay = 1000 * Math.pow(2, retryCount);
+      elements.feedbackText.textContent = `Retrying in ${retryDelay / 1000} seconds...`;
+      setTimeout(() => fetchCompanyData(company, elements, state, retryCount + 1), retryDelay);
     } else {
-      handleFetchError(elements, state, company);
+      elements.feedbackText.textContent = 'Failed to fetch company data after multiple attempts.';
+      displayNotification('Unable to retrieve company data. Please check your connection and try again later.');
     }
   } finally {
     state.isFetching = false;
@@ -285,11 +284,6 @@ function handleErrorStatus(status, elements) {
   } else {
     throw new Error(`Unexpected HTTP status: ${status}`);
   }
-}
-
-function handleFetchError(elements, state, company) {
-  elements.feedbackText.textContent = 'Failed to fetch company data. Retrying...';
-  setTimeout(() => fetchCompanyData(company, elements, state), 3000);
 }
 
 function showCompanyConfirmationDialog(companyName, phoneNumber, url, elements, state) {
