@@ -21,35 +21,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module.exports = {
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-
-  transform: {
-    '^.+\\.(js|jsx)$': ['babel-jest', {
-      presets: [
-        ['@babel/preset-env', {
-          targets: { node: 'current' }
-        }],
-        '@babel/preset-react'
-      ]
-    }]
-  },
-
-  moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js',
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^voicerecognition$': '<rootDir>/voicerecognition.js'
-  },
-  transformIgnorePatterns: [
-    '/node_modules/(?!node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill)/'
-  ],
-  moduleDirectories: ['node_modules', '<rootDir>'],
-  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
-  verbose: true,
-  testTimeout: 10000,
-  resetMocks: false,
-  resetModules: false,
-  restoreMocks: false
+export const testEnvironment = 'jsdom';
+export const setupFilesAfterEnv = ['<rootDir>/jest.setup.js'];
+export const transform = {
+  '^.+\\.(js|jsx)$': ['babel-jest', {
+    presets: [
+      ['@babel/preset-env', {
+        targets: { node: 'current' }
+      }],
+      '@babel/preset-react'
+    ]
+  }]
 };
+export const moduleNameMapper = {
+  '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js',
+  '^@/(.*)$': '<rootDir>/src/$1',
+  '^voicerecognition$': '<rootDir>/voicerecognition.js'
+};
+export const transformIgnorePatterns = [
+  '/node_modules/(?!node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill)/'
+];
+export const moduleDirectories = ['node_modules', '<rootDir>'];
+export const moduleFileExtensions = ['js', 'jsx', 'json', 'node'];
+export const verbose = true;
+export const testTimeout = 10000;
+export const resetMocks = false;
+export const resetModules = false;
+export const restoreMocks = false;
